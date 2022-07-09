@@ -1,4 +1,5 @@
-import { Grid, Link, Typography, useTheme } from "@mui/material"
+import { Grid, Typography, useTheme } from "@mui/material"
+import Link from "next/link";
 import { IUser } from '../app/constants'
 
 export const UserCard = ({user, isDetail = false}: {user: IUser | undefined, isDetail?: boolean}) => {
@@ -9,7 +10,7 @@ export const UserCard = ({user, isDetail = false}: {user: IUser | undefined, isD
   }
 
   if(isDetail) {
-    return <Link href = {`/users/${user.address}`}>
+    return <Link href={`/users/${user.address}`}>
     <Grid item >
       <Grid container direction={'column'}>
         <Grid item sx={{ borderRadius: 3, border: 0.5, paddingX: 2, paddingY: 3, marginX: 2, marginY: 3, cursor: 'pointer' }}>
