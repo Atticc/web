@@ -8,20 +8,20 @@ import Link from 'next/link';
 import { UserCard } from '../../components/UserCard';
 
 const Home: NextPage = () => {
-  
+
   const colorTheme = useTheme().palette;
   return (
     <LayoutWithoutFooter>
-      <Grid container maxWidth="lg" spacing={2} direction={'column'} >
-        <Grid item  xs>
+      <Grid container spacing={3} direction={'column'} sx={{ paddingX: 4 }}>
+        <Grid item xs>
           <Typography variant={'h2'}>
             Discover Users
           </Typography>
         </Grid>
       </Grid>
-        <Grid container direction={'row'} sx={{margin: 3}} >
+      <Grid container direction={'row'} sx={{ marginY: 3 }} >
         {users.map(u => <UserCard user={u} key={u.address} />)}
-        </Grid>
+      </Grid>
     </LayoutWithoutFooter>
   );
 };

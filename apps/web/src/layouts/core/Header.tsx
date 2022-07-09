@@ -51,7 +51,7 @@ function Header() {
         position: `sticky`,
         top: 0,
         zIndex: scrollPosition ? 1000 : 1,
-        maxWidth: `${scrollPosition ? 'unset' : '1400px'} !important`,
+        maxWidth: 'unset !important',
         background: '#001325',
         boxShadow: scrollPosition ? '0px 4px 21px rgba(0, 23, 46, 0.66)' : 'none',
       }}

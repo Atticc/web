@@ -25,9 +25,9 @@ const Home: NextPage = () => {
 
   return (
     <LayoutWithoutFooter>
-      <Grid container maxWidth="lg" spacing={3} direction={'row'} >
+      <Grid container spacing={3} direction={'row'} sx={{ paddingX: 4 }} >
         <Grid item xs={9}>
-          <Grid container direction={'column'} sx={{ paddingX: 2 }}>
+          <Grid container direction={'column'} >
             <Tabs value={tab} onChange={handleSetTab} aria-label="Post Tabs">
               {tabs.map(t => <Tab label={t.label} value={t.value} key={t.label} />)}
             </Tabs>

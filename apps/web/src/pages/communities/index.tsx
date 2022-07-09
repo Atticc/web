@@ -18,7 +18,7 @@ const Home: NextPage = () => {
   
   return (
     <LayoutWithoutFooter>
-      <Grid container maxWidth="lg" spacing={2} direction={'row'} >
+      <Grid container spacing={3} direction={'row'} sx={{ paddingX: 4, marginY:4 }} >
         <Grid item xs={2}>
           <Grid container direction={'column'} spacing={2} alignItems={'center'}>
             <Grid item xs>

@@ -30,9 +30,9 @@ const UserDetailPage: NextPage<UserDetailProps> = ({ id }) => {
 
   return (
     <LayoutWithoutFooter>
-      <Grid container maxWidth="lg" spacing={3} direction={'row'} >
+      <Grid container spacing={3} direction={'row'} sx={{ paddingX: 4 }} >
         <Grid item xs>
-          <Grid container direction={'column'} sx={{ paddingX: 2 }} alignItems={'center'}>
+          <Grid container direction={'column'} alignItems={'center'}>
             <CommunitiesList title={'Joined Communities'} data={communities} />
           </Grid>
         </Grid>
