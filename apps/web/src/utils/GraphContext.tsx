@@ -16,7 +16,7 @@ import {
   AllSocialConnections,
   SocialConnection, 
 } from "../app/types";
-import { useWeb3 } from "./web3Context";
+// import { useWeb3 } from "./web3Context";
 
 export type GraphNode = {
   id: string;
@@ -78,7 +78,7 @@ export const GraphContext = createContext<GraphContextInterface>({
 let count = 0;
 
 export const GraphContextProvider: React.FC<any> = ({ children }) => {
-  const { address } = useWeb3();
+  // const { address } = useWeb3();
   // Cyberlab.eth default address
   const [graphAddress, setGraphAddress] = useState<string>(
     "0x148d59faf10b52063071eddf4aaf63a395f2d41c"
@@ -519,13 +519,12 @@ export const GraphContextProvider: React.FC<any> = ({ children }) => {
     loadFocusModeConnections,
   ]);
 
-  useEffect(() => {
-    console.log(address)
-    if (address) {
-      setSelectAddress(address);
-      setGraphAddress(address);
-    }
-  }, [address]);
+  // useEffect(() => {
+  //   if (address) {
+  //     setSelectAddress(address);
+  //     setGraphAddress(address);
+  //   }
+  // }, [address]);
 
   return (
     <GraphContext.Provider
