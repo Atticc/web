@@ -1,5 +1,5 @@
 import type { NextPage } from 'next'
-import LayoutWithoutFooter from '../../layouts/LayoutWithoutFooter'
+import LayoutWithoutFooter from '../../components/layouts/LayoutWithoutFooter'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useEffect, useState } from 'react'
 import { Grid, Typography, useTheme } from '@mui/material'

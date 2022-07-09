@@ -2,7 +2,10 @@ import { useState, useContext, useCallback, createContext, FC } from 'react'
 import Web3Modal from 'web3modal'
 import { Web3Provider } from '@ethersproject/providers'
 import CyberConnect from '@cyberlab/cyberconnect'
+import WalletConnectProvider from '@walletconnect/web3-provider'
+import { useTheme } from '@mui/material/styles'
 import { useLocalStorage } from 'usehooks-ts'
+import { ALCHEMY_RPC_ETH } from '../app/config'
 
 interface Web3ContextInterface {
   disconnect: () => Promise<void>
@@ -25,12 +28,8 @@ export const Web3Context = createContext<Web3ContextInterface>({
 })
 
 export const Web3ContextProvider: FC<any> = ({ children }) => {
-  const [connected, setConnected] = useLocalStorage('WEB3_CONNECT_CACHED_PROVIDER', null)
-  // const [address, setAddress] = useSessionStorage('address', '')
-  // const [domain, setDomain] = useSessionStorage<string | null>('domain', '')
-  // const [avatar, setAvatar] = useSessionStorage<string | null>('avatar', '')
-  // const [cyberConnect, setCyberConnect] = useSessionStorage<CyberConnect | null>('cyberConnect', null)
-  // const [provider, setProvider] = useSessionStorage<Web3Provider | undefined>('web3Provider', undefined)
+  const theme = useTheme()
+  const [_, setConnected] = useLocalStorage('WEB3_CONNECT_CACHED_PROVIDER', null)
   const [address, setAddress] = useState<string>('')
   const [domain, setDomain] = useState<string | null>('')
   const [avatar, setAvatar] = useState<string | null>('')
@@ -63,26 +62,43 @@ export const Web3ContextProvider: FC<any> = ({ children }) => {
     }
   }
 
-  const connectWallet = useCallback(async () => {
+  const connectWallet = async () => {
     const web3Modal = new Web3Modal({
       network: 'mainnet',
       cacheProvider: true,
-      providerOptions: {},
+      providerOptions: {
+        injected: {
+          package: null,
+        },
+        walletconnect: {
+          package: WalletConnectProvider,
+          options: {
+            rpc: {
+              1: ALCHEMY_RPC_ETH,
+            },
+          },
+        },
+      },
+      theme: theme.palette.mode,
     })
 
-    const instance = await web3Modal.connect()
-    const provider = new Web3Provider(instance)
-    const signer = provider.getSigner()
-    const address = await signer.getAddress()
-    const domain = await getEnsByAddress(provider, address)
-    const avatar = await getAvatarByAddress(provider, address)
+    try {
+      const instance = await web3Modal.connect()
+      const provider = new Web3Provider(instance)
+      const signer = provider.getSigner()
+      const address = await signer.getAddress()
+      const domain = await getEnsByAddress(provider, address)
+      const avatar = await getAvatarByAddress(provider, address)
 
-    setAddress(address)
-    setDomain(domain)
-    setAvatar(avatar)
-    setProvider(provider)
-    initCyberConnect(provider.provider)
-  }, [initCyberConnect])
+      setAddress(address)
+      setDomain(domain)
+      setAvatar(avatar)
+      setProvider(provider)
+      initCyberConnect(provider.provider)
+    } catch (error) {
+      disconnect()
+    }
+  }
 
   const disconnect = useCallback(async () => {
     setConnected(null)

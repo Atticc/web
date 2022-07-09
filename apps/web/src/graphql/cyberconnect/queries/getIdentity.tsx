@@ -13,7 +13,7 @@ export const getIdentity = async (address: string) => {
             address
             domain
             ens
-            twitter{
+            twitter {
               handle
               avatar
             }

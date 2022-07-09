@@ -1,6 +1,5 @@
 import type { GetServerSideProps, NextPage } from 'next'
-import LayoutWithoutFooter from '../../../../layouts/LayoutWithoutFooter'
-import { useState } from 'react'
+import LayoutWithoutFooter from '../../../../components/layouts/LayoutWithoutFooter'
 import { Grid, Typography } from '@mui/material'
 
 interface UserDetailProps {
