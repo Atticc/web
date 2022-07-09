@@ -1,17 +1,11 @@
-import { Box, Container, Grid, Typography, useTheme, styled, Stack, Avatar } from '@mui/material'
+import { Container, Grid, Typography, useTheme, styled } from '@mui/material'
 import { useTranslation } from 'next-i18next'
 import Link from 'next/link'
-import { PrimaryDarkButton, SecondaryDarkButton } from '../../components/buttons/Buttons'
-import { SwitchBox } from './mode_switch/Mode_switch'
+import { SwitchBox } from './SwitchBox'
 import { useRouter } from 'next/router'
 
-import Web3 from 'web3'
-import Web3Modal from 'web3modal'
 import { useScrollPosition } from '../../utils/useScrollPosition'
-import { useCallback, useEffect, useState } from 'react'
-import { useWeb3 } from '../../utils/Web3Context'
-import { formatAddress } from '../../utils/helper'
-import { useLocalStorage } from 'usehooks-ts'
+import { WalletComponent } from '../WalletComponent'
 
 const NavContainer = styled(Container)(() => ({
   padding: '8px',
@@ -27,25 +21,10 @@ const menu = [
 ]
 
 function Header() {
-  const [connected] = useLocalStorage('WEB3_CONNECT_CACHED_PROVIDER', null)
   const { t } = useTranslation('common')
   const router = useRouter()
   const colorTheme = useTheme().palette
   const scrollPosition = useScrollPosition()
-  const { connectWallet, disconnect, address, domain, avatar } = useWeb3()
-  const [loading, setLoading] = useState(false)
-
-  const connect = useCallback(async () => {
-    setLoading(true)
-    await connectWallet()
-    setLoading(false)
-  }, [connectWallet])
-
-  useEffect(() => {
-    if (connected) {
-      connect()
-    }
-  }, [connected])
 
   return (
     <Container
@@ -96,19 +75,7 @@ function Header() {
           <Grid item>
             <Grid container direction={'row'}>
               <SwitchBox />
-              <Grid item>
-                {!address ? (
-                  <PrimaryDarkButton textcontent={loading ? 'Loading...' : 'Connect Wallet'} onClick={connect} />
-                ) : (
-                  <Stack direction={'row'} alignItems={'center'} onClick={disconnect}>
-                    <Avatar variant="circular" src={avatar || ''} />
-                    <Stack direction={'column'} paddingLeft={1}>
-                      <Typography variant="h6">{domain || null}</Typography>
-                      <Typography variant="body1">{formatAddress(address)}</Typography>
-                    </Stack>
-                  </Stack>
-                )}
-              </Grid>
+              <WalletComponent />
             </Grid>
           </Grid>
         </Grid>

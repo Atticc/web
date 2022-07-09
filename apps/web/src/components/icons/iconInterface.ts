@@ -14,7 +14,7 @@ export interface ITierIconProps {
 }
 
 export interface IIconProps {
-  width?: string
-  height?: string
+  width?: string | number
+  height?: string | number
   color?: PaletteColor
 }

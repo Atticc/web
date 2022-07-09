@@ -1,5 +1,5 @@
 import type { GetServerSideProps, NextPage } from 'next'
-import LayoutWithoutFooter from '../../../../layouts/LayoutWithoutFooter'
+import LayoutWithoutFooter from '../../../../components/layouts/LayoutWithoutFooter'
 import { useState } from 'react'
 import { Grid, Tab, Tabs, Typography } from '@mui/material'
 import { PrimaryDarkButton } from '../../../../components/buttons/Buttons'

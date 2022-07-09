@@ -7,6 +7,7 @@ import { useFollowStatus } from '../graphql/cyberconnect/queries/getFollowStatus
 import { formatAddress, isSameAddr } from '../utils/helper'
 import { useWeb3 } from '../utils/Web3Context'
 import { PrimaryDarkButton } from './buttons/Buttons'
+import { TwitterIcon } from './icons/TwitterIcon'
 import UserConnectionModal from './modal/UserConnectionModal'
 
 export const UserCard = ({ user, isDetail = false }: { user: IUser; isDetail?: boolean }) => {
@@ -62,16 +63,6 @@ export const UserCard = ({ user, isDetail = false }: { user: IUser; isDetail?: b
                 <Typography variant="body1">{formatAddress(user?.address)}</Typography>
               </Stack>
             </Stack>
-            {user?.twitter?.handle ? <Stack alignItems={'center'} paddingBottom={2}> 
-                <Typography variant="body1" >
-                  Twitter
-                </Typography>
-              <a href={`https://twitter.com/${user?.twitter?.handle}`} target="_blank">
-                <Typography variant="body1" >
-                  {user.twitter.handle}
-                </Typography>
-              </a>
-            </Stack>: null }
             <Stack
               direction={'row'}
               spacing={3}
@@ -98,6 +89,15 @@ export const UserCard = ({ user, isDetail = false }: { user: IUser; isDetail?: b
                 onClick={onFollow}
               />
             ) : null}
+            <Stack direction={'row'} alignItems={'center'}>
+              {user?.twitter?.handle ? (
+                <Stack alignItems={'center'}>
+                  <a href={`https://twitter.com/${user?.twitter?.handle}`} target="_blank">
+                    <TwitterIcon color={colorTheme.dark} height={24} width={24} />
+                  </a>
+                </Stack>
+              ) : null}
+            </Stack>
           </Stack>
         </Grid>
         <UserConnectionModal address={user.address} open={showConnection} onClose={() => setShowConnection(false)} />

@@ -1,5 +1,5 @@
 import type { GetServerSideProps, NextPage } from 'next'
-import LayoutWithoutFooter from '../../layouts/LayoutWithoutFooter'
+import LayoutWithoutFooter from '../../components/layouts/LayoutWithoutFooter'
 import { useEffect, useState } from 'react'
 import { Grid, Tab, Tabs, Typography, useTheme } from '@mui/material'
 import { CommunitiesList } from '../../components/CommunitiesList'

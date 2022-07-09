@@ -1,7 +1,7 @@
 import Head from 'next/head'
-import Header from './core/Header'
+import Header from './Header'
 import { Box, Container } from '@mui/material'
-import { useDimensions } from '../utils/useDimensions'
+import { useDimensions } from '../../utils/useDimensions'
 
 function LayoutWithoutFooter({ children }: { children: React.ReactNode }) {
   const { height } = useDimensions()
