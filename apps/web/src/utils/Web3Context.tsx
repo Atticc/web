@@ -1,12 +1,14 @@
 import { useState, useContext, useCallback, createContext, FC } from "react";
 import Web3Modal from "web3modal";
 import { Web3Provider } from "@ethersproject/providers";
+import CyberConnect from "@cyberlab/cyberconnect";
 
 interface Web3ContextInterface {
   connectWallet: () => Promise<void>;
   address: string;
   ens: string | null;
   avatar: string | null;
+  cyberConnect: CyberConnect | null;
   provider: Web3Provider | undefined;
 }
 
@@ -15,6 +17,7 @@ export const Web3Context = createContext<Web3ContextInterface>({
   address: "",
   ens: "",
   avatar: "",
+  cyberConnect: null,
   provider: undefined,
 });
 
@@ -22,7 +25,17 @@ export const Web3ContextProvider: FC<any> = ({ children }) => {
   const [address, setAddress] = useState<string>("");
   const [ens, setEns] = useState<string | null>("");
   const [avatar, setAvatar] = useState<string | null>("");
+  const [cyberConnect, setCyberConnect] = useState<CyberConnect | null>(null);
   const [provider, setProvider] = useState<Web3Provider>();
+
+  const initCyberConnect = useCallback((provider: any) => {
+    const cyberConnect = new CyberConnect({
+      provider,
+      namespace: "CyberGraph",
+    });
+
+    setCyberConnect(cyberConnect);
+  }, []);
 
   async function getEnsByAddress(provider: Web3Provider, address: string) {
     try {
@@ -59,7 +72,8 @@ export const Web3ContextProvider: FC<any> = ({ children }) => {
     setEns(ens);
     setAvatar(avatar);
     setProvider(provider);
-  }, []);
+    initCyberConnect(provider.provider);
+  }, [initCyberConnect]);
 
   return (
     <Web3Context.Provider
@@ -69,6 +83,7 @@ export const Web3ContextProvider: FC<any> = ({ children }) => {
         ens,
         avatar,
         provider,
+        cyberConnect
       }}
     >
       {children}

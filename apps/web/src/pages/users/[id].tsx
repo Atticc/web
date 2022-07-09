@@ -8,6 +8,7 @@ import { communities, posts, users } from '../../app/constants';
 import Link from 'next/link';
 import { PostListItem } from '../../components/PostListItem';
 import { UserCard } from '../../components/UserCard';
+import { useIdentity } from '../../graphql/cyberconnect/queries/getIdentity';
 
 
 interface UserDetailProps {
@@ -20,9 +21,10 @@ const tabs = [
 ]
 
 const UserDetailPage: NextPage<UserDetailProps> = ({ id }) => {
-  
+  const {data : user} = useIdentity({ address: id });
   const colorTheme = useTheme().palette;
   const [tab, setTab] = useState(1)
+  console.log(user)
 
   const handleSetTab = (_: React.ChangeEvent<{}>, value: number) => {
     setTab(value)
@@ -46,7 +48,7 @@ const UserDetailPage: NextPage<UserDetailProps> = ({ id }) => {
         </Grid>
         <Grid item xs>
           <Grid container direction={'column'}  alignItems={'center'}>
-            <UserCard user={users.find(u => u.address === id)} isDetail />
+            <UserCard user={user} isDetail />
             <CommunitiesList title={'NFT Issued'} data={[]} />
             <CommunitiesList title={'Collections'} data={[]} />
           </Grid>
@@ -60,6 +62,7 @@ export default UserDetailPage;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { id } = context.query
+  
 
   return {
     props: { id },

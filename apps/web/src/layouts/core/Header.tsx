@@ -95,17 +95,19 @@ function Header() {
                   <PrimaryDarkButton
                     textcontent={loading ? 'Loading...' : 'Connect Wallet'}
                     onClick={connect}
-                  />) : <Stack direction={'row'} alignItems={'center'}>
-                    <Avatar variant='circular' src={avatar || ''} />
-                  <Stack direction={'column'} paddingLeft={1}>
-                    <Typography variant='h6'>
-                      {ens || null}
-                    </Typography>
-                    <Typography variant='body1'>
-                      {formatAddress(address)}
-                    </Typography>
-                  </Stack>
-                </Stack>}
+                  />) : <Link href={`/users/${address}`}>
+                    <Stack direction={'row'} alignItems={'center'}>
+                      <Avatar variant='circular' src={avatar || ''} />
+                      <Stack direction={'column'} paddingLeft={1}>
+                        <Typography variant='h6'>
+                          {ens || null}
+                        </Typography>
+                        <Typography variant='body1'>
+                          {formatAddress(address)}
+                        </Typography>
+                      </Stack>
+                    </Stack>
+                  </Link>}
               </Grid>
 
             </Grid>

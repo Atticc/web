@@ -6,7 +6,7 @@ import { ICommunity } from "../app/constants";
 export const CommunitiesList = ({ title, data }: { title: string, data: Array<ICommunity> }) => {
   const colorTheme = useTheme().palette;
 
-  return <Grid container direction={'column'} sx={{ border: 1, borderRadius: 2, paddingX: 1, paddingY: 1, marginY: 2 }} spacing={1}>
+  return <Grid container direction={'column'} sx={{ border: 1, borderRadius: 2, paddingX: 1, paddingY: 1, marginTop: 5 }} spacing={1}>
     <Grid item >
       <Typography sx={{ marginBottom: 1 }} variant='h5'>
         {title}

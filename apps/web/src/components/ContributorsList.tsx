@@ -2,12 +2,13 @@
 import { Divider, Grid, Typography, useTheme } from "@mui/material"
 import Link from "next/link"
 import { IUser } from "../app/constants";
+import { formatAddress } from "../utils/helper";
 
 
 export const ContributorsList = ({title, data}: {title: string, data: Array<IUser>}) => {
   const colorTheme = useTheme().palette;
 
-  return <Grid container direction={'column'} sx={{ border: 1, borderRadius: 2, paddingX: 1, paddingY: 1, marginY: 2 }} spacing={1}>
+  return <Grid container direction={'column'} sx={{ border: 1, borderRadius: 2, paddingX: 1, paddingY: 1, marginTop: 5 }} spacing={1}>
     <Grid item >
       <Typography sx={{ marginBottom: 1 }} variant='h5'>
         {title}
@@ -23,7 +24,7 @@ export const ContributorsList = ({title, data}: {title: string, data: Array<IUse
         }
       }}>
         <Typography variant='body1'>
-          {c.address}
+          {formatAddress(c.address)}
         </Typography>
       </Grid>
     </Link>)}
