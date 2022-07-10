@@ -8,8 +8,8 @@ export const getIdentity = async (address: string) => {
         const { identity } = await request(
             CYBERCONNECT_ENDPOINT,
             gql`
-                query {
-                    identity(address: "${address}") {
+                query GetIdentity($address: String!) {
+                    identity(address: $address) {
                         address
                         domain
                         ens
@@ -22,7 +22,9 @@ export const getIdentity = async (address: string) => {
                         followingCount
                     }
                 }
-                `,
+                `, {
+                    address
+                }
         );
         return identity;
     } catch (err) {

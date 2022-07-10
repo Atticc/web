@@ -1,14 +1,50 @@
+import { ConnectionType } from "@cyberlab/cyberconnect";
 import { Avatar, Grid, Stack, Typography, useTheme } from "@mui/material"
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import { IUser } from '../app/constants'
+import { useFollowStatus } from "../graphql/cyberconnect/queries/getFollowStatus";
 import { formatAddress } from "../utils/helper";
+import { useWeb3 } from "../utils/Web3Context";
+import { PrimaryDarkButton } from "./buttons/Buttons";
 
-export const UserCard = ({ user, isDetail = false }: { user: IUser | undefined, isDetail?: boolean }) => {
+export const UserCard = ({ user, isDetail = false }: { user: IUser, isDetail?: boolean }) => {
+  const [isFollowing, setIsFollowing] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const {address, cyberConnect} = useWeb3()
+
+  const handleFetchFollowStatusResult = (data: any) => {
+    setIsFollowing(data?.isFollowing)
+  }
+
+  const { data: followStatus, refetch: refetchFollowStatus } = useFollowStatus({
+    fromAddr: address, toAddr: user.address, onSuccess: handleFetchFollowStatusResult
+  })
   const colorTheme = useTheme().palette;
 
   if (!user) {
     return null
   }
+
+  const onFollow = async () => {
+    try {
+      setLoading(true)
+      isFollowing 
+        ? await cyberConnect?.disconnect(user?.address, '')
+        : await cyberConnect?.connect(user?.address, '', ConnectionType.FOLLOW)
+      await refetchFollowStatus()
+    } catch(err: any) {
+      console.warn(err.message)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  useEffect(() => {
+    if(address && user.address) {
+      refetchFollowStatus()
+    }
+  }, [user.address, address])
 
   if (isDetail) {
     return <Grid container direction={'column'} spacing={1}>
@@ -43,6 +79,11 @@ export const UserCard = ({ user, isDetail = false }: { user: IUser | undefined, 
               </Typography>
             </Stack>
           </Stack>
+          {address && address !== user?.address ? <PrimaryDarkButton
+            textcontent={loading ? 'loading...' : isFollowing ? 'Followed' : 'Follow'}
+            onClick={onFollow}
+          /> : null }
+         
         </Stack>
       </Grid>
     </Grid>
