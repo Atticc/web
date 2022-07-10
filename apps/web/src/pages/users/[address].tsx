@@ -1,7 +1,7 @@
 import type { GetServerSideProps, NextPage } from 'next'
 import LayoutWithoutFooter from '../../components/layouts/LayoutWithoutFooter'
 import { useEffect, useState } from 'react'
-import { Grid, Tab, Tabs, Typography, useTheme } from '@mui/material'
+import { Grid, Tab, Tabs, useTheme } from '@mui/material'
 import { CommunitiesList } from '../../components/CommunitiesList'
 import { communities, IUser, posts } from '../../app/constants'
 import { PostListItem } from '../../components/PostListItem'
@@ -9,6 +9,7 @@ import { UserCard } from '../../components/UserCard'
 import { getIdentity, useIdentity } from '../../graphql/cyberconnect/queries/getIdentity'
 import { isValidAddr } from '../../utils/helper'
 import Head from 'next/head'
+import { NftSection } from '../../components/NftSection'
 
 interface UserDetailProps {
   address: string
@@ -42,11 +43,11 @@ const UserDetailPage: NextPage<UserDetailProps> = ({ address, userData }) => {
       </Head>
       <Grid container direction={'row'} columnGap={3} paddingX={5} marginTop={2}>
         <Grid item xs>
-          <Grid container direction={'column'} alignItems={'center'}>
+          <Grid container direction={'column'} alignItems={'center'} maxWidth={320}>
             <CommunitiesList title={'Joined Communities'} data={communities} />
           </Grid>
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={12} md={6}>
           <Tabs value={tab} onChange={handleSetTab} aria-label="Post Tabs" variant="fullWidth">
             {tabs.map((t) => (
               <Tab label={t.label} value={t.value} key={t.label} />
@@ -59,10 +60,10 @@ const UserDetailPage: NextPage<UserDetailProps> = ({ address, userData }) => {
           </Grid>
         </Grid>
         <Grid item xs>
-          <Grid container direction={'column'} alignItems={'center'} gap={3}>
-            <UserCard user={user} isDetail key={address} />
+          <Grid container direction={'column'} alignItems={'center'} gap={3} maxWidth={320}>
+            <UserCard user={user} isDetail key={`user-${address}`} />
             <CommunitiesList title={'NFT Issued'} data={[]} />
-            <CommunitiesList title={'Collections'} data={[]} />
+            <NftSection title={'Collections'} address={address} key={`nft-${address}`} showMore />
           </Grid>
         </Grid>
       </Grid>

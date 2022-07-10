@@ -62,24 +62,26 @@ export const Web3ContextProvider: FC<any> = ({ children }) => {
     }
   }
 
-  const connectWallet = async () => {
-    const web3Modal = new Web3Modal({
-      network: 'mainnet',
-      cacheProvider: true,
-      providerOptions: {
-        injected: {
-          package: null,
-        },
-        walletconnect: {
-          package: WalletConnectProvider,
-          options: {
-            rpc: {
-              1: ALCHEMY_RPC_ETH,
-            },
-          },
+  const providerOptions = {
+    injected: {
+      package: null,
+    },
+    walletconnect: {
+      package: WalletConnectProvider,
+      options: {
+        rpc: {
+          1: ALCHEMY_RPC_ETH,
         },
       },
+    },
+  }
+
+  const connectWallet = async () => {
+    const web3Modal = new Web3Modal({
       theme: theme.palette.mode,
+      network: 'mainnet',
+      cacheProvider: true,
+      providerOptions,
     })
 
     try {
