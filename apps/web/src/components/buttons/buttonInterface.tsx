@@ -1,21 +1,21 @@
-import { SxProps, Theme } from '@mui/material';
-import { MouseEventHandler, ReactNode } from 'react';
+import { SxProps, Theme } from '@mui/material'
+import { MouseEventHandler, ReactNode } from 'react'
 
 export interface IButtonProps {
-  textcontent: string;
-  startIcon?: ReactNode;
-  endIcon?: ReactNode;
-  onClick?: MouseEventHandler<HTMLButtonElement> | undefined;
-  sx?: SxProps<Theme> | undefined;
-  disabled?: boolean;
-  href?: string;
+  textcontent: string
+  startIcon?: ReactNode
+  endIcon?: ReactNode
+  onClick?: MouseEventHandler<HTMLButtonElement> | undefined
+  sx?: SxProps<Theme> | undefined
+  disabled?: boolean
+  href?: string
 }
 
 export interface IBaseButtonProps {
-  onClick?: MouseEventHandler<HTMLButtonElement> | undefined;
-  sx?: SxProps<Theme> | undefined;
-  disabled?: boolean;
-  href?: string;
+  onClick?: MouseEventHandler<HTMLButtonElement> | undefined
+  sx?: SxProps<Theme> | undefined
+  disabled?: boolean
+  href?: string
   textcolor:
     | 'inherit'
     | 'primary.main'
@@ -29,7 +29,7 @@ export interface IBaseButtonProps {
     | 'textDark300.main'
     | 'textLight100.main'
     | 'textLight200.main'
-    | 'textLight300.main';
+    | 'textLight300.main'
   backgroundcolor:
     | 'inherit'
     | 'primary'
@@ -47,10 +47,10 @@ export interface IBaseButtonProps {
     | 'backgroundDark200'
     | 'backgroundDark300'
     | 'backgroundDark400'
-    | 'backgroundDark500';
-  startIcon?: ReactNode;
-  endIcon?: ReactNode;
-  textcontent: string;
+    | 'backgroundDark500'
+  startIcon?: ReactNode
+  endIcon?: ReactNode
+  textcontent: string
   variant:
     | 'h1'
     | 'h2'
@@ -61,5 +61,5 @@ export interface IBaseButtonProps {
     | 'actionSmall'
     | 'actionMedium'
     | 'actionLarge'
-    | 'tagSmall';
+    | 'tagSmall'
 }

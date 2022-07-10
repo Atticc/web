@@ -1,21 +1,21 @@
-import { IArrowIconProps, IIconProps } from './iconInterface';
+import { IArrowIconProps, IIconProps } from './iconInterface'
 
 export const ArrowIcon = (props: IArrowIconProps) => {
   interface IDirectionAngle {
-    [key: string]: number;
+    [key: string]: number
   }
   const directionAngle: IDirectionAngle = {
     up: 0,
     right: 90,
     down: 180,
     left: 270,
-  };
-  let angle = 0;
+  }
+  let angle = 0
 
-  if (props.direction !== undefined) angle = directionAngle[props.direction];
+  if (props.direction !== undefined) angle = directionAngle[props.direction]
 
-  let filledColor = '#600B18';
-  if (props.color !== undefined) filledColor = props.color.main;
+  let filledColor = '#600B18'
+  if (props.color !== undefined) filledColor = props.color.main
   return (
     <svg
       transform={`rotate(${angle})`}
@@ -32,11 +32,11 @@ export const ArrowIcon = (props: IArrowIconProps) => {
         fill={filledColor}
       />
     </svg>
-  );
-};
+  )
+}
 export const CloseIcon = (props: IIconProps) => {
-  let filledColor = '#600B18';
-  if (props.color !== undefined) filledColor = props.color.main;
+  let filledColor = '#600B18'
+  if (props.color !== undefined) filledColor = props.color.main
   return (
     <svg
       width={props.width === undefined ? '12' : props.width}
@@ -54,11 +54,11 @@ export const CloseIcon = (props: IIconProps) => {
         fill={filledColor}
       />
     </svg>
-  );
-};
+  )
+}
 export const SearchIcon = (props: IIconProps) => {
-  let filledColor = '#63475E';
-  if (props.color !== undefined) filledColor = props.color.main;
+  let filledColor = '#63475E'
+  if (props.color !== undefined) filledColor = props.color.main
   return (
     <svg
       width={props.width === undefined ? '19' : props.width}
@@ -72,5 +72,5 @@ export const SearchIcon = (props: IIconProps) => {
         fill={filledColor}
       />
     </svg>
-  );
-};
+  )
+}

@@ -1,8 +1,8 @@
-import { Button, Typography, useTheme } from '@mui/material';
-import { IBaseButtonProps } from './buttonInterface';
+import { Button, Typography, useTheme } from '@mui/material'
+import { IBaseButtonProps } from './buttonInterface'
 
 const BaseButton = (props: IBaseButtonProps) => {
-  const colorTheme = useTheme().palette;
+  const colorTheme = useTheme().palette
   return (
     <Button
       {...props}
@@ -37,7 +37,7 @@ const BaseButton = (props: IBaseButtonProps) => {
         {props.textcontent}
       </Typography>
     </Button>
-  );
-};
+  )
+}
 
-export default BaseButton;
+export default BaseButton
