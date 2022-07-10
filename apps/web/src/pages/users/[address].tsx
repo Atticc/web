@@ -9,7 +9,11 @@ import { UserCard } from '@c/UserCard'
 import { getIdentity, useIdentity } from '@req/cyberconnect/queries/getIdentity'
 import { isValidAddr } from '@utils/helper'
 import Head from 'next/head'
-import { NftSection } from '@c/NFT/NftSection'
+import dynamic from 'next/dynamic'
+
+const NftSection = dynamic(() => import('@c/NFT/NftSection'), {
+  suspense: false,
+})
 
 interface UserDetailProps {
   address: string

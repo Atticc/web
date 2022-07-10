@@ -106,3 +106,5 @@ export const NftSection = ({
     </Grid>
   )
 }
+
+export default NftSection
