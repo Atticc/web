@@ -1,4 +1,4 @@
-import { Nft } from '@alch/alchemy-web3'
+import { Nft, NftFilters } from '@alch/alchemy-web3'
 import { Divider, Grid, Stack, Typography, useTheme } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { useQuery } from 'react-query'
@@ -10,6 +10,7 @@ import { useAlchemy } from '../utils/useAlchemy'
 import { PrimaryDarkButton } from './buttons/Buttons'
 import NftCollectionModal from './modal/NftCollectionModal'
 import { NftItem } from './NftItem'
+import { OatItem } from './OatItem'
 import { PoapItem } from './PoapItem'
 
 export const NftSection = ({
@@ -22,7 +23,7 @@ export const NftSection = ({
   showMore?: boolean
 }) => {
   const { alchemy } = useAlchemy()
-  const [nfts, setNfts] = useState<Array<Nft>>([])
+  const [nfts, setNfts] = useState<{ items: Array<Nft>; totalCount?: number }>({ items: [], totalCount: 0 })
   const [openNFTs, setOpenNFTs] = useState<boolean>(false)
   const { data: { data: oats = {} } = {}, refetch: fetchOATs } = useOATs({ address })
   const { data: { data: poaps = [] } = {} } = useQuery(['poap', address], () => POAP.getNFTs({ address }))
@@ -31,8 +32,9 @@ export const NftSection = ({
   useEffect(() => {
     async function fetchNFTs() {
       try {
-        const { ownedNfts } = await alchemy.getNfts({ owner: address })
-        setNfts(ownedNfts)
+        const { ownedNfts, totalCount } = await alchemy.getNfts({ owner: address, filters: [NftFilters.SPAM] })
+        console.log(ownedNfts)
+        setNfts({ items: ownedNfts, totalCount: totalCount })
       } catch (_) {}
       try {
         await fetchOATs()
@@ -41,12 +43,12 @@ export const NftSection = ({
     if (isValidAddr(address)) {
       fetchNFTs()
     } else {
-      setNfts([])
+      setNfts({ items: [], totalCount: 0 })
     }
   }, [address])
 
-  return !nfts.length && !poaps.length && !oats?.list?.length ? null : (
-    <Grid container direction={'column'} border={1} sx={{ borderRadius: 2, paddingX: 1, paddingY: 1 }} spacing={1}>
+  return !nfts?.items?.length && !poaps.length && !oats?.list?.length ? null : (
+    <Grid container direction={'column'} border={1} sx={{ borderRadius: 4, padding: 2 }}>
       <Grid item>
         <Typography marginBottom={1} variant="h5">
           {title}
@@ -54,20 +56,20 @@ export const NftSection = ({
         {title ? <Divider /> : null}
       </Grid>
       <Grid item>
-        {nfts.length > 0 ? (
-          <Stack direction={'column'}>
+        {nfts?.items?.length > 0 ? (
+          <Stack direction={'column'} marginTop={3}>
             <Typography marginY={1} variant="h6">
-              NFTs({nfts.length})
+              NFTs({nfts.totalCount})
             </Typography>
             <Stack flexDirection={'row'} gap={3}>
-              {nfts.slice(0, 3).map((n) => (
+              {nfts?.items?.slice(-3).map((n) => (
                 <NftItem nft={n} key={n.id.tokenId} />
               ))}
             </Stack>{' '}
           </Stack>
         ) : null}
         {poaps?.length > 0 ? (
-          <Stack direction={'column'}>
+          <Stack direction={'column'} marginTop={3}>
             <Typography marginY={1} variant="h6">
               POAPs({poaps.length})
             </Typography>
@@ -79,29 +81,27 @@ export const NftSection = ({
           </Stack>
         ) : null}
         {oats?.list?.length > 0 ? (
-          <Stack direction={'column'}>
+          <Stack direction={'column'} marginTop={3}>
             <Typography marginY={1} variant="h6">
               OATs({oats.totalCount})
             </Typography>
             <Stack flexDirection={'row'} gap={3}>
-              {oats?.list?.slice(0, 3).map((n: IOatNft) => (
-                <Stack direction={'column'} key={n.id}>
-                  <Typography>{n.name}</Typography>
-                </Stack>
+              {oats?.list?.slice(0, 3).map((o: IOatNft) => (
+                <OatItem oat={o} key={o.id} />
               ))}
-            </Stack>{' '}
+            </Stack>
           </Stack>
         ) : null}
       </Grid>
-      {showMore && (nfts.length > 3 || poaps.length > 3 || oats?.list?.length > 3) ? (
-        <Grid item>
+      {showMore && (nfts?.items?.length > 3 || poaps.length > 3 || oats?.list?.length > 3) ? (
+        <Grid item marginTop={3}>
           <PrimaryDarkButton textcontent={'View More'} onClick={() => setOpenNFTs(true)} />
         </Grid>
       ) : null}
       <NftCollectionModal
         nfts={nfts}
-        poaps={poaps}
-        oats={oats?.list || []}
+        poaps={{ items: poaps || [], totalCount: poaps.length }}
+        oats={{ items: oats.list || [], totalCount: oats.totalCount }}
         open={openNFTs}
         onClose={() => setOpenNFTs(false)}
       />

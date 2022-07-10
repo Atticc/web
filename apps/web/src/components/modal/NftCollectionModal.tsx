@@ -5,8 +5,9 @@ import { CloseIcon } from '../icons/ArrowIcon'
 import { ContributorsList } from '../ContributorsList'
 import { Nft } from '@alch/alchemy-web3'
 import { IOatNft, IPoapNft } from '../../app/types'
+import { NftList } from '../NftList'
 
-enum NftType {
+export enum NftType {
   nfts = 'nfts',
   poaps = 'poaps',
   oats = 'oats',
@@ -23,9 +24,9 @@ const NftCollectionModal = ({
   onClose,
   ...props
 }: {
-  nfts: Array<Nft>
-  poaps: Array<IPoapNft>
-  oats: Array<IOatNft>
+  nfts: { items: Array<Nft>; totalCount?: number }
+  poaps: { items: Array<IPoapNft>; totalCount?: number }
+  oats: { items: Array<IOatNft>; totalCount?: number }
   open: boolean
   onClose: (event: {}, reason: 'backdropClick' | 'escapeKeyDown') => void
 }) => {
@@ -83,7 +84,11 @@ const NftCollectionModal = ({
           <Stack flexDirection="row" justifyContent={'center'} alignItems={'center'}>
             <Tabs value={tab} onChange={handleSetTab} aria-label="Post Tabs" variant="fullWidth">
               {tabs.map((t) => (
-                <Tab label={`${t.label}(${props[t.value]?.length})`} value={t.value} key={t.label} />
+                <Tab
+                  label={`${t.label}${props[t.value]?.totalCount ? `(${props[t.value]?.totalCount})` : ''}`}
+                  value={t.value}
+                  key={t.label}
+                />
               ))}
             </Tabs>
           </Stack>
@@ -97,7 +102,7 @@ const NftCollectionModal = ({
               margin: '10px 0 8px 0',
             }}
           >
-            {/* <ContributorsList data={connections[tab]} hasBorder={false} /> */}
+            <NftList data={props[tab].items} tab={tab} />
           </Stack>
         </Stack>
       </Box>
