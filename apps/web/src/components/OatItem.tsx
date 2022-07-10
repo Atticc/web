@@ -29,6 +29,7 @@ export const OatItem = ({ oat, size = 80 }: { oat: IOatNft | undefined; size?: n
         arrow
       >
         <Avatar
+          variant={'rounded'}
           alt={oat.name}
           src={oat.image}
           onLoad={handleLoad}

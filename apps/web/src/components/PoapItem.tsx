@@ -29,6 +29,7 @@ export const PoapItem = ({ poap, size = 80 }: { poap: IPoapNft | undefined; size
         arrow
       >
         <Avatar
+          variant={'rounded'}
           alt={poap.event.name}
           src={poap.event.image_url}
           onLoad={handleLoad}
