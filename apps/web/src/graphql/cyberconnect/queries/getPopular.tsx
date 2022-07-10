@@ -3,13 +3,19 @@ import { useQuery } from 'react-query';
 import { CYBERCONNECT_ENDPOINT } from "../../../app/config";
 import { IUser } from "../../../app/constants";
 
-export const getPopular = async () => {
+interface GetPopularRequest {
+  first: number; 
+  onSuccess: (data: [IUser]) => void;
+  enabled?: boolean,
+}
+
+export const getPopular = async ({ first }: {first: number}) => {
   try {
     const { popular } = await request(
       CYBERCONNECT_ENDPOINT,
       gql`
-      query () {
-        popular(first:5, tags: { list: [FEATURED, NFTMARKET,PLAZA] } ) {
+      query ($first: Int!) {
+        popular(first: $first, tags: { list: [FEATURED, NFTMARKET,PLAZA] } ) {
           list {
             address
             domain
@@ -20,7 +26,9 @@ export const getPopular = async () => {
           }
         }
       }
-      `
+      `, {
+        first
+      }
     );
     return popular.list;
   } catch (err) {
@@ -28,6 +36,6 @@ export const getPopular = async () => {
   }
 }
 
-export function usePopular({ onSuccess }: { onSuccess: (data: [IUser]) => void }) {
-  return useQuery(["popular"], getPopular, { enabled: false, onSuccess });
+export function usePopular({ first, ...props }: GetPopularRequest) {
+  return useQuery(["popular"], () => getPopular({ first }), { enabled: false, ...props });
 }

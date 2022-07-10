@@ -3,7 +3,7 @@ import Link from "next/link";
 import { IUser } from '../app/constants'
 import { formatAddress } from "../utils/helper";
 
-export const ContributorListItem = ({ user }: { user: IUser | undefined }) => {
+export const ContributorListItem = ({ user, showReason = false }: { user: IUser | undefined, showReason?: boolean }) => {
   const colorTheme = useTheme().palette;
 
   if (!user) {
@@ -11,9 +11,11 @@ export const ContributorListItem = ({ user }: { user: IUser | undefined }) => {
   }
 
   return <Link href={`/users/${user.address}`}>
-    <Grid item sx={{ borderRadius: 3, margin: 1, cursor: 'pointer', ':hover': {
-      filter: 'opacity(0.8)'
-    } }}>
+    <Grid item sx={{
+      borderRadius: 3, margin: 1, cursor: 'pointer', ':hover': {
+        filter: 'opacity(0.8)'
+      }
+    }}>
       <Stack direction={'row'} alignItems={'center'}>
         <Avatar variant='circular' src={user?.avatar || ''} />
         <Stack direction={'column'} paddingLeft={1}>
@@ -25,6 +27,9 @@ export const ContributorListItem = ({ user }: { user: IUser | undefined }) => {
           </Typography>
         </Stack>
       </Stack>
+      <Typography variant='body2'>
+        {user?.recommendationReason}
+      </Typography>
     </Grid>
   </Link>
 }

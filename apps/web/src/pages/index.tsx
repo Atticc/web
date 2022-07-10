@@ -23,7 +23,7 @@ const Home: NextPage = () => {
   const { address } = useWeb3()
   const handleSuccess = (data: [IUser]) => { setUsers(data) }
   const { refetch: fetchRecommendations } = useRecommendation({ address, onSuccess: handleSuccess })
-  const { refetch: fetchPopular } = usePopular({ onSuccess: handleSuccess })
+  const { refetch: fetchPopular } = usePopular({ first: 5, onSuccess: handleSuccess })
   const colorTheme = useTheme().palette;
   const [tab, setTab] = useState(0)
   const [users, setUsers] = useState<[IUser] | []>([])
@@ -54,7 +54,7 @@ const Home: NextPage = () => {
         <Grid item xs>
           <Grid container direction={'column'}>
             <CommunitiesList title={'Top Communities'} data={communities} />
-            <ContributorsList title={'Top Contributors'} data={users} />
+            <ContributorsList title={'Popular / Recommends'} data={users} showReason />
           </Grid>
         </Grid>
       </Grid>

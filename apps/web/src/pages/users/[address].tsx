@@ -4,14 +4,12 @@ import LayoutWithoutFooter from '../../layouts/LayoutWithoutFooter';
 import { useEffect, useState } from 'react';
 import { Grid, Tab, Tabs, Typography, useTheme } from '@mui/material';
 import { CommunitiesList } from '../../components/CommunitiesList';
-import { communities, IUser, posts, users } from '../../app/constants';
-import Link from 'next/link';
+import { communities, IUser, posts } from '../../app/constants';
 import { PostListItem } from '../../components/PostListItem';
 import { UserCard } from '../../components/UserCard';
 import { getIdentity, useIdentity } from '../../graphql/cyberconnect/queries/getIdentity';
 import { isValidAddr } from '../../utils/helper';
 import Head from 'next/head';
-
 
 interface UserDetailProps {
   address: string;
@@ -24,9 +22,8 @@ const tabs = [
 ]
 
 const UserDetailPage: NextPage<UserDetailProps> = ({ address, userData }) => {
-  const colorTheme = useTheme().palette;
-  // const [user, setUser] = useState(userData)
   const [tab, setTab] = useState(1)
+  const colorTheme = useTheme().palette
   const { data: user, refetch } = useIdentity({address, data: userData})
   const title = `${ user?.domain }(${ address }) - CryptoCorner Profile`
 
@@ -34,7 +31,7 @@ const UserDetailPage: NextPage<UserDetailProps> = ({ address, userData }) => {
     refetch()
   }, [address])
 
-
+  
   const handleSetTab = (_: React.ChangeEvent<{}>, value: number) => {
     setTab(value)
   }
