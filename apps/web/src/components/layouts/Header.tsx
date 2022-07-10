@@ -6,6 +6,7 @@ import { useRouter } from 'next/router'
 
 import { useScrollPosition } from '../../utils/useScrollPosition'
 import { WalletComponent } from '../WalletComponent'
+import { APP_NAME } from '../../app/config'
 
 const NavContainer = styled(Container)(() => ({
   padding: '8px',
@@ -52,7 +53,7 @@ function Header() {
                   },
                 }}
               >
-                Crypto Corner
+                {APP_NAME}
               </Typography>
             </Link>
             {menu.map((m) => (

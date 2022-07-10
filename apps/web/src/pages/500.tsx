@@ -1,5 +1,6 @@
 import type { NextPage } from 'next'
 import Link from 'next/link'
+import { APP_NAME } from '../app/config'
 import LayoutWithoutFooter from '../components/layouts/LayoutWithoutFooter'
 
 const Custom500: NextPage = () => {
@@ -11,7 +12,7 @@ const Custom500: NextPage = () => {
           <h1 className="text-6xl font-bold">
             Back to{' '}
             <Link href="/" passHref>
-              <a>Crypto Corner!</a>
+              <a>{APP_NAME}</a>
             </Link>
           </h1>
         </main>
