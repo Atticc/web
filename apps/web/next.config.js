@@ -2,6 +2,7 @@
 const { i18n } = require('./next-i18next.config');
 const withTM = require('next-transpile-modules')(['ui']);
 module.exports = withTM({
+  swcMinify: true,
   reactStrictMode: true,
   eslint: {
     dirs: ['pages', 'components', 'graphql', 'utils', 'app'],

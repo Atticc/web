@@ -9,9 +9,9 @@ import { isValidAddr } from '@utils/helper'
 import { useAlchemy } from '@utils/useAlchemy'
 import { PrimaryDarkButton } from '@c/buttons/Buttons'
 import NftCollectionModal from '@c/modal/NftCollectionModal'
-import { NftItem } from '@c/NftItem'
-import { OatItem } from '@c/OatItem'
-import { PoapItem } from '@c/PoapItem'
+import { NftItem } from '@/components/NFT/NftItem'
+import { OatItem } from '@/components/NFT/OatItem'
+import { PoapItem } from '@/components/NFT/PoapItem'
 
 export const NftSection = ({
   title,

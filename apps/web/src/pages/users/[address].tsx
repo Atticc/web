@@ -9,7 +9,7 @@ import { UserCard } from '@c/UserCard'
 import { getIdentity, useIdentity } from '@req/cyberconnect/queries/getIdentity'
 import { isValidAddr } from '@utils/helper'
 import Head from 'next/head'
-import { NftSection } from '@c/NftSection'
+import { NftSection } from '@c/NFT/NftSection'
 
 interface UserDetailProps {
   address: string

@@ -1,11 +1,10 @@
-import { Box, Divider, Modal, Stack, SxProps, Tab, Tabs, TextField, Theme, Typography, useTheme } from '@mui/material'
+import { Box, Modal, Stack, Tab, Tabs, useTheme } from '@mui/material'
 import { useTranslation } from 'next-i18next'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { CloseIcon } from '../icons/ArrowIcon'
-import { ContributorsList } from '../ContributorsList'
 import { Nft } from '@alch/alchemy-web3'
-import { IOatNft, IPoapNft } from '../../app/types'
-import { NftList } from '../NftList'
+import { IOatNft, IPoapNft } from '@app/types'
+import { NftList } from '@c/NFT/NftList'
 
 export enum NftType {
   nfts = 'nfts',

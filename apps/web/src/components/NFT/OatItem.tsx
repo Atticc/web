@@ -1,11 +1,11 @@
 import { Avatar, CircularProgress, Stack, Tooltip, Typography } from '@mui/material'
 import { useState } from 'react'
-import { IPoapNft } from '../app/types'
+import { IOatNft } from '../../app/types'
 
-export const PoapItem = ({ poap, size = 80 }: { poap: IPoapNft | undefined; size?: number }) => {
+export const OatItem = ({ oat, size = 80 }: { oat: IOatNft | undefined; size?: number }) => {
   const [show, setShow] = useState(true)
   const [loading, setLoading] = useState(true)
-  if (!poap) {
+  if (!oat) {
     return null
   }
 
@@ -22,16 +22,16 @@ export const PoapItem = ({ poap, size = 80 }: { poap: IPoapNft | undefined; size
       <Tooltip
         title={
           <Stack direction={'column'}>
-            <Typography>{poap.event?.name}</Typography>
-            <Typography>{poap.event?.description}</Typography>
+            <Typography>{oat?.name}</Typography>
+            <Typography>{oat?.description}</Typography>
           </Stack>
         }
         arrow
       >
         <Avatar
           variant={'rounded'}
-          alt={poap.event.name}
-          src={poap.event.image_url}
+          alt={oat.name}
+          src={oat.image}
           onLoad={handleLoad}
           sx={{ width: size, height: size }}
           onError={handleError}
