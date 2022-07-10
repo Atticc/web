@@ -1,31 +1,28 @@
-import {
-  Box,
-  Divider,
-  Modal,
-  Stack,
-  SxProps,
-  Tab,
-  Tabs,
-  TextField,
-  Theme,
-  Typography,
-  useTheme,
-} from '@mui/material';
-import { useTranslation } from 'next-i18next';
-import { useEffect, useState } from 'react';
-import {  CloseIcon } from '../icons/ArrowIcon';
-import { useConnections } from '../../graphql/cyberconnect/queries/getConnections';
-import { ContributorsList } from '../ContributorsList';
-import { IUser } from '../../app/constants';
+import { Box, Divider, Modal, Stack, SxProps, Tab, Tabs, TextField, Theme, Typography, useTheme } from '@mui/material'
+import { useTranslation } from 'next-i18next'
+import { useEffect, useState } from 'react'
+import { CloseIcon } from '../icons/ArrowIcon'
+import { useConnections } from '../../graphql/cyberconnect/queries/getConnections'
+import { ContributorsList } from '../ContributorsList'
+import { IUser } from '../../app/constants'
 
 const defaultConnections: {
-  followers: Array<IUser>;
-  followings: Array<IUser>;
-  friends: Array<IUser>;
+  followers: Array<IUser>
+  followings: Array<IUser>
+  friends: Array<IUser>
 } = {
   followers: [],
   followings: [],
   friends: [],
+}
+const defaultCounts: {
+  followers: number
+  followings: number
+  friends: number
+} = {
+  followers: 0,
+  followings: 0,
+  friends: 0,
 }
 
 enum FollowType {
@@ -36,21 +33,28 @@ enum FollowType {
 
 const tabs = [
   {
-    label: 'Friends', value: FollowType.friends },
+    label: 'Friends',
+    value: FollowType.friends,
+  },
   { label: 'Followers', value: FollowType.followers },
   { label: 'Followings', value: FollowType.followings },
 ]
 
-const UserConnectionModal = ({open, address, onClose}: {
-  address: string;
-  open: boolean;
-  onClose: (event: {}, reason: 'backdropClick' | 'escapeKeyDown') => void;
+const UserConnectionModal = ({
+  open,
+  address,
+  onClose,
+}: {
+  address: string
+  open: boolean
+  onClose: (event: {}, reason: 'backdropClick' | 'escapeKeyDown') => void
 }) => {
   const [tab, setTab] = useState<FollowType>(FollowType.friends)
   const [connections, setConnections] = useState(defaultConnections)
+  const [counts, setCounts] = useState(defaultCounts)
 
-  const { t } = useTranslation();
-  const colorTheme = useTheme().palette;
+  const { t } = useTranslation()
+  const colorTheme = useTheme().palette
   const { data, refetch } = useConnections({ address, first: 50 })
 
   useEffect(() => {
@@ -60,14 +64,23 @@ const UserConnectionModal = ({open, address, onClose}: {
         followings: data?.followings?.list,
         friends: data?.friends?.list,
       })
+      setCounts({
+        followers: data?.followerCount,
+        followings: data?.followingCount,
+        friends: data?.friends?.list?.length,
+      })
       setTab(
-        data?.friends?.list ? FollowType.friends
-          : data?.followers?.list ? FollowType.followers
-            : data?.followings?.list ? FollowType.followings
-              : FollowType.friends 
+        data?.friends?.list?.length
+          ? FollowType.friends
+          : data?.followerCount
+          ? FollowType.followers
+          : data?.followingCount
+          ? FollowType.followings
+          : FollowType.friends
       )
     } else {
       setConnections(defaultConnections)
+      setCounts(defaultCounts)
     }
   }, [data])
 
@@ -83,7 +96,7 @@ const UserConnectionModal = ({open, address, onClose}: {
     <Modal
       open={open}
       onClose={(e) => {
-        onClose(e, 'backdropClick');
+        onClose(e, 'backdropClick')
       }}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
@@ -98,16 +111,17 @@ const UserConnectionModal = ({open, address, onClose}: {
           left: '50%',
           transform: 'translate(-50%, -50%)',
           width: '600px',
-          bgcolor: colorTheme.backgroundDark200.main,
           borderRadius: '12px',
           boxShadow: 24,
           padding: '26.5px',
+          border: 0.1,
+          bgcolor: colorTheme.background.default,
         }}
       >
         <Box
           component={'div'}
           onClick={(e: {}) => {
-            onClose(e, 'backdropClick');
+            onClose(e, 'backdropClick')
           }}
           sx={{
             cursor: 'pointer',
@@ -118,33 +132,31 @@ const UserConnectionModal = ({open, address, onClose}: {
             right: '26.5px',
           }}
         >
-          <CloseIcon color={colorTheme.textLight100}></CloseIcon>
+          <CloseIcon color={colorTheme.dark}></CloseIcon>
         </Box>
         <Stack>
-          <Stack
-            flexDirection="row"
-            justifyContent={'center'}
-            alignItems={'center'}
-          >
-            <Tabs value={tab} onChange={handleSetTab} aria-label="Post Tabs">
-              {tabs.map(t => <Tab label={t.label} value={t.value} key={t.label} />)}
+          <Stack flexDirection="row" justifyContent={'center'} alignItems={'center'}>
+            <Tabs value={tab} onChange={handleSetTab} aria-label="Post Tabs" variant="fullWidth">
+              {tabs.map((t) => (
+                <Tab label={`${t.label}(${counts[t.value]})`} value={t.value} key={t.label} />
+              ))}
             </Tabs>
           </Stack>
           <Stack
             sx={{
+              minHeight: '70vh',
               maxHeight: '70vh',
               overflowY: 'auto',
-              backgroundColor: colorTheme.backgroundDark100.main,
               borderRadius: '12px',
               padding: '10px 16px',
               margin: '10px 0 8px 0',
             }}
           >
-            <ContributorsList title="" data={connections[tab]} />
+            <ContributorsList data={connections[tab]} hasBorder={false} />
           </Stack>
         </Stack>
       </Box>
     </Modal>
-  );
-};
-export default UserConnectionModal;
+  )
+}
+export default UserConnectionModal

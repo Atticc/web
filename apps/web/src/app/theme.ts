@@ -1,5 +1,5 @@
-import { alpha, PaletteMode } from '@mui/material';
-import { red } from '@mui/material/colors';
+import { alpha, PaletteMode } from '@mui/material'
+import { red } from '@mui/material/colors'
 
 export const getDesignTokens = (mode: PaletteMode) => ({
   breakpoints: {
@@ -24,41 +24,23 @@ export const getDesignTokens = (mode: PaletteMode) => ({
     primary: { main: '#B6394E' },
     secondary: { main: '#0AB2A9' },
     modalbgcolor: { main: '#1c0715cc' },
-    paper300: {
-      main: '#F6EFEA',
-    },
-    topEarnersBackground: {
-      main: '#3B1F32',
-    },
-    paper100: {
-      main: '#FDFAF8',
-    },
-    advertiseText: {
-      main: '#AF9A8C',
-    },
     radioColor: {
       main: '#79263A',
     },
     radioCheckedColor: {
       main: '#AA4656',
     },
-    placeholderColor: {
-      main: '#7A5975',
-    },
     error: {
       main: red.A400,
     },
-    detailIconColor: {
-      main: '#553D51',
-    },
     ...(mode === 'light'
       ? {
+          dark: { main: '#000000' },
           backgroundDark100: { main: '#320D1E' },
           backgroundDark200: { main: '#3B1325' },
           backgroundDark300: { main: '#3D1426', dark: '#4e2537' },
           backgroundDark400: { main: '#5E2A49', dark: '#6f3b50' },
           backgroundDark500: { main: '#7C4466' },
-
           backgroundLight100: { main: '#FDFAF8' },
           backgroundLight200: { main: '#FAF5F2' },
           backgroundLight300: { main: '#F6EFEA', dark: '#e5DED9' },
@@ -70,14 +52,9 @@ export const getDesignTokens = (mode: PaletteMode) => ({
           textLight100: { main: '#FDFAF8' },
           textLight200: { main: '#FAF5F2' },
           textLight300: { main: '#F6EFEA' },
-          inputBorderDefault: { main: alpha('#63475e', 0.16) },
-          inputBorderActive: { main: alpha('#63475e', 0.56) },
-          accordionBorder: { main: '#501c31' },
-          wine200: {
-            main: '#600b18',
-          },
         }
       : {
+          dark: { main: '#ffffff' },
           backgroundDark100: { main: '#320D1E' },
           backgroundDark200: { main: '#3B1325' },
           backgroundDark300: { main: '#3D1426', dark: '#4e2537' },
@@ -94,12 +71,6 @@ export const getDesignTokens = (mode: PaletteMode) => ({
           textLight100: { main: '#FDFAF8' },
           textLight200: { main: '#FAF5F2' },
           textLight300: { main: '#F6EFEA' },
-          inputBorderDefault: { main: alpha('#7c4466', 0.56) },
-          inputBorderActive: { main: '#7C4466' },
-          accordionBorder: { main: '#501c31' },
-          wine200: {
-            main: '#600b18',
-          },
         }),
   },
   components: {
@@ -196,212 +167,144 @@ export const getDesignTokens = (mode: PaletteMode) => ({
       lineHeight: '16.41px',
     },
   },
-});
+})
 
 declare module '@mui/material/styles' {
   interface Palette {
-    backgroundDark100: Palette['primary'];
-    backgroundDark200: Palette['primary'];
-    backgroundDark300: Palette['primary'];
-    backgroundDark400: Palette['primary'];
-    backgroundDark500: Palette['primary'];
-    backgroundLight100: Palette['primary'];
-    backgroundLight200: Palette['primary'];
-    backgroundLight300: Palette['primary'];
-    backgroundLight400: Palette['primary'];
-    backgroundLight500: Palette['primary'];
-    textLight100: Palette['primary'];
-    textLight200: Palette['primary'];
-    textLight300: Palette['primary'];
-    textDark100: Palette['primary'];
-    textDark200: Palette['primary'];
-    textDark300: Palette['primary'];
-    modalbgcolor: Palette['primary'];
-    legendary: Palette['primary'];
-    prestige: Palette['primary'];
-    noble: Palette['primary'];
-    superior: Palette['primary'];
-    fine: Palette['primary'];
-    inputBorderDefault: Palette['primary'];
-    inputBorderActive: Palette['primary'];
-    paper300: Palette['primary'];
-    paper100: Palette['primary'];
-    accordionBorder: Palette['primary'];
-    wine200: Palette['primary'];
-    dashboardBackground: Palette['primary'];
-    dashboardCardBackground: Palette['primary'];
-    topEarnersBackground: Palette['primary'];
-    advertiseText: Palette['primary'];
-    radioColor: Palette['primary'];
-    radioCheckedColor: Palette['primary'];
-    placeholderColor: Palette['primary'];
-    wineCellarBackground: Palette['primary'];
-    detailIconColor: Palette['primary'];
+    dark: Palette['primary']
+    backgroundDark100: Palette['primary']
+    backgroundDark200: Palette['primary']
+    backgroundDark300: Palette['primary']
+    backgroundDark400: Palette['primary']
+    backgroundDark500: Palette['primary']
+    backgroundLight100: Palette['primary']
+    backgroundLight200: Palette['primary']
+    backgroundLight300: Palette['primary']
+    backgroundLight400: Palette['primary']
+    backgroundLight500: Palette['primary']
+    textLight100: Palette['primary']
+    textLight200: Palette['primary']
+    textLight300: Palette['primary']
+    textDark100: Palette['primary']
+    textDark200: Palette['primary']
+    textDark300: Palette['primary']
+    modalbgcolor: Palette['primary']
+    radioColor: Palette['primary']
+    radioCheckedColor: Palette['primary']
   }
   interface PaletteOptions {
-    backgroundDark100: PaletteOptions['primary'];
-    backgroundDark200: PaletteOptions['primary'];
-    backgroundDark300: PaletteOptions['primary'];
-    backgroundDark400: PaletteOptions['primary'];
-    backgroundDark500: PaletteOptions['primary'];
-    backgroundLight100: PaletteOptions['primary'];
-    backgroundLight200: PaletteOptions['primary'];
-    backgroundLight300: PaletteOptions['primary'];
-    backgroundLight400: PaletteOptions['primary'];
-    backgroundLight500: PaletteOptions['primary'];
-    textLight100: PaletteOptions['primary'];
-    textLight200: PaletteOptions['primary'];
-    textLight300: PaletteOptions['primary'];
-    textDark100: PaletteOptions['primary'];
-    textDark200: PaletteOptions['primary'];
-    textDark300: PaletteOptions['primary'];
-    legendary: PaletteOptions['primary'];
-    prestige: PaletteOptions['primary'];
-    noble: PaletteOptions['primary'];
-    superior: PaletteOptions['primary'];
-    fine: PaletteOptions['primary'];
-    inputBorderDefault: PaletteOptions['primary'];
-    inputBorderActive: PaletteOptions['primary'];
-    paper300: PaletteOptions['primary'];
-    paper100: PaletteOptions['primary'];
-    accordionBorder: PaletteOptions['primary'];
-    wine200: PaletteOptions['primary'];
-    dashboardBackground: PaletteOptions['primary'];
-    dashboardCardBackground: PaletteOptions['primary'];
-    topEarnersBackground: PaletteOptions['primary'];
-    advertiseText: PaletteOptions['primary'];
-    modalbgcolor: PaletteOptions['primary'];
-    radioColor: PaletteOptions['primary'];
-    radioCheckedColor: PaletteOptions['primary'];
-    placeholderColor: PaletteOptions['primary'];
-    wineCellarBackground: PaletteOptions['primary'];
-    detailIconColor: PaletteOptions['primary'];
+    dark: PaletteOptions['primary']
+    backgroundDark100: PaletteOptions['primary']
+    backgroundDark200: PaletteOptions['primary']
+    backgroundDark300: PaletteOptions['primary']
+    backgroundDark400: PaletteOptions['primary']
+    backgroundDark500: PaletteOptions['primary']
+    backgroundLight100: PaletteOptions['primary']
+    backgroundLight200: PaletteOptions['primary']
+    backgroundLight300: PaletteOptions['primary']
+    backgroundLight400: PaletteOptions['primary']
+    backgroundLight500: PaletteOptions['primary']
+    textLight100: PaletteOptions['primary']
+    textLight200: PaletteOptions['primary']
+    textLight300: PaletteOptions['primary']
+    textDark100: PaletteOptions['primary']
+    textDark200: PaletteOptions['primary']
+    textDark300: PaletteOptions['primary']
+    modalbgcolor: PaletteOptions['primary']
+    radioColor: PaletteOptions['primary']
+    radioCheckedColor: PaletteOptions['primary']
   }
   interface TypographyVariants {
-    bodySmall: React.CSSProperties;
-    bodyMedium: React.CSSProperties;
-    bodyLarge: React.CSSProperties;
-    actionSmall: React.CSSProperties;
-    actionMedium: React.CSSProperties;
-    actionLarge: React.CSSProperties;
-    tagSmall: React.CSSProperties;
+    bodySmall: React.CSSProperties
+    bodyMedium: React.CSSProperties
+    bodyLarge: React.CSSProperties
+    actionSmall: React.CSSProperties
+    actionMedium: React.CSSProperties
+    actionLarge: React.CSSProperties
+    tagSmall: React.CSSProperties
   }
 
   interface TypographyVariantsOptions {
-    bodySmall?: React.CSSProperties;
-    bodyMedium?: React.CSSProperties;
-    bodyLarge?: React.CSSProperties;
-    actionSmall?: React.CSSProperties;
-    actionMedium?: React.CSSProperties;
-    actionLarge?: React.CSSProperties;
-    tagSmall?: React.CSSProperties;
+    bodySmall?: React.CSSProperties
+    bodyMedium?: React.CSSProperties
+    bodyLarge?: React.CSSProperties
+    actionSmall?: React.CSSProperties
+    actionMedium?: React.CSSProperties
+    actionLarge?: React.CSSProperties
+    tagSmall?: React.CSSProperties
   }
 }
 
 declare module '@mui/material/Typography' {
   interface TypographyPropsVariantOverrides {
-    bodySmall: true;
-    bodyMedium: true;
-    bodyLarge: true;
-    actionSmall: true;
-    actionMedium: true;
-    actionLarge: true;
-    tagSmall: true;
+    bodySmall: true
+    bodyMedium: true
+    bodyLarge: true
+    actionSmall: true
+    actionMedium: true
+    actionLarge: true
+    tagSmall: true
   }
 }
 
 declare module '@mui/material/Button' {
   interface ButtonPropsColorOverrides {
-    backgroundDark100: true;
-    backgroundDark200: true;
-    backgroundDark300: true;
-    backgroundDark400: true;
-    backgroundDark500: true;
-    backgroundLight100: true;
-    backgroundLight200: true;
-    backgroundLight300: true;
-    backgroundLight400: true;
-    backgroundLight500: true;
-    textLight100: true;
-    textLight200: true;
-    textLight300: true;
-    textDark100: true;
-    textDark200: true;
-    textDark300: true;
-    legendary: true;
-    prestige: true;
-    noble: true;
-    superior: true;
-    fine: true;
-    inputBorderDefault: true;
-    inputBorderActive: true;
-    paper300: true;
-    paper100: true;
-    accordionBorder: true;
-    wine200: true;
-    dashboardBackground: true;
-    dashboardCardBackground: true;
-    topEarnersBackground: true;
-    advertiseText: true;
-    modalbgcolor: true;
-    radioColor: true;
-    radioCheckedColor: true;
-    placeholderColor: true;
-    wineCellarBackground: true;
-    detailIconColor: true;
+    dark: true
+    backgroundDark100: true
+    backgroundDark200: true
+    backgroundDark300: true
+    backgroundDark400: true
+    backgroundDark500: true
+    backgroundLight100: true
+    backgroundLight200: true
+    backgroundLight300: true
+    backgroundLight400: true
+    backgroundLight500: true
+    textLight100: true
+    textLight200: true
+    textLight300: true
+    textDark100: true
+    textDark200: true
+    textDark300: true
+    modalbgcolor: true
+    radioColor: true
+    radioCheckedColor: true
   }
 }
 declare module '@mui/material/TextField' {
   interface TextFieldPropsColorOverrides {
-    backgroundDark100: true;
-    backgroundDark200: true;
-    backgroundDark300: true;
-    backgroundDark400: true;
-    backgroundDark500: true;
-    backgroundLight100: true;
-    backgroundLight200: true;
-    backgroundLight300: true;
-    backgroundLight400: true;
-    backgroundLight500: true;
-    textLight100: true;
-    textLight200: true;
-    textLight300: true;
-    textDark100: true;
-    textDark200: true;
-    textDark300: true;
-    legendary: true;
-    prestige: true;
-    noble: true;
-    superior: true;
-    fine: true;
-    inputBorderDefault: true;
-    inputBorderActive: true;
-    paper300: true;
-    paper100: true;
-    accordionBorder: true;
-    wine200: true;
-    dashboardBackground: true;
-    dashboardCardBackground: true;
-    topEarnersBackground: true;
-    advertiseText: true;
-    radioColor: true;
-    radioCheckedColor: true;
-    placeholderColor: true;
-    wineCellarBackground: true;
-    detailIconColor: true;
+    dark: true
+    backgroundDark100: true
+    backgroundDark200: true
+    backgroundDark300: true
+    backgroundDark400: true
+    backgroundDark500: true
+    backgroundLight100: true
+    backgroundLight200: true
+    backgroundLight300: true
+    backgroundLight400: true
+    backgroundLight500: true
+    textLight100: true
+    textLight200: true
+    textLight300: true
+    textDark100: true
+    textDark200: true
+    textDark300: true
+    radioColor: true
+    radioCheckedColor: true
   }
 }
 
 declare module '@mui/material/styles' {
   interface BreakpointOverrides {
-    xxl: true;
-    xxxl: true;
-    xxxxl: true;
-    xxxxxl: true;
-    xxxxxxl: true;
-    xxxxxxxl: true;
-    xxxxxxxxl: true;
+    xxl: true
+    xxxl: true
+    xxxxl: true
+    xxxxxl: true
+    xxxxxxl: true
+    xxxxxxxl: true
+    xxxxxxxxl: true
   }
 }
 
-export default getDesignTokens;
+export default getDesignTokens

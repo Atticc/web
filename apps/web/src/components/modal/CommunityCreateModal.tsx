@@ -1,33 +1,23 @@
-import {
-  Box,
-  Divider,
-  Modal,
-  Stack,
-  SxProps,
-  TextField,
-  Theme,
-  Typography,
-  useTheme,
-} from '@mui/material';
-import { useTranslation } from 'next-i18next';
-import { useState } from 'react';
-import { useRouter } from 'next/router';
-import { ArrowIcon, CloseIcon } from '../icons/ArrowIcon';
+import { Box, Divider, Modal, Stack, SxProps, TextField, Theme, Typography, useTheme } from '@mui/material'
+import { useTranslation } from 'next-i18next'
+import { useState } from 'react'
+import { useRouter } from 'next/router'
+import { ArrowIcon, CloseIcon } from '../icons/ArrowIcon'
 
 const CommunityCreateModal = (props: {
-  open: boolean;
-  onClose: (event: {}, reason: 'backdropClick' | 'escapeKeyDown') => void;
+  open: boolean
+  onClose: (event: {}, reason: 'backdropClick' | 'escapeKeyDown') => void
 }) => {
-  const [value, setValue] = useState(0);
+  const [value, setValue] = useState(0)
   interface TabPanelProps {
-    children?: React.ReactNode;
-    index: number;
-    value: number;
-    sx?: SxProps<Theme> | undefined;
+    children?: React.ReactNode
+    index: number
+    value: number
+    sx?: SxProps<Theme> | undefined
   }
 
   function TabPanel(props: TabPanelProps) {
-    const { children, value, index, sx, ...other } = props;
+    const { children, value, index, sx, ...other } = props
 
     return (
       <div
@@ -39,22 +29,22 @@ const CommunityCreateModal = (props: {
       >
         {value === index && <Box sx={{ p: 3, ...sx }}>{children}</Box>}
       </div>
-    );
+    )
   }
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-    setValue(newValue);
-  };
+    setValue(newValue)
+  }
 
-  const { t } = useTranslation();
-  const colorTheme = useTheme().palette;
-  const router = useRouter();
+  const { t } = useTranslation()
+  const colorTheme = useTheme().palette
+  const router = useRouter()
 
   return (
     <Modal
       open={props.open}
       onClose={(e) => {
-        props.onClose(e, 'backdropClick');
+        props.onClose(e, 'backdropClick')
       }}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
@@ -78,7 +68,7 @@ const CommunityCreateModal = (props: {
         <Box
           component={'div'}
           onClick={(e: {}) => {
-            props.onClose(e, 'backdropClick');
+            props.onClose(e, 'backdropClick')
           }}
           sx={{
             cursor: 'pointer',
@@ -92,11 +82,7 @@ const CommunityCreateModal = (props: {
           <CloseIcon color={colorTheme.textLight100}></CloseIcon>
         </Box>
         <Stack>
-          <Stack
-            flexDirection="row"
-            justifyContent={'center'}
-            alignItems={'center'}
-          >
+          <Stack flexDirection="row" justifyContent={'center'} alignItems={'center'}>
             <Typography
               variant="h2"
               color={colorTheme.textLight100.main}
@@ -170,6 +156,6 @@ const CommunityCreateModal = (props: {
         </Stack>
       </Box>
     </Modal>
-  );
-};
-export default CommunityCreateModal;
+  )
+}
+export default CommunityCreateModal

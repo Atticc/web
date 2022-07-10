@@ -1,19 +1,17 @@
-import { Box, Container, Grid, Typography, useTheme, styled, Stack, Avatar } from '@mui/material';
-import { useTranslation } from 'next-i18next';
-import Link from 'next/link';
-import {
-  PrimaryDarkButton,
-  SecondaryDarkButton,
-} from '../../components/buttons/Buttons';
-import { SwitchBox } from './mode_switch/Mode_switch';
-import { useRouter } from 'next/router';
+import { Box, Container, Grid, Typography, useTheme, styled, Stack, Avatar } from '@mui/material'
+import { useTranslation } from 'next-i18next'
+import Link from 'next/link'
+import { PrimaryDarkButton, SecondaryDarkButton } from '../../components/buttons/Buttons'
+import { SwitchBox } from './mode_switch/Mode_switch'
+import { useRouter } from 'next/router'
 
-import Web3 from "web3";
-import Web3Modal from "web3modal";
-import { useScrollPosition } from '../../utils/useScrollPosition';
-import { useCallback, useState } from 'react';
-import { useWeb3 } from '../../utils/Web3Context';
-import { formatAddress } from '../../utils/helper';
+import Web3 from 'web3'
+import Web3Modal from 'web3modal'
+import { useScrollPosition } from '../../utils/useScrollPosition'
+import { useCallback, useEffect, useState } from 'react'
+import { useWeb3 } from '../../utils/Web3Context'
+import { formatAddress } from '../../utils/helper'
+import { useLocalStorage } from 'usehooks-ts'
 
 const NavContainer = styled(Container)(() => ({
   padding: '8px',
@@ -21,28 +19,33 @@ const NavContainer = styled(Container)(() => ({
   alignItems: 'center',
   minHeight: '60px',
   color: 'white',
-}));
+}))
 
 const menu = [
   { title: 'Discover', path: '/users/' },
   { title: 'Communities', path: '/communities/' },
 ]
 
-
 function Header() {
-  const { t } = useTranslation('common');
-  const router = useRouter();
-  const colorTheme = useTheme().palette;
+  const [connected] = useLocalStorage('WEB3_CONNECT_CACHED_PROVIDER', null)
+  const { t } = useTranslation('common')
+  const router = useRouter()
+  const colorTheme = useTheme().palette
   const scrollPosition = useScrollPosition()
-  const { connectWallet, address, domain, avatar } = useWeb3();
-  const [loading, setLoading] = useState(false);
+  const { connectWallet, disconnect, address, domain, avatar } = useWeb3()
+  const [loading, setLoading] = useState(false)
 
   const connect = useCallback(async () => {
-    setLoading(true);
-    await connectWallet();
-    setLoading(false);
-  }, [connectWallet]);
+    setLoading(true)
+    await connectWallet()
+    setLoading(false)
+  }, [connectWallet])
 
+  useEffect(() => {
+    if (connected) {
+      connect()
+    }
+  }, [connected])
 
   return (
     <Container
@@ -59,19 +62,21 @@ function Header() {
       <NavContainer maxWidth="lg">
         <Grid container spacing={2} sx={{ justifyContent: 'space-between' }}>
           <Grid item sx={{ alignSelf: 'center' }}>
-            <Link href={'/'} >
-              <Typography variant="actionMedium"
+            <Link href={'/'}>
+              <Typography
+                variant="actionMedium"
                 sx={{
                   padding: 5,
                   cursor: 'pointer',
                   ':hover': {
                     color: colorTheme.secondary.main,
                   },
-                }}>
+                }}
+              >
                 Crypto Corner
               </Typography>
             </Link>
-            {menu.map(m =>
+            {menu.map((m) => (
               <Link href={m.path} key={m.title}>
                 <Typography
                   variant="actionMedium"
@@ -85,39 +90,31 @@ function Header() {
                 >
                   {m.title}
                 </Typography>
-              </Link>)}
+              </Link>
+            ))}
           </Grid>
           <Grid item>
             <Grid container direction={'row'}>
               <SwitchBox />
-              <Grid item >
+              <Grid item>
                 {!address ? (
-                  <PrimaryDarkButton
-                    textcontent={loading ? 'Loading...' : 'Connect Wallet'}
-                    onClick={connect}
-                  />) : <Link href={`/users/${address}`}>
-                    <Stack direction={'row'} alignItems={'center'}>
-                      <Avatar variant='circular' src={avatar || ''} />
-                      <Stack direction={'column'} paddingLeft={1}>
-                        <Typography variant='h6'>
-                          {domain || null}
-                        </Typography>
-                        <Typography variant='body1'>
-                          {formatAddress(address)}
-                        </Typography>
-                      </Stack>
+                  <PrimaryDarkButton textcontent={loading ? 'Loading...' : 'Connect Wallet'} onClick={connect} />
+                ) : (
+                  <Stack direction={'row'} alignItems={'center'} onClick={disconnect}>
+                    <Avatar variant="circular" src={avatar || ''} />
+                    <Stack direction={'column'} paddingLeft={1}>
+                      <Typography variant="h6">{domain || null}</Typography>
+                      <Typography variant="body1">{formatAddress(address)}</Typography>
                     </Stack>
-                  </Link>}
+                  </Stack>
+                )}
               </Grid>
-
             </Grid>
           </Grid>
         </Grid>
       </NavContainer>
     </Container>
-
-
-  );
+  )
 }
 
-export default Header;
+export default Header

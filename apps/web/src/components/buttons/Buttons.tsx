@@ -1,5 +1,5 @@
-import BaseButton from './BaseButton';
-import { IButtonProps } from './buttonInterface';
+import BaseButton from './BaseButton'
+import { IButtonProps } from './buttonInterface'
 
 export const PrimaryDarkButton = (props: IButtonProps) => {
   return (
@@ -14,8 +14,8 @@ export const PrimaryDarkButton = (props: IButtonProps) => {
         ...props.sx,
       }}
     />
-  );
-};
+  )
+}
 
 export const PrimaryLightButton = (props: IButtonProps) => {
   return (
@@ -29,8 +29,8 @@ export const PrimaryLightButton = (props: IButtonProps) => {
         ...props.sx,
       }}
     />
-  );
-};
+  )
+}
 
 export const SecondaryDarkButton = (props: IButtonProps) => {
   return (
@@ -42,8 +42,8 @@ export const SecondaryDarkButton = (props: IButtonProps) => {
       onClick={props.onClick}
       variant="actionMedium"
     />
-  );
-};
+  )
+}
 export const SecondaryLightButton = (props: IButtonProps) => {
   return (
     <BaseButton
@@ -53,8 +53,8 @@ export const SecondaryLightButton = (props: IButtonProps) => {
       variant="actionMedium"
       onClick={props.onClick}
     />
-  );
-};
+  )
+}
 
 export const PrimaryDarkIconButton = (props: IButtonProps) => {
   return (
@@ -67,8 +67,8 @@ export const PrimaryDarkIconButton = (props: IButtonProps) => {
       variant="actionMedium"
       onClick={props.onClick}
     />
-  );
-};
+  )
+}
 
 export const PrimaryLightIconButton = (props: IButtonProps) => {
   return (
@@ -81,8 +81,8 @@ export const PrimaryLightIconButton = (props: IButtonProps) => {
       variant="actionMedium"
       onClick={props.onClick}
     />
-  );
-};
+  )
+}
 
 export const SecondaryDarkIconButton = (props: IButtonProps) => {
   return (
@@ -95,8 +95,8 @@ export const SecondaryDarkIconButton = (props: IButtonProps) => {
       variant="actionMedium"
       onClick={props.onClick}
     />
-  );
-};
+  )
+}
 
 export const SecondaryLightIconButton = (props: IButtonProps) => {
   return (
@@ -109,5 +109,5 @@ export const SecondaryLightIconButton = (props: IButtonProps) => {
       variant="actionMedium"
       onClick={props.onClick}
     />
-  );
-};
+  )
+}

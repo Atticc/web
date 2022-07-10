@@ -1,5 +1,5 @@
 import type { NextPage } from 'next'
-import Link from 'next/link';
+import Link from 'next/link'
 
 const Custom500: NextPage = () => {
   return (
@@ -9,9 +9,7 @@ const Custom500: NextPage = () => {
         <h1 className="text-6xl font-bold">
           Back to{' '}
           <Link href="/" passHref>
-            <a className="text-blue-600" >
-             Crypto Corner!
-            </a>
+            <a className="text-blue-600">Crypto Corner!</a>
           </Link>
         </h1>
       </main>
