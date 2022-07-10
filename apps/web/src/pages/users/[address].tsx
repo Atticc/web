@@ -1,15 +1,15 @@
 import type { GetServerSideProps, NextPage } from 'next'
-import LayoutWithoutFooter from '../../components/layouts/LayoutWithoutFooter'
+import LayoutWithoutFooter from '@c/layouts/LayoutWithoutFooter'
 import { useEffect, useState } from 'react'
 import { Grid, Tab, Tabs, useTheme } from '@mui/material'
-import { CommunitiesList } from '../../components/CommunitiesList'
-import { communities, IUser, posts } from '../../app/constants'
-import { PostListItem } from '../../components/PostListItem'
-import { UserCard } from '../../components/UserCard'
-import { getIdentity, useIdentity } from '../../graphql/cyberconnect/queries/getIdentity'
-import { isValidAddr } from '../../utils/helper'
+import { CommunitiesList } from '@c/CommunitiesList'
+import { communities, IUser, posts } from '@app/constants'
+import { PostListItem } from '@c/PostListItem'
+import { UserCard } from '@c/UserCard'
+import { getIdentity, useIdentity } from '@req/cyberconnect/queries/getIdentity'
+import { isValidAddr } from '@utils/helper'
 import Head from 'next/head'
-import { NftSection } from '../../components/NftSection'
+import { NftSection } from '@c/NftSection'
 
 interface UserDetailProps {
   address: string
