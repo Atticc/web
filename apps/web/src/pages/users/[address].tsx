@@ -1,17 +1,19 @@
 
 import type { GetServerSideProps, NextPage } from 'next';
 import LayoutWithoutFooter from '../../layouts/LayoutWithoutFooter';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Grid, Tab, Tabs, Typography, useTheme } from '@mui/material';
 import { CommunitiesList } from '../../components/CommunitiesList';
-import { communities, posts, users } from '../../app/constants';
-import Link from 'next/link';
+import { communities, IUser, posts } from '../../app/constants';
 import { PostListItem } from '../../components/PostListItem';
 import { UserCard } from '../../components/UserCard';
-
+import { getIdentity, useIdentity } from '../../graphql/cyberconnect/queries/getIdentity';
+import { isValidAddr } from '../../utils/helper';
+import Head from 'next/head';
 
 interface UserDetailProps {
-  id: string
+  address: string;
+  userData: IUser;
 }
 
 const tabs = [
@@ -19,20 +21,30 @@ const tabs = [
   { label: 'Latests', value: 2 },
 ]
 
-const UserDetailPage: NextPage<UserDetailProps> = ({ id }) => {
-  
-  const colorTheme = useTheme().palette;
+const UserDetailPage: NextPage<UserDetailProps> = ({ address, userData }) => {
   const [tab, setTab] = useState(1)
+  const colorTheme = useTheme().palette
+  const { data: user, refetch } = useIdentity({address, data: userData})
+  const title = `${ user?.domain }(${ address }) - CryptoCorner Profile`
 
+  useEffect(() => {
+    refetch()
+  }, [address])
+
+  
   const handleSetTab = (_: React.ChangeEvent<{}>, value: number) => {
     setTab(value)
   }
 
   return (
     <LayoutWithoutFooter>
-      <Grid container maxWidth="lg" spacing={3} direction={'row'} >
+      <Head>
+        <title>{title}</title>
+        <meta property="og:title" content={title} key="title" />
+      </Head>
+      <Grid container spacing={3} direction={'row'} sx={{ paddingX: 4 }} >
         <Grid item xs>
-          <Grid container direction={'column'} sx={{ paddingX: 2 }} alignItems={'center'}>
+          <Grid container direction={'column'} alignItems={'center'}>
             <CommunitiesList title={'Joined Communities'} data={communities} />
           </Grid>
         </Grid>
@@ -46,7 +58,7 @@ const UserDetailPage: NextPage<UserDetailProps> = ({ id }) => {
         </Grid>
         <Grid item xs>
           <Grid container direction={'column'}  alignItems={'center'}>
-            <UserCard user={users.find(u => u.address === id)} isDetail />
+            <UserCard user={user} isDetail />
             <CommunitiesList title={'NFT Issued'} data={[]} />
             <CommunitiesList title={'Collections'} data={[]} />
           </Grid>
@@ -59,9 +71,20 @@ const UserDetailPage: NextPage<UserDetailProps> = ({ id }) => {
 export default UserDetailPage;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { id } = context.query
+  const { address } = context.query
+  let userData = {}
+
+  try {
+    if (isValidAddr(String(address))) {
+      userData = await getIdentity(String(address));
+    } else {
+      throw new Error("ERR_WALLET_ADDRESS_PATH_INCORRECT")
+    }
+  } catch(err: any) {
+    console.warn(err.message)
+  }
 
   return {
-    props: { id },
+    props: { address, userData },
   }
 }

@@ -1,29 +1,57 @@
 import { useState, useContext, useCallback, createContext, FC } from "react";
 import Web3Modal from "web3modal";
 import { Web3Provider } from "@ethersproject/providers";
+import CyberConnect from "@cyberlab/cyberconnect";
 
 interface Web3ContextInterface {
   connectWallet: () => Promise<void>;
   address: string;
-  ens: string | null;
+  domain: string | null;
+  avatar: string | null;
+  cyberConnect: CyberConnect | null;
   provider: Web3Provider | undefined;
 }
 
 export const Web3Context = createContext<Web3ContextInterface>({
   connectWallet: async () => undefined,
   address: "",
-  ens: "",
+  domain: "",
+  avatar: "",
+  cyberConnect: null,
   provider: undefined,
 });
 
 export const Web3ContextProvider: FC<any> = ({ children }) => {
   const [address, setAddress] = useState<string>("");
-  const [ens, setEns] = useState<string | null>("");
+  const [domain, setDomain] = useState<string | null>("");
+  const [avatar, setAvatar] = useState<string | null>("");
+  const [cyberConnect, setCyberConnect] = useState<CyberConnect | null>(null);
   const [provider, setProvider] = useState<Web3Provider>();
 
+  const initCyberConnect = useCallback((provider: any) => {
+    const cyberConnect = new CyberConnect({
+      provider,
+      namespace: "CyberGraph",
+    });
+
+    setCyberConnect(cyberConnect);
+  }, []);
+
   async function getEnsByAddress(provider: Web3Provider, address: string) {
-    const ens = await provider.lookupAddress(address);
-    return ens;
+    try {
+      const ens = await provider.lookupAddress(address);
+      return ens;
+    } catch(e) {
+      return null;
+    }
+  }
+  async function getAvatarByAddress(provider: Web3Provider, address: string) {
+    try {
+      const avatar = await provider.getAvatar(address);
+      return avatar;
+    } catch(e) {
+      return null;
+    }
   }
 
   const connectWallet = useCallback(async () => {
@@ -37,20 +65,25 @@ export const Web3ContextProvider: FC<any> = ({ children }) => {
     const provider = new Web3Provider(instance);
     const signer = provider.getSigner();
     const address = await signer.getAddress();
-    const ens = await getEnsByAddress(provider, address);
+    const domain = await getEnsByAddress(provider, address);
+    const avatar = await getAvatarByAddress(provider, address);
 
     setAddress(address);
-    setEns(ens);
+    setDomain(domain);
+    setAvatar(avatar);
     setProvider(provider);
-  }, []);
+    initCyberConnect(provider.provider);
+  }, [initCyberConnect]);
 
   return (
     <Web3Context.Provider
       value={{
         connectWallet,
         address,
-        ens,
+        domain,
+        avatar,
         provider,
+        cyberConnect
       }}
     >
       {children}

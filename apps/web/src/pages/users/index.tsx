@@ -1,27 +1,38 @@
 import type { NextPage } from 'next';
 import LayoutWithoutFooter from '../../layouts/LayoutWithoutFooter';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Grid, Typography, useTheme } from '@mui/material';
-import { users } from '../../app/constants';
+import { IUser } from '../../app/constants';
 import Link from 'next/link';
 import { UserCard } from '../../components/UserCard';
+import { usePopular } from '../../graphql/cyberconnect/queries/getPopular';
+import { useWeb3 } from '../../utils/Web3Context';
 
 const Home: NextPage = () => {
-  
+  const {address} = useWeb3()
+  const [popularUsers, setPopularUsers] = useState<Array<IUser>>([])
+
+  const handleSuccess = (data: [IUser]) => { setPopularUsers(data) }
+  const { refetch: fetchPopular } = usePopular({ first: 20, onSuccess: handleSuccess })
+
+  useEffect(() => {
+    fetchPopular()
+  }, [])
+
   const colorTheme = useTheme().palette;
   return (
     <LayoutWithoutFooter>
-      <Grid container maxWidth="lg" spacing={2} direction={'column'} >
-        <Grid item  xs>
+      <Grid container spacing={3} direction={'column'} sx={{ paddingX: 4 }}>
+        <Grid item xs>
           <Typography variant={'h2'}>
             Discover Users
           </Typography>
         </Grid>
       </Grid>
-        <Grid container direction={'row'} sx={{margin: 3}} >
-        {users.map(u => <UserCard user={u} key={u.address} />)}
-        </Grid>
+      <Grid container direction={'row'} sx={{ marginY: 3 }} rowGap={2} columnGap={2}  >
+        {popularUsers.map(u => <UserCard user={u} key={u.address} />)}
+      </Grid>
     </LayoutWithoutFooter>
   );
 };

@@ -14,7 +14,7 @@ const Home: NextPage<UserDetailProps> = ({ pageId, id }) => {
   
   return (
     <LayoutWithoutFooter>
-      <Grid container maxWidth="lg" spacing={2} direction={'row'} >
+      <Grid container  spacing={3} direction={'row'} sx={{ paddingX: 4 }}>
         <Grid item direction={'column'} xs>
           <Typography variant={'h2'}>
             Community {id}, Post {pageId}

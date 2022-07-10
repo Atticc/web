@@ -1,4 +1,4 @@
-import { Box, Container, Grid, Typography, useTheme, styled, Stack } from '@mui/material';
+import { Box, Container, Grid, Typography, useTheme, styled, Stack, Avatar } from '@mui/material';
 import { useTranslation } from 'next-i18next';
 import Link from 'next/link';
 import {
@@ -34,7 +34,7 @@ function Header() {
   const router = useRouter();
   const colorTheme = useTheme().palette;
   const scrollPosition = useScrollPosition()
-  const { connectWallet, address, ens } = useWeb3();
+  const { connectWallet, address, domain, avatar } = useWeb3();
   const [loading, setLoading] = useState(false);
 
   const connect = useCallback(async () => {
@@ -51,7 +51,7 @@ function Header() {
         position: `sticky`,
         top: 0,
         zIndex: scrollPosition ? 1000 : 1,
-        maxWidth: `${scrollPosition ? 'unset' : '1400px'} !important`,
+        maxWidth: 'unset !important',
         background: '#001325',
         boxShadow: scrollPosition ? '0px 4px 21px rgba(0, 23, 46, 0.66)' : 'none',
       }}
@@ -95,14 +95,19 @@ function Header() {
                   <PrimaryDarkButton
                     textcontent={loading ? 'Loading...' : 'Connect Wallet'}
                     onClick={connect}
-                  />) : <Stack>
-                  <Typography variant='h6'>
-                    {formatAddress(address)}
-                  </Typography>
-                  <Typography variant='body1'>
-                    {ens || null}
-                  </Typography>
-                </Stack>}
+                  />) : <Link href={`/users/${address}`}>
+                    <Stack direction={'row'} alignItems={'center'}>
+                      <Avatar variant='circular' src={avatar || ''} />
+                      <Stack direction={'column'} paddingLeft={1}>
+                        <Typography variant='h6'>
+                          {domain || null}
+                        </Typography>
+                        <Typography variant='body1'>
+                          {formatAddress(address)}
+                        </Typography>
+                      </Stack>
+                    </Stack>
+                  </Link>}
               </Grid>
 
             </Grid>

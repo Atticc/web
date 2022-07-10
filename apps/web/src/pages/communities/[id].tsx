@@ -31,9 +31,9 @@ const Home: NextPage<UserDetailProps> = ({ id }) => {
   }
   return (
     <LayoutWithoutFooter>
-      <Grid container maxWidth="lg" spacing={2} direction={'row'} >
+      <Grid container spacing={3} direction={'row'} sx={{ paddingX: 4 }} >
         <Grid item xs>
-          <Grid container direction={'column'} sx={{ paddingX: 2 }} alignItems={'center'}>
+          <Grid container direction={'column'}  alignItems={'center'}>
             <Grid item xs>
               <PrimaryDarkButton
                 textcontent={'Create Community'}
