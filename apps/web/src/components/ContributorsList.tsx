@@ -24,7 +24,6 @@ export const ContributorsList = ({
       direction={'column'}
       border={hasBorder ? 1 : 0}
       sx={{ borderRadius: 2, paddingX: 1, paddingY: 1 }}
-      spacing={1}
     >
       <Grid item>
         <Typography marginBottom={1} variant="h5">
