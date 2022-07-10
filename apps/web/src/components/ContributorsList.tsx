@@ -19,12 +19,7 @@ export const ContributorsList = ({
   const colorTheme = useTheme().palette
 
   return (
-    <Grid
-      container
-      direction={'column'}
-      border={hasBorder ? 1 : 0}
-      sx={{ borderRadius: 2, paddingX: 1, paddingY: 1 }}
-    >
+    <Grid container direction={'column'} border={hasBorder ? 1 : 0} sx={{ borderRadius: 2, paddingX: 1, paddingY: 1 }}>
       <Grid item>
         <Typography marginBottom={1} variant="h5">
           {title}
