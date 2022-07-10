@@ -1,6 +1,6 @@
 import { Nft } from '@alch/alchemy-web3'
 import { Avatar, CircularProgress, Stack, Tooltip, Typography } from '@mui/material'
-import { ElementType, useState } from 'react'
+import { useState } from 'react'
 import { decodeNftTokenUri, replaceIPFS } from '@utils/helper'
 import { useEffect } from 'react'
 
@@ -57,7 +57,7 @@ export const NftItem = ({ nft, size = 80 }: { nft: Nft | undefined; size?: numbe
         <Avatar
           variant={'rounded'}
           alt={nft.title}
-          src={replaceIPFS(item?.metadata?.image || item?.metadata?.image_url)}
+          src={replaceIPFS(item?.media?.[0]?.gateway || item?.metadata?.image || item?.metadata?.image_url)}
           onLoad={handleLoad}
           sx={{ width: size, height: size }}
           onError={handleError}
