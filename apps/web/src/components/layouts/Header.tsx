@@ -3,7 +3,6 @@ import { useTranslation } from 'next-i18next'
 import Link from 'next/link'
 import { SwitchBox } from './SwitchBox'
 import { useRouter } from 'next/router'
-
 import { useScrollPosition } from '../../utils/useScrollPosition'
 import { WalletComponent } from '../WalletComponent'
 import { APP_NAME } from '../../app/config'

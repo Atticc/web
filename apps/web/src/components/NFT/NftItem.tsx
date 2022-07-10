@@ -17,14 +17,18 @@ export const NftItem = ({ nft, size = 80 }: { nft: Nft | undefined; size?: numbe
 
   useEffect(() => {
     setId(parseInt(item?.id?.tokenId || '0x0', 16))
-  },[item])
+  }, [item])
 
   useEffect(() => {
     const loaderTimer = setTimeout(() => {
-      if (loading === true) { setShow(false) }
-    }, 15_000);
+      if (loading === true) {
+        setShow(false)
+      }
+    }, 10_000)
 
-    return () => { clearTimeout(loaderTimer) }
+    return () => {
+      clearTimeout(loaderTimer)
+    }
   }, [loading])
 
   const handleError = () => {
@@ -45,10 +49,11 @@ export const NftItem = ({ nft, size = 80 }: { nft: Nft | undefined; size?: numbe
         followCursor
         title={
           <Stack direction={'column'}>
-            <Typography variant='h6'>
-              {item?.title || item?.metadata?.name}{id && id < 999_999_999_999 ? ` - ${id}` : ''}
+            <Typography variant="h6">
+              {item?.title || item?.metadata?.name}
+              {id && id < 999_999_999_999 ? ` - ${id}` : ''}
             </Typography>
-            <Typography variant='body1'>{item?.metadata?.description}</Typography>
+            <Typography variant="body1">{item?.metadata?.description}</Typography>
             {loading ? <Typography>{JSON.stringify(nft?.tokenUri)}</Typography> : null}
           </Stack>
         }

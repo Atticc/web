@@ -10,7 +10,7 @@ export function WalletComponent() {
   const router = useRouter()
   const colorTheme = useTheme().palette
   const [connected] = useLocalStorage('WEB3_CONNECT_CACHED_PROVIDER', null)
-  const { connectWallet, disconnect, address, domain, avatar } = useWeb3()
+  const { connectWallet, disconnect, address, domain, avatar, provider } = useWeb3()
   const [loading, setLoading] = useState(false)
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
@@ -46,7 +46,7 @@ export function WalletComponent() {
 
   return (
     <Grid item>
-      {!address ? (
+      {!provider ? (
         <PrimaryDarkButton textcontent={loading ? 'Loading...' : 'Connect Wallet'} onClick={connect} />
       ) : (
         <Button
@@ -61,7 +61,7 @@ export function WalletComponent() {
             <Avatar variant="circular" src={avatar || ''} />
             <Stack direction={'column'} paddingLeft={1}>
               <Typography variant="h6">{domain || null}</Typography>
-              <Typography variant="body1">{formatAddress(address)}</Typography>
+              <Typography variant="body1">{formatAddress(address || '')}</Typography>
             </Stack>
           </Stack>
         </Button>
@@ -83,3 +83,5 @@ export function WalletComponent() {
     </Grid>
   )
 }
+
+export default WalletComponent

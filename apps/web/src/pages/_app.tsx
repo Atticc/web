@@ -3,17 +3,16 @@ import { AppProps } from 'next/app'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import CssBaseline from '@mui/material/CssBaseline'
 import { CacheProvider, EmotionCache } from '@emotion/react'
-import { getDesignTokens } from '../app/theme'
-import createEmotionCache from '../app/createEmotionCache'
-import { ColorModeContext } from '../components/layouts/SwitchBox'
+import { getDesignTokens } from '@app/theme'
+import createEmotionCache from '@app/createEmotionCache'
+import { ColorModeContext } from '@c/layouts/SwitchBox'
 import { appWithTranslation } from 'next-i18next'
 import { QueryClientProvider } from 'react-query'
 import React from 'react'
 import { Provider } from 'react-redux'
 import store from '../store'
-import { Web3ContextProvider } from '../utils/Web3Context'
-import client from '../graphql/client'
-
+import { Web3ContextProvider } from '@utils/Web3Context'
+import client from '@req/client'
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache()
 
@@ -45,7 +44,6 @@ function MyApp(props: MyAppProps) {
           <ThemeProvider theme={theme}>
             <QueryClientProvider client={client}>
               <Web3ContextProvider>
-                {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
                 <CssBaseline />
                 <Component {...pageProps} />
               </Web3ContextProvider>
