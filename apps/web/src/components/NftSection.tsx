@@ -1,5 +1,5 @@
 import { Nft, NftFilters } from '@alch/alchemy-web3'
-import { Divider, Grid, Stack, Typography, useTheme } from '@mui/material'
+import { Divider, Grid, Stack, Typography } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { useQuery } from 'react-query'
 import { IOatNft, IPoapNft } from '../app/types'
@@ -25,19 +25,18 @@ export const NftSection = ({
   const { alchemy } = useAlchemy()
   const [nfts, setNfts] = useState<{ items: Array<Nft>; totalCount?: number }>({ items: [], totalCount: 0 })
   const [openNFTs, setOpenNFTs] = useState<boolean>(false)
-  const { data: { data: oats = {} } = {}, refetch: fetchOATs } = useOATs({ address })
+  const { data: oats = {}, refetch: fetchOATs } = useOATs({ address })
   const { data: { data: poaps = [] } = {} } = useQuery(['poap', address], () => POAP.getNFTs({ address }))
-  const colorTheme = useTheme().palette
 
   useEffect(() => {
     async function fetchNFTs() {
       try {
         const { ownedNfts, totalCount } = await alchemy.getNfts({ owner: address, filters: [NftFilters.SPAM] })
-        console.log(ownedNfts)
-        setNfts({ items: ownedNfts, totalCount: totalCount })
+        setNfts({ items: ownedNfts.filter((n) => n?.metadata?.name), totalCount: totalCount })
       } catch (_) {}
       try {
         await fetchOATs()
+        console.log(oats)
       } catch (_) {}
     }
     if (isValidAddr(address)) {

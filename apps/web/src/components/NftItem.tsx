@@ -2,7 +2,7 @@ import { Nft } from '@alch/alchemy-web3'
 import { Avatar, Stack } from '@mui/material'
 
 export const NftItem = ({ nft, size = 80 }: { nft: Nft | undefined; size?: number }) => {
-  if (!nft) {
+  if (!nft || !nft?.metadata?.name) {
     return null
   }
 

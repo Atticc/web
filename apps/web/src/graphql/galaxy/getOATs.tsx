@@ -26,8 +26,8 @@ export const GET_GALAXY_OAT = gql`
 
 export const getOATs = async ({ address }: GetOATsRequest) => {
   try {
-    const { addressInfo } = await request(GALAXY_OAT_ENDPOINT, GET_GALAXY_OAT, { address })
-    return addressInfo
+    const { addressInfo: { nfts = {} } = {} } = await request(GALAXY_OAT_ENDPOINT, GET_GALAXY_OAT, { address })
+    return nfts
   } catch (err) {
     return null
   }

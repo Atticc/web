@@ -30,7 +30,7 @@ export const NftList = ({
           ) : tab === NftType.poaps ? (
             <PoapItem poap={item as IPoapNft} key={(item as IPoapNft).tokenId} size={148} />
           ) : (
-            <OatItem oat={item as IOatNft} key={(item as IOatNft).id} size={120} />
+            <OatItem oat={item as IOatNft} key={(item as IOatNft).id} size={148} />
           )
         )}
       </Grid>
