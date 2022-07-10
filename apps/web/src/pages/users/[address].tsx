@@ -79,7 +79,7 @@ export default UserDetailPage
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { address } = context.query
-  let userData = {}
+  let userData: IUser | undefined = undefined
 
   try {
     if (isValidAddr(String(address))) {
@@ -89,6 +89,12 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     }
   } catch (err: any) {
     console.warn(err.message)
+  }
+
+  if (!userData?.address) {
+    return {
+      notFound: true,
+    }
   }
 
   return {
