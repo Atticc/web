@@ -30,7 +30,7 @@ export const decodeNftTokenUri = (data: string = '') => {
     const [_, encoding] = header.split(';')
     const content = Buffer.from(body.toString(), encoding as BufferEncoding).toString()
     return JSON.parse(content)
-  } catch(err: any) {
+  } catch (err: any) {
     console.warn(err.message)
     return {}
   }

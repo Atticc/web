@@ -1,5 +1,5 @@
 import { Avatar, CircularProgress, Stack, Tooltip, Typography } from '@mui/material'
-import { useState } from 'react';
+import { useState } from 'react'
 import { IPoapNft } from '../app/types'
 
 export const PoapItem = ({ poap, size = 80 }: { poap: IPoapNft | undefined; size?: number }) => {
@@ -36,9 +36,13 @@ export const PoapItem = ({ poap, size = 80 }: { poap: IPoapNft | undefined; size
           onError={handleError}
         />
       </Tooltip>
-      {loading ? <CircularProgress sx={{
-        position: 'absolute',
-      }} /> : null}
+      {loading ? (
+        <CircularProgress
+          sx={{
+            position: 'absolute',
+          }}
+        />
+      ) : null}
     </Stack>
   ) : null
 }

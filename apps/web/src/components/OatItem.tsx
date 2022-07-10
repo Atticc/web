@@ -1,5 +1,5 @@
 import { Avatar, CircularProgress, Stack, Tooltip, Typography } from '@mui/material'
-import { useState } from 'react';
+import { useState } from 'react'
 import { IOatNft } from '../app/types'
 
 export const OatItem = ({ oat, size = 80 }: { oat: IOatNft | undefined; size?: number }) => {
@@ -36,9 +36,13 @@ export const OatItem = ({ oat, size = 80 }: { oat: IOatNft | undefined; size?: n
           onError={handleError}
         />
       </Tooltip>
-      {loading ? <CircularProgress sx={{
-        position: 'absolute',
-      }} /> : null}
+      {loading ? (
+        <CircularProgress
+          sx={{
+            position: 'absolute',
+          }}
+        />
+      ) : null}
     </Stack>
   ) : null
 }
