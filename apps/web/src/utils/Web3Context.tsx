@@ -81,7 +81,7 @@ export const Web3ContextProvider: FC<any> = ({ children }) => {
       theme: theme.palette.mode,
       network: 'mainnet',
       cacheProvider: true,
-      providerOptions: {},
+      providerOptions,
     })
 
     try {

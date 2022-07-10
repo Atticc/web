@@ -4,7 +4,7 @@ const withTM = require('next-transpile-modules')(['ui']);
 module.exports = withTM({
   reactStrictMode: true,
   eslint: {
-    dirs: ['pages', 'common', 'layouts', 'modules', 'app'],
+    dirs: ['pages', 'components', 'graphql', 'utils', 'app'],
   },
   async headers() {
     return [
