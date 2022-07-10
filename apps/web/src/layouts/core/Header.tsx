@@ -34,7 +34,7 @@ function Header() {
   const router = useRouter();
   const colorTheme = useTheme().palette;
   const scrollPosition = useScrollPosition()
-  const { connectWallet, address, ens, avatar } = useWeb3();
+  const { connectWallet, address, domain, avatar } = useWeb3();
   const [loading, setLoading] = useState(false);
 
   const connect = useCallback(async () => {
@@ -100,7 +100,7 @@ function Header() {
                       <Avatar variant='circular' src={avatar || ''} />
                       <Stack direction={'column'} paddingLeft={1}>
                         <Typography variant='h6'>
-                          {ens || null}
+                          {domain || null}
                         </Typography>
                         <Typography variant='body1'>
                           {formatAddress(address)}

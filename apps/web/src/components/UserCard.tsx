@@ -18,7 +18,7 @@ export const UserCard = ({ user, isDetail = false }: { user: IUser | undefined, 
             <Avatar variant='circular' src={user?.avatar || ''} />
             <Stack direction={'column'} paddingLeft={1}>
               <Typography variant='h5'>
-                {user?.ens || null}
+                {user?.domain || null}
               </Typography>
               <Typography variant='body1'>
                 {formatAddress(user?.address)}
@@ -56,7 +56,7 @@ export const UserCard = ({ user, isDetail = false }: { user: IUser | undefined, 
             {user.address}
           </Typography>
           <Typography variant="body1">
-            {user.name}
+            {user.domain}
           </Typography>
         </Grid>
       </Grid>

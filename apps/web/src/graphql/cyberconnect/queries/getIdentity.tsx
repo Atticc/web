@@ -1,28 +1,35 @@
 import { gql, request } from "graphql-request";
 import { useQuery } from 'react-query';
 import { CYBERCONNECT_ENDPOINT } from "../../../app/config";
+import { IUser } from "../../../app/constants";
 
-export function useIdentity({ address }: {address: string}) {
-    return useQuery(["identity", address], async () => {
-        const {identity} = await request(
+export const getIdentity = async (address: string) => {
+    try {
+        const { identity } = await request(
             CYBERCONNECT_ENDPOINT,
             gql`
-            query {
-                identity(address: "${address}") {
-                    address
-                    domain
-                    ens
-                    social {
-                        twitter
+                query {
+                    identity(address: "${address}") {
+                        address
+                        domain
+                        ens
+                        social {
+                            twitter
+                        }
+                        avatar
+                        joinTime
+                        followerCount
+                        followingCount
                     }
-                    avatar
-                    joinTime
-                    followerCount
-                    followingCount
                 }
-            }
-            `,
+                `,
         );
         return identity;
-    });
+    } catch (err) {
+        return null;
+    }
+}
+
+export function useIdentity({ address, data }: { address: string, data: IUser}) {
+    return useQuery(["identity", address], () => getIdentity(address), { initialData: data, enabled: false });
 }

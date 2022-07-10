@@ -6,7 +6,7 @@ import CyberConnect from "@cyberlab/cyberconnect";
 interface Web3ContextInterface {
   connectWallet: () => Promise<void>;
   address: string;
-  ens: string | null;
+  domain: string | null;
   avatar: string | null;
   cyberConnect: CyberConnect | null;
   provider: Web3Provider | undefined;
@@ -15,7 +15,7 @@ interface Web3ContextInterface {
 export const Web3Context = createContext<Web3ContextInterface>({
   connectWallet: async () => undefined,
   address: "",
-  ens: "",
+  domain: "",
   avatar: "",
   cyberConnect: null,
   provider: undefined,
@@ -23,7 +23,7 @@ export const Web3Context = createContext<Web3ContextInterface>({
 
 export const Web3ContextProvider: FC<any> = ({ children }) => {
   const [address, setAddress] = useState<string>("");
-  const [ens, setEns] = useState<string | null>("");
+  const [domain, setDomain] = useState<string | null>("");
   const [avatar, setAvatar] = useState<string | null>("");
   const [cyberConnect, setCyberConnect] = useState<CyberConnect | null>(null);
   const [provider, setProvider] = useState<Web3Provider>();
@@ -65,11 +65,11 @@ export const Web3ContextProvider: FC<any> = ({ children }) => {
     const provider = new Web3Provider(instance);
     const signer = provider.getSigner();
     const address = await signer.getAddress();
-    const ens = await getEnsByAddress(provider, address);
+    const domain = await getEnsByAddress(provider, address);
     const avatar = await getAvatarByAddress(provider, address);
 
     setAddress(address);
-    setEns(ens);
+    setDomain(domain);
     setAvatar(avatar);
     setProvider(provider);
     initCyberConnect(provider.provider);
@@ -80,7 +80,7 @@ export const Web3ContextProvider: FC<any> = ({ children }) => {
       value={{
         connectWallet,
         address,
-        ens,
+        domain,
         avatar,
         provider,
         cyberConnect

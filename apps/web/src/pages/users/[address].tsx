@@ -1,18 +1,21 @@
 
 import type { GetServerSideProps, NextPage } from 'next';
 import LayoutWithoutFooter from '../../layouts/LayoutWithoutFooter';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Grid, Tab, Tabs, Typography, useTheme } from '@mui/material';
 import { CommunitiesList } from '../../components/CommunitiesList';
-import { communities, posts, users } from '../../app/constants';
+import { communities, IUser, posts, users } from '../../app/constants';
 import Link from 'next/link';
 import { PostListItem } from '../../components/PostListItem';
 import { UserCard } from '../../components/UserCard';
-import { useIdentity } from '../../graphql/cyberconnect/queries/getIdentity';
+import { getIdentity, useIdentity } from '../../graphql/cyberconnect/queries/getIdentity';
+import { isValidAddr } from '../../utils/helper';
+import Head from 'next/head';
 
 
 interface UserDetailProps {
-  id: string
+  address: string;
+  userData: IUser;
 }
 
 const tabs = [
@@ -20,11 +23,17 @@ const tabs = [
   { label: 'Latests', value: 2 },
 ]
 
-const UserDetailPage: NextPage<UserDetailProps> = ({ id }) => {
-  const {data : user} = useIdentity({ address: id });
+const UserDetailPage: NextPage<UserDetailProps> = ({ address, userData }) => {
   const colorTheme = useTheme().palette;
+  // const [user, setUser] = useState(userData)
   const [tab, setTab] = useState(1)
-  console.log(user)
+  const { data: user, refetch } = useIdentity({address, data: userData})
+  const title = `${ user?.domain }(${ address }) - CryptoCorner Profile`
+
+  useEffect(() => {
+    refetch()
+  }, [address])
+
 
   const handleSetTab = (_: React.ChangeEvent<{}>, value: number) => {
     setTab(value)
@@ -32,6 +41,10 @@ const UserDetailPage: NextPage<UserDetailProps> = ({ id }) => {
 
   return (
     <LayoutWithoutFooter>
+      <Head>
+        <title>{title}</title>
+        <meta property="og:title" content={title} key="title" />
+      </Head>
       <Grid container spacing={3} direction={'row'} sx={{ paddingX: 4 }} >
         <Grid item xs>
           <Grid container direction={'column'} alignItems={'center'}>
@@ -61,10 +74,20 @@ const UserDetailPage: NextPage<UserDetailProps> = ({ id }) => {
 export default UserDetailPage;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { id } = context.query
-  
+  const { address } = context.query
+  let userData = {}
+
+  try {
+    if (isValidAddr(String(address))) {
+      userData = await getIdentity(String(address));
+    } else {
+      throw new Error("ERR_WALLET_ADDRESS_PATH_INCORRECT")
+    }
+  } catch(err: any) {
+    console.warn(err.message)
+  }
 
   return {
-    props: { id },
+    props: { address, userData },
   }
 }

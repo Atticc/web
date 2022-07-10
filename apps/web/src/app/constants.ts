@@ -7,16 +7,16 @@ export interface ICommunity {
 }
 
 export interface IUser {
-  name: string;
-  image: string;
   address: string;
-  ens?: string;
+  domain?: string;
   avatar?: string;
   followerCount?: number;
   followingCount?: number;
   social?:{
     twitter?: string;
   }
+  isFollowing?: boolean;
+  recommendationReason?: string;
 }
 
 export interface IPost {
@@ -53,7 +53,7 @@ export const comments = [
 ]
 
 export const users: Array<IUser> = [
-  {name: 'User 1', image: '', address: '0xbF9B4a79a3d9e6AA3cea0fc0134A923FBB111309'},
-  {name: 'Vitalik.eth', image: '', address: '0xd8da6bf26964af9d7eed9e03e53415d37aa96045'},
-  {name: 'User 3', image: '', address: '0x983110309620d911731ac0932219af06091b6744'},
+  {domain: '', avatar: '', address: '0xbF9B4a79a3d9e6AA3cea0fc0134A923FBB111309'},
+  {domain: 'Vitalik.eth', avatar: '', address: '0xd8da6bf26964af9d7eed9e03e53415d37aa96045'},
+  {domain: '', avatar: '', address: '0x983110309620d911731ac0932219af06091b6744'},
 ]

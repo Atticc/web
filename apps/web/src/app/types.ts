@@ -16,7 +16,7 @@ export type SocialConnection = {
     alias: string;
     avatar: string;
     domain: string;
-    ens: string;
+    d: string;
 };
 
 export type SocialConnectionsPaginated = {

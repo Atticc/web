@@ -13,7 +13,7 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import store from '../store';
 import { Web3ContextProvider } from '../utils/Web3Context';
-import client from '../graphql/cyberconnect/client';
+import client from '../graphql/client';
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
@@ -46,11 +46,9 @@ function MyApp(props: MyAppProps) {
           <ThemeProvider theme={theme}>
             <QueryClientProvider client={client}>
               <Web3ContextProvider>
-                <GraphContextProvider>
                   {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
                   <CssBaseline />
                   <Component {...pageProps} />
-                </GraphContextProvider>
               </Web3ContextProvider>
             </QueryClientProvider>
           </ThemeProvider>
