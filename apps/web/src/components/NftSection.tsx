@@ -82,7 +82,7 @@ export const NftSection = ({
         {oats?.list?.length > 0 ? (
           <Stack direction={'column'} marginTop={3}>
             <Typography marginY={1} variant="h6">
-              OATs({oats.totalCount})
+              OATs({oats?.totalCount})
             </Typography>
             <Stack flexDirection={'row'} gap={3}>
               {oats?.list?.slice(0, 3).map((o: IOatNft) => (
@@ -100,7 +100,7 @@ export const NftSection = ({
       <NftCollectionModal
         nfts={nfts}
         poaps={{ items: poaps || [], totalCount: poaps.length }}
-        oats={{ items: oats.list || [], totalCount: oats.totalCount }}
+        oats={{ items: oats?.list || [], totalCount: oats?.totalCount }}
         open={openNFTs}
         onClose={() => setOpenNFTs(false)}
       />
