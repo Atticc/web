@@ -15,6 +15,19 @@ export const NftList = ({
   tab: NftType
   data: Array<Nft | IPoapNft | IOatNft>
 }) => {
+  function renderNFT(nft: Nft) {
+    const key = `${nft.contract.address}-${nft.id.tokenId}`
+    return <NftItem key={key} nft={nft} size={148} />
+  }
+
+  function renderPOAP(poap: IPoapNft) {
+    return <PoapItem poap={poap} key={poap.tokenId} size={148} />
+  }
+
+  function renderOAT(oat: IOatNft) {
+    return <OatItem oat={oat} key={oat.id} size={148} />
+  }
+
   return (
     <Grid container direction={'column'} sx={{ borderRadius: 2, paddingX: 2, paddingY: 2 }}>
       <Grid item>
@@ -25,13 +38,11 @@ export const NftList = ({
       </Grid>
       <Grid container direction={'row'} flexWrap={'wrap'} gap={2}>
         {data?.map((item) =>
-          tab === NftType.nfts ? (
-            <NftItem key={(item as Nft).id.tokenId} nft={item as Nft} size={148} />
-          ) : tab === NftType.poaps ? (
-            <PoapItem poap={item as IPoapNft} key={(item as IPoapNft).tokenId} size={148} />
-          ) : (
-            <OatItem oat={item as IOatNft} key={(item as IOatNft).id} size={148} />
-          )
+          tab === NftType.nfts
+            ? renderNFT(item as Nft)
+            : tab === NftType.poaps
+            ? renderPOAP(item as IPoapNft)
+            : renderOAT(item as IOatNft)
         )}
       </Grid>
     </Grid>

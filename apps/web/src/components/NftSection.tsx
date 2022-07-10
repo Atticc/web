@@ -32,7 +32,7 @@ export const NftSection = ({
     async function fetchNFTs() {
       try {
         const { ownedNfts, totalCount } = await alchemy.getNfts({ owner: address, filters: [NftFilters.SPAM] })
-        setNfts({ items: ownedNfts.filter((n) => n?.metadata?.name), totalCount: totalCount })
+        setNfts({ items: ownedNfts.filter((n) => !n?.error), totalCount: totalCount })
       } catch (_) {}
       try {
         await fetchOATs()
