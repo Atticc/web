@@ -36,7 +36,6 @@ export const NftSection = ({
       } catch (_) {}
       try {
         await fetchOATs()
-        console.log(oats)
       } catch (_) {}
     }
     if (isValidAddr(address)) {

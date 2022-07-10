@@ -102,7 +102,7 @@ const NftCollectionModal = ({
               margin: '10px 0 8px 0',
             }}
           >
-            <NftList data={props[tab].items} tab={tab} />
+            <NftList data={props[tab].items} tab={tab} key={tab} />
           </Stack>
         </Stack>
       </Box>
