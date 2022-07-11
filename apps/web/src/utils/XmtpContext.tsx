@@ -2,7 +2,7 @@ import { useCallback, useEffect, useReducer, useState } from 'react'
 import { Conversation } from '@xmtp/xmtp-js'
 import { Client, Message } from '@xmtp/xmtp-js'
 import { Signer } from 'ethers'
-import useMessageStore from './useXmtp'
+import useMessageStore from './useMessageStore'
 
 import { createContext, Dispatch } from 'react'
 
@@ -84,7 +84,6 @@ export const XmtpProvider = ({ children }: { children: JSX.Element }) => {
   useEffect(() => {
     const listConversations = async () => {
       if (!client) return
-      console.log('Listing conversations')
       setLoadingConversations(true)
       const convos = await client.conversations.list()
       convos.forEach((convo: Conversation) => {

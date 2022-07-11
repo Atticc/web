@@ -1,21 +1,12 @@
 import Header from './Header'
 import { Box, Container } from '@mui/material'
-import { useDimensions } from '@utils/useDimensions'
 
 function LayoutWithoutFooter({ children }: { children: React.ReactNode }) {
-  const { height } = useDimensions()
-
   return (
-    <Box
-      sx={{
-        position: 'relative',
-      }}
-    >
+    <Box maxHeight={'100vh'}>
       <Header />
       <Container
         sx={{
-          minHeight: { xs: height - 340, md: height - 220 },
-          position: 'relative',
           margin: 0,
           padding: {
             xs: 0,

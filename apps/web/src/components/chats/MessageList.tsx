@@ -1,38 +1,67 @@
-import { Avatar, Grid, Stack, Typography, useTheme } from '@mui/material'
-import Link from 'next/link'
-import { IUser } from '@app/constants'
-import { formatAddress } from '@utils/helper'
+import { Chip, Divider, Grid, Typography } from '@mui/material'
+import { Message } from '@xmtp/xmtp-js'
+import React, { MutableRefObject } from 'react'
+import MessageListItem from './MessageListItem'
 
-export const MessageList = ({ user, message }: { user: IUser | undefined; message: any }) => {
-  const colorTheme = useTheme().palette
+export type MessageListProps = {
+  messages: Message[]
+  walletAddress: string | undefined
+  messagesEndRef: MutableRefObject<null>
+}
 
-  if (!user) {
-    return null
+
+const isOnSameDay = (d1?: Date, d2?: Date): boolean => {
+  return d1?.toDateString() === d2?.toDateString()
+}
+
+const formatDate = (d?: Date) =>
+  d?.toLocaleString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
+
+const DateDivider = ({ date }: { date?: Date }): JSX.Element => (
+  <Divider>
+    <Chip label={formatDate(date)} />
+  </Divider>
+)
+
+const ConversationBeginningNotice = (): JSX.Element => (
+  <Grid item alignItems={'center'} justifyItems={'center'} paddingBottom={4}>
+    <Typography variant='body2' textAlign={'center'}>
+      Start of the conversation
+    </Typography>
+  </Grid>
+)
+
+const MessagesList = ({
+  messages,
+  walletAddress,
+  messagesEndRef,
+}: MessageListProps): JSX.Element => {
+  let lastMessageDate: Date | undefined
+
+  const renderMessage = (msg: Message) => {
+    const isSender = msg.senderAddress === walletAddress
+    const dateHasChanged = !isOnSameDay(lastMessageDate, msg.sent)
+    lastMessageDate = msg.sent
+
+    return <Grid item key={msg.id}>
+      {dateHasChanged ? <DateDivider date={msg.sent} /> : null}
+      <MessageListItem message={msg} isSender={isSender} />
+    </Grid>
   }
 
   return (
-    <Link href={`/chats/${user.address}`}>
-      <Grid
-        item
-        sx={{
-          borderRadius: 3,
-          margin: 1,
-          cursor: 'pointer',
-          ':hover': {
-            filter: 'opacity(0.8)',
-          },
-        }}
-      >
-        <Stack direction={'row'} alignItems={'center'}>
-          <Avatar variant="circular" src={user?.avatar || user?.twitter?.avatar || ''} />
-          <Stack direction={'column'} paddingLeft={1}>
-            <Typography variant="h6">{user?.domain || null}</Typography>
-            <Typography variant="body1">{formatAddress(user?.address)}</Typography>
-          </Stack>
-        </Stack>
+    <Grid container sx={{ display: 'flex', flexGrow: 1 }}>
+      <Grid container sx={{ alignSelf: 'flex-end'}} width={'100%'}>
+
+        <Grid item width={'100%'} flex={1}>
+          {messages && messages.length ? (
+            <ConversationBeginningNotice />
+          ) : null}
+          {messages?.map(renderMessage)}
+          <div ref={messagesEndRef} />
+        </Grid>
       </Grid>
-    </Link>
+      </Grid>
   )
 }
-
-export default MessageList
+export default React.memo(MessagesList)

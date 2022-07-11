@@ -60,7 +60,7 @@ export const NftSection = ({
               NFTs({nfts.totalCount})
             </Typography>
             <Stack flexDirection={'row'} gap={3}>
-              {nfts?.items?.slice(-3).map((n) => (
+              {nfts?.items?.slice(0, 3).map((n) => (
                 <NftItem nft={n} key={n.id.tokenId} />
               ))}
             </Stack>{' '}

@@ -1,37 +1,42 @@
-import { Avatar, Grid, Stack, Typography, useTheme } from '@mui/material'
+import { Avatar, Chip, Grid, Stack, Typography, useTheme } from '@mui/material'
 import Link from 'next/link'
-import { IUser } from '@app/constants'
-import { formatAddress } from '@utils/helper'
+import { formatAddress, formatTime } from '@utils/helper'
+import { Message } from '@xmtp/xmtp-js'
+import ProfileImage from '@c/users/Avatar'
+import Address from '@c/users/Address'
+import useWallet from '@utils/useWallet'
 
-export const MessageListItem = ({ user, message }: { user: IUser | undefined; message: any }) => {
+type MessageListItemProps = {
+  message: Message
+  isSender: boolean
+}
+
+
+export const MessageListItem = ({ isSender, message }: MessageListItemProps) => {
   const colorTheme = useTheme().palette
+  const {address} = useWallet()
 
-  if (!user) {
+  if (!message) {
     return null
   }
 
   return (
-    <Link href={`/chats/${user.address}`}>
-      <Grid
-        item
-        sx={{
-          borderRadius: 3,
-          margin: 1,
-          cursor: 'pointer',
-          ':hover': {
-            filter: 'opacity(0.8)',
-          },
-        }}
-      >
-        <Stack direction={'row'} alignItems={'center'}>
-          <Avatar variant="circular" src={user?.avatar || user?.twitter?.avatar || ''} />
-          <Stack direction={'column'} paddingLeft={1}>
-            <Typography variant="h6">{user?.domain || null}</Typography>
-            <Typography variant="body1">{formatAddress(user?.address)}</Typography>
-          </Stack>
+    <Stack direction={isSender ? 'row-reverse' : 'row'} paddingY={2}>
+      <ProfileImage address={message.senderAddress as string} />
+      <Stack direction={'column'} >
+        <Stack direction={isSender ? 'row-reverse' : 'row'}>
+          {isSender ? <Typography paddingX={1} variant='body1'>Me</Typography> : <Address address={address || ''} variant={'body1'} /> }
+          <Chip label={formatTime(message.sent)} variant="outlined" size="small" />
         </Stack>
-      </Grid>
-    </Link>
+        <Typography textAlign={isSender ? 'right' : 'left'} paddingX={1}>
+          {message.error ? (
+            `Error: ${message.error?.message}`
+          ) : 
+              message.content  // <Emoji text={message.content || ''} />
+          }
+        </Typography>
+      </Stack>
+    </Stack>
   )
 }
 

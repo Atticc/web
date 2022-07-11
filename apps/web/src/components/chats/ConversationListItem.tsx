@@ -21,7 +21,6 @@ export const ConversationListItem = ({ conversation, isSelected }: ConversationL
   const colorTheme = useTheme().palette
   const { loading: isLoadingEns } = useEns(conversation.peerAddress)
   const { messages, loading: isLoadingConversation } = useConversation(conversation.peerAddress)
-  console.log(messages)
 
   if (!conversation) {
     return null
@@ -48,18 +47,18 @@ export const ConversationListItem = ({ conversation, isSelected }: ConversationL
           paddingX: 1,
         }}
       >
-        <Typography variant='body2'>
-          {formatDate(latestMessage?.sent)}
-        </Typography>
         {loading
           ? <CircularProgress />
           : <Stack direction={'row'} alignItems={'center'}>
             <ProfileImage address={conversation.peerAddress} />
             <Address address={conversation?.peerAddress || ''} />
           </Stack>}
-        <Typography variant='body2'>
-          {latestMessage && truncate(latestMessage.content, 75)}
-        </Typography>
+          {latestMessage ? 
+          <Typography variant='body2'paddingTop={1} paddingLeft={1}>
+            {formatDate(latestMessage?.sent)}{`: `}
+            {truncate(latestMessage.content, 55)}
+          </Typography>
+          : null}
       </Grid>
     </Link>
   )

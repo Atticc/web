@@ -9578,7 +9578,7 @@ sturdy-websocket@^0.2.1:
   resolved "https://registry.yarnpkg.com/sturdy-websocket/-/sturdy-websocket-0.2.1.tgz#20a58fd53372ef96eaa08f3c61c91a10b07c7c05"
   integrity sha512-NnzSOEKyv4I83qbuKw9ROtJrrT6Z/Xt7I0HiP/e6H6GnpeTDvzwGIGeJ8slai+VwODSHQDooW2CAilJwT9SpRg==
 
-styled-components@^5.3.3:
+styled-components@^5.1.1, styled-components@^5.3.3:
   version "5.3.5"
   resolved "https://registry.yarnpkg.com/styled-components/-/styled-components-5.3.5.tgz#a750a398d01f1ca73af16a241dec3da6deae5ec4"
   integrity sha512-ndETJ9RKaaL6q41B69WudeqLzOpY1A/ET/glXkNZ2T7dPjPqpPCXXQjDFYZWwNnE5co0wX+gTCqx9mfxTmSIPg==
@@ -10801,6 +10801,18 @@ web3@1.7.1:
     web3-net "1.7.1"
     web3-shh "1.7.1"
     web3-utils "1.7.1"
+
+web3modal-dynamic-import@^1.11.1:
+  version "1.11.1"
+  resolved "https://registry.yarnpkg.com/web3modal-dynamic-import/-/web3modal-dynamic-import-1.11.1.tgz#dcfb30264da11c6985c187ccc6209a8710511b88"
+  integrity sha512-E371wfcaE07Jrscte1jl5OixVvnVnvbLsBppWVHmqoEn+GYUGIYmIIHkpGy0J3Kd+RSBKNmF5TthJDFM8tVU0A==
+  dependencies:
+    detect-browser "^5.1.0"
+    prop-types "^15.7.2"
+    react "^16.8.6"
+    react-dom "^16.8.6"
+    styled-components "^5.1.1"
+    tslib "^1.10.0"
 
 web3modal@^1.9.8:
   version "1.9.8"

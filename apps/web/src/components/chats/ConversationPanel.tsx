@@ -32,7 +32,6 @@ export const ConversationPanel = ({ onConnect }: ConversationPanelProps) => {
   const { conversations, loadingConversations, client } = useXmtp()
 
   const handleSetTab = (_: React.ChangeEvent<{}>, value: ConversationListType) => {
-    console.log(value)
     setTab(value)
   }
 
@@ -88,7 +87,7 @@ export const ConversationPanel = ({ onConnect }: ConversationPanelProps) => {
           ))}
         </Tabs>
       </Grid>
-      <Grid item key={tab}>
+      <Grid item key={tab} sx={{overflowY: 'auto'}} maxHeight={'calc(100vh - 156px)'}>
         {tab == ConversationListType.friends ? renderFriends() : renderConversations()}
       </Grid>
     </Grid>

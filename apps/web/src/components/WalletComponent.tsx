@@ -1,9 +1,7 @@
-import { Avatar, Button, Grid, Stack, Typography, Menu, MenuItem, useTheme, CircularProgress } from '@mui/material'
-import useEns from '@utils/useEns'
+import { Button, Grid, Stack, Menu, MenuItem, useTheme, CircularProgress } from '@mui/material'
 import useWallet from '@utils/useWallet'
 import { useRouter } from 'next/router'
 import { useCallback, useState, MouseEvent } from 'react'
-import { formatAddress } from '../utils/helper'
 import { PrimaryDarkButton } from './buttons/Buttons'
 import Address from './users/Address'
 import ProfileImage from './users/Avatar'
@@ -11,8 +9,7 @@ import ProfileImage from './users/Avatar'
 export function WalletComponent() {
   const router = useRouter()
   const colorTheme = useTheme().palette
-  const { connect, disconnect, address, provider } = useWallet()
-  const { name } = useEns(address)
+  const { connect, disconnect, address } = useWallet()
   const [loading, setLoading] = useState(false)
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)

@@ -3,17 +3,16 @@ import { AppProps } from 'next/app'
 import CssBaseline from '@mui/material/CssBaseline'
 import { CacheProvider, EmotionCache } from '@emotion/react'
 import createEmotionCache from '@app/createEmotionCache'
+import dynamic from 'next/dynamic'
+import { APP_NAME } from '@app/config'
 
 import { appWithTranslation } from 'next-i18next'
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache()
 
-import dynamic from 'next/dynamic'
-import { APP_NAME } from '@app/config'
 
 const AppWithoutSSR = dynamic(() => import('@c/App'), {
   ssr: false,
-  suspense: false,
 })
 
 const title = `${APP_NAME} - For Crypto Communities`

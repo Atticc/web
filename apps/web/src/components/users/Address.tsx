@@ -16,7 +16,7 @@ const Address = ({ address, variant = 'h6', showAddress = false }: AddressProps)
   const { name, loading } = useEns(address)
 
   return (
-    <Stack direction={'column'} paddingLeft={1}>
+    <Stack direction={'column'} paddingX={1}>
       <Typography variant={variant}>{name ?? (!showAddress ? shortAddress(address) : '') }</Typography>
       {showAddress ? <Typography variant="body1">{shortAddress(address)}</Typography> : null}
     </Stack>

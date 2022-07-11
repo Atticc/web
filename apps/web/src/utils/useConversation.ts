@@ -15,7 +15,10 @@ const useConversation = (peerAddress: string, onMessageCallback?: OnMessageCallb
       if (!client) {
         return
       }
-      setConversation(await client.conversations.newConversation(peerAddress))
+      try {
+        setConversation(await client.conversations.newConversation(peerAddress))
+      } catch(err) {
+      }
     }
     getConvo()
   }, [client, peerAddress])

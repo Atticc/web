@@ -1,5 +1,5 @@
 import { Message } from '@xmtp/xmtp-js'
-import { useCallback, useReducer, useContext } from 'react'
+import { useCallback, useReducer } from 'react'
 import { MessageStoreEvent } from './XmtpContext'
 
 type MessageDeduper = (message: Message) => boolean
@@ -29,10 +29,15 @@ const useMessageStore = () => {
     {}
   )
 
-  const getMessages = useCallback((peerAddress: string) => messageStore[peerAddress] || [], [messageStore])
+  const getMessages = useCallback(
+    (peerAddress: string) => messageStore[peerAddress] || [],
+    [messageStore]
+  )
 
   return {
     getMessages,
     dispatchMessages,
   }
 }
+
+export default useMessageStore

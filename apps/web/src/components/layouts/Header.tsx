@@ -2,10 +2,14 @@ import { Container, Grid, Typography, useTheme, Link as A } from '@mui/material'
 import { useTranslation } from 'next-i18next'
 import Link from 'next/link'
 import { SwitchBox } from './SwitchBox'
-import { useRouter } from 'next/router'
 import { useScrollPosition } from '../../utils/useScrollPosition'
-import { WalletComponent } from '../WalletComponent'
 import { AtticcIcon } from '@c/icons/AtticcIcon'
+import Wallet from '../WalletComponent'
+import dynamic from 'next/dynamic'
+
+// const LazyWallet = dynamic(() => import('../WalletComponent'), {
+//   ssr: false,
+// })
 
 const menu = [
   { title: 'Discover', path: '/users/' },
@@ -14,7 +18,6 @@ const menu = [
 
 function Header() {
   const { t } = useTranslation('common')
-  const router = useRouter()
   const colorTheme = useTheme().palette
   const scrollPosition = useScrollPosition()
 
@@ -22,6 +25,8 @@ function Header() {
     <Container
       disableGutters
       sx={{
+        maxHeight: 68,
+        minHeight: 68,
         position: `sticky`,
         top: 0,
         zIndex: scrollPosition ? 1000 : 1,
@@ -31,7 +36,7 @@ function Header() {
       }}
     >
       <Grid container sx={{
-        display: 'flex', justifyContent: 'space-between', paddingX: 10, minHeight: 68
+        display: 'flex', justifyContent: 'space-between', paddingX: 10, height: 68
       }} alignItems={'center'} direction={'row'}>
         <Grid item>
           <Grid container direction={'row'} alignItems={'center'}>
@@ -45,6 +50,7 @@ function Header() {
                 <Typography
                   variant="actionMedium"
                   sx={{
+                    color: '#fff',
                     paddingX: 5,
                     cursor: 'pointer',
                     ':hover': {
@@ -64,6 +70,7 @@ function Header() {
               <Typography
                 variant="actionMedium"
                 sx={{
+                  color: '#fff',
                   cursor: 'pointer',
                   ':hover': {
                     color: colorTheme.secondary.main,
@@ -74,7 +81,7 @@ function Header() {
               </Typography>
             </Link>
             <SwitchBox />
-            <WalletComponent />
+            <Wallet />
           </Grid>
         </Grid>
       </Grid>

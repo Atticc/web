@@ -1,13 +1,13 @@
 import { useCallback, useEffect, useState, createContext } from 'react'
-import { ethers, Signer } from 'ethers'
-import Web3Modal, { IProviderOptions, providers } from 'web3modal'
-import WalletConnectProvider from '@walletconnect/web3-provider'
+import type {Signer, ethers as Ether} from 'ethers'
+// import { ethers } from 'ethers'
+import Web3Modal, { providers } from 'web3modal-dynamic-import'
 import CyberConnect from '@cyberlab/cyberconnect'
 import { ALCHEMY_RPC_ETH } from '@app/config'
 import { useTheme } from '@mui/material/styles'
 
 export type WalletContextType = {
-  provider: ethers.providers.Web3Provider | undefined
+  provider: Ether.providers.Web3Provider | undefined
   signer: Signer | undefined
   address: string | undefined
   web3Modal: Web3Modal | undefined
@@ -42,7 +42,7 @@ type WalletProviderProps = {
 
 export const WalletProvider = ({ children }: WalletProviderProps): JSX.Element => {
   const theme = useTheme()
-  const [provider, setProvider] = useState<ethers.providers.Web3Provider>()
+  const [provider, setProvider] = useState<Ether.providers.Web3Provider>()
   const [signer, setSigner] = useState<Signer>()
   const [cyberConnect, setCyberConnect] = useState<CyberConnect>()
   const [web3Modal, setWeb3Modal] = useState<Web3Modal>()
@@ -121,12 +121,13 @@ export const WalletProvider = ({ children }: WalletProviderProps): JSX.Element =
     try {
       const instance = await web3Modal.connect()
       if (!instance) return
-      instance.on('accountsChanged', handleAccountsChanged)
-      const provider = new ethers.providers.Web3Provider(instance)
-      const signer = provider.getSigner()
-      setSigner(signer)
-      setAddress(await signer.getAddress())
-      initCyberConnect(provider.provider)
+      const signer = await handleSetup(instance)
+      // const provider = new ethers.providers.Web3Provider(instance)
+      // const signer = provider.getSigner()
+      // setProvider(provider)
+      // setSigner(signer)
+      // setAddress(await signer.getAddress())
+      // initCyberConnect(provider.provider)
       return signer
     } catch (e) {
       // TODO: better error handling/surfacing here.
@@ -137,9 +138,10 @@ export const WalletProvider = ({ children }: WalletProviderProps): JSX.Element =
   }, [web3Modal, handleAccountsChanged])
 
   useEffect(() => {
-    const providerOptions: IProviderOptions = {
+    const providerOptions: any = {
       walletconnect: {
-        package: WalletConnectProvider,
+        package: () => import('@walletconnect/web3-provider'),
+        packageFactory: true,
         options: {
           rpc: {
             1: ALCHEMY_RPC_ETH,
@@ -147,7 +149,7 @@ export const WalletProvider = ({ children }: WalletProviderProps): JSX.Element =
         },
       },
     }
-    if (!window.ethereum || !window.ethereum.isMetaMask) {
+    if (!window?.ethereum || !window?.ethereum?.isMetaMask) {
       providerOptions['custom-metamask'] = {
         display: {
           logo: providers.METAMASK.logo,
@@ -156,7 +158,7 @@ export const WalletProvider = ({ children }: WalletProviderProps): JSX.Element =
         },
         package: {},
         connector: async () => {
-          window.open('https://metamask.io')
+          window?.open('https://metamask.io')
           // throw new Error("MetaMask not installed");
         },
       }
@@ -172,16 +174,27 @@ export const WalletProvider = ({ children }: WalletProviderProps): JSX.Element =
       const cachedProviderName = JSON.parse(cachedProviderJson)
       const instance = await web3Modal.connectTo(cachedProviderName)
       if (!instance) return
-      instance.on('accountsChanged', handleAccountsChanged)
-      const provider = new ethers.providers.Web3Provider(instance)
-      const signer = provider.getSigner()
-      setProvider(provider)
-      setSigner(signer)
-      setAddress(await signer.getAddress())
-      initCyberConnect(provider.provider)
+      await handleSetup(instance)
     }
     initCached()
   }, [web3Modal, handleAccountsChanged])
+
+  const handleSetup = async (instance: any) => {
+    instance.on('accountsChanged', handleAccountsChanged)
+    try {
+      return import("ethers").then(async ({ethers}) => {
+        const provider = new ethers.providers.Web3Provider(instance)
+        const signer = provider.getSigner()
+        setProvider(provider)
+        setSigner(signer)
+        setAddress(await signer.getAddress())
+        initCyberConnect(provider.provider)
+        return signer
+      })
+    } catch (e) {
+      console.log('Error while creating ethers provider');
+    }
+  }
 
   return (
     <WalletContext.Provider
