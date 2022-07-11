@@ -2,11 +2,11 @@ import { ColorModeContext } from '@c/layouts/SwitchBox'
 import { QueryClientProvider } from 'react-query'
 import { Provider } from 'react-redux'
 import store from '../store'
-import { Web3ContextProvider } from '@utils/Web3Context'
 import client from '@req/client'
 import React from 'react'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import { getDesignTokens } from '@app/theme'
+import { WalletProvider } from '@utils/WalletProvider'
 
 type AppProps = {
   children?: React.ReactNode
@@ -30,9 +30,7 @@ function App({ children }: AppProps) {
       <Provider store={store}>
         <ThemeProvider theme={theme}>
           <QueryClientProvider client={client}>
-            <Web3ContextProvider>
-              {children}
-            </Web3ContextProvider>
+            <WalletProvider>{children}</WalletProvider>
           </QueryClientProvider>
         </ThemeProvider>
       </Provider>

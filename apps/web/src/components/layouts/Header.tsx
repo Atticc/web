@@ -65,7 +65,6 @@ function Header() {
                   </Typography>
                 </Link>
               ))}
-
             </Grid>
           </Grid>
           <Grid item>

@@ -10,6 +10,7 @@ import { getIdentity, useIdentity } from '@req/cyberconnect/queries/getIdentity'
 import { isValidAddr } from '@utils/helper'
 import Head from 'next/head'
 import dynamic from 'next/dynamic'
+import { APP_NAME } from '@/app/config'
 
 const NftSection = dynamic(() => import('@c/NFT/NftSection'), {
   suspense: false,
@@ -29,7 +30,7 @@ const UserDetailPage: NextPage<UserDetailProps> = ({ address, userData }) => {
   const [tab, setTab] = useState(1)
   const colorTheme = useTheme().palette
   const { data: user, refetch } = useIdentity({ address, data: userData })
-  const title = `${user?.domain}(${address}) - CryptoCorner Profile`
+  const title = `${user?.domain}(${address}) - ${APP_NAME} Profile`
 
   useEffect(() => {
     refetch()
@@ -79,7 +80,7 @@ export default UserDetailPage
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { address } = context.query
-  let userData: IUser | undefined = undefined
+  let userData: any = {}
 
   try {
     if (isValidAddr(String(address))) {
@@ -89,6 +90,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     }
   } catch (err: any) {
     console.warn(err.message)
+    return {
+      notFound: true,
+    }
   }
 
   if (!userData?.address) {

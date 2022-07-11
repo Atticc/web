@@ -1,8 +1,5 @@
 import { Divider, Grid, Typography, useTheme } from '@mui/material'
-import { unlink } from 'fs'
-import Link from 'next/link'
 import { IUser } from '../app/constants'
-import { formatAddress } from '../utils/helper'
 import { ContributorListItem } from './ContributorListItem'
 
 export const ContributorsList = ({

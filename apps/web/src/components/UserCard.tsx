@@ -1,11 +1,11 @@
 import { ConnectionType } from '@cyberlab/cyberconnect'
 import { Avatar, Grid, Stack, Typography, useTheme } from '@mui/material'
+import useWallet from '@utils/useWallet'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { IUser } from '../app/constants'
 import { useFollowStatus } from '../graphql/cyberconnect/queries/getFollowStatus'
 import { formatAddress, isSameAddr } from '../utils/helper'
-import { useWeb3 } from '../utils/Web3Context'
 import { PrimaryDarkButton } from './buttons/Buttons'
 import { TwitterIcon } from './icons/TwitterIcon'
 import UserConnectionModal from './modal/UserConnectionModal'
@@ -14,14 +14,14 @@ export const UserCard = ({ user, isDetail = false }: { user: IUser; isDetail?: b
   const [showConnection, setShowConnection] = useState(false)
   const [isFollowing, setIsFollowing] = useState(false)
   const [loading, setLoading] = useState(false)
-  const { address, cyberConnect } = useWeb3()
+  const { address, cyberConnect } = useWallet()
 
   const handleFetchFollowStatusResult = (data: any) => {
     setIsFollowing(data?.isFollowing)
   }
 
   const { data: followStatus, refetch: refetchFollowStatus } = useFollowStatus({
-    fromAddr: address,
+    fromAddr: address || '',
     toAddr: user.address,
     onSuccess: handleFetchFollowStatusResult,
   })

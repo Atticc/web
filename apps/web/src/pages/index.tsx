@@ -4,14 +4,13 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useEffect, useState } from 'react'
 import { Grid, Tab, Tabs, Typography, useTheme } from '@mui/material'
 import { communities, IUser, posts, users } from '../app/constants'
-import Link from 'next/link'
 import { CommunitiesList } from '../components/CommunitiesList'
 import { ContributorsList } from '../components/ContributorsList'
 import { PostListItem } from '../components/PostListItem'
 import { useRecommendation } from '../graphql/cyberconnect/queries/getRecommendation'
-import { useWeb3 } from '../utils/Web3Context'
 import { usePopular } from '../graphql/cyberconnect/queries/getPopular'
 import { isValidAddr } from '../utils/helper'
+import useWallet from '@utils/useWallet'
 
 const tabs = [
   { label: 'Explore', value: 0 },
@@ -20,12 +19,12 @@ const tabs = [
 ]
 
 const Home: NextPage = () => {
-  const { address } = useWeb3()
+  const { address } = useWallet()
   const handleSuccess = (data: [IUser]) => {
     setUsers(data)
   }
   const { refetch: fetchRecommendations } = useRecommendation({
-    address,
+    address: address || '',
     onSuccess: handleSuccess,
   })
   const { refetch: fetchPopular } = usePopular({
@@ -37,7 +36,7 @@ const Home: NextPage = () => {
   const [users, setUsers] = useState<[IUser] | []>([])
 
   useEffect(() => {
-    if (isValidAddr(address)) {
+    if (isValidAddr(String(address))) {
       fetchRecommendations()
     } else {
       fetchPopular()

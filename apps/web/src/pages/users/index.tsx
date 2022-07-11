@@ -4,13 +4,10 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useEffect, useState } from 'react'
 import { Grid, Typography, useTheme } from '@mui/material'
 import { IUser } from '../../app/constants'
-import Link from 'next/link'
 import { UserCard } from '../../components/UserCard'
 import { usePopular } from '../../graphql/cyberconnect/queries/getPopular'
-import { useWeb3 } from '../../utils/Web3Context'
 
 const Home: NextPage = () => {
-  const { address } = useWeb3()
   const [popularUsers, setPopularUsers] = useState<Array<IUser>>([])
 
   const handleSuccess = (data: [IUser]) => {

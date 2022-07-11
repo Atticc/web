@@ -1,16 +1,16 @@
 import { Avatar, Button, Grid, Stack, Typography, Menu, MenuItem, useTheme } from '@mui/material'
+import useEns from '@utils/useEns'
+import useWallet from '@utils/useWallet'
 import { useRouter } from 'next/router'
-import { useCallback, useEffect, useState, MouseEvent } from 'react'
-import { useLocalStorage } from 'usehooks-ts'
+import { useCallback, useState, MouseEvent } from 'react'
 import { formatAddress } from '../utils/helper'
-import { useWeb3 } from '../utils/Web3Context'
 import { PrimaryDarkButton } from './buttons/Buttons'
 
 export function WalletComponent() {
   const router = useRouter()
   const colorTheme = useTheme().palette
-  const [connected] = useLocalStorage('WEB3_CONNECT_CACHED_PROVIDER', null)
-  const { connectWallet, disconnect, address, domain, avatar, provider } = useWeb3()
+  const { connect, disconnect, address, provider } = useWallet()
+  const { name, avatarUrl } = useEns(address)
   const [loading, setLoading] = useState(false)
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
@@ -22,32 +22,26 @@ export function WalletComponent() {
     setAnchorEl(null)
   }
 
-  const connect = useCallback(async () => {
+  const connectWallet = useCallback(async () => {
     setLoading(true)
-    await connectWallet()
+    await connect()
     setLoading(false)
-  }, [connectWallet])
+  }, [connect])
 
-  const handleDisconnect = () => {
+  const handleDisconnect = useCallback(async () => {
+    await disconnect()
     handleClose()
-    disconnect()
-  }
+  }, [disconnect])
 
   const gotoProfile = (e: MouseEvent) => {
     e.preventDefault()
     router.push(`/users/${address}`)
   }
 
-  useEffect(() => {
-    if (connected) {
-      connect()
-    }
-  }, [connected])
-
   return (
     <Grid item>
       {!provider ? (
-        <PrimaryDarkButton textcontent={loading ? 'Loading...' : 'Connect Wallet'} onClick={connect} />
+        <PrimaryDarkButton textcontent={loading ? 'Loading...' : 'Connect Wallet'} onClick={connectWallet} />
       ) : (
         <Button
           id="basic-button"
@@ -58,9 +52,9 @@ export function WalletComponent() {
           color={'backgroundLight100'}
         >
           <Stack direction={'row'} alignItems={'center'}>
-            <Avatar variant="circular" src={avatar || ''} />
+            <Avatar variant="circular" src={avatarUrl || ''} />
             <Stack direction={'column'} paddingLeft={1}>
-              <Typography variant="h6">{domain || null}</Typography>
+              <Typography variant="h6">{name || null}</Typography>
               <Typography variant="body1">{formatAddress(address || '')}</Typography>
             </Stack>
           </Stack>
