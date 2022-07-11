@@ -1,7 +1,11 @@
 /** @type {import('next').NextConfig} */
 const { i18n } = require('./next-i18next.config');
 const withTM = require('next-transpile-modules')(['ui']);
-module.exports = withTM({
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: process.env.ANALYZE === 'true',
+})
+
+module.exports = withBundleAnalyzer(withTM({
   swcMinify: true,
   reactStrictMode: true,
   eslint: {
@@ -45,4 +49,4 @@ module.exports = withTM({
     ];
   },
   i18n,
-});
+}));

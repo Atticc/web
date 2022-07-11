@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "b": "ANALYZE=true yarn build",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
@@ -39,6 +40,7 @@
   },
   "devDependencies": {
     "@netlify/plugin-nextjs": "^4.9.3",
+    "@next/bundle-analyzer": "^12.2.2",
     "@testing-library/dom": "^8.15.0",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.3.0",
