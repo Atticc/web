@@ -36,7 +36,7 @@ export const ContributorListItem = ({
             <Typography variant="body1">{formatAddress(user?.address)}</Typography>
           </Stack>
         </Stack>
-        <Typography variant="body2">{user?.recommendationReason}</Typography>
+        {showReason ? <Typography variant="body2">{user?.recommendationReason}</Typography> : null}
       </Grid>
     </Link>
   )

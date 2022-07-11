@@ -6,7 +6,7 @@ export const CommunitiesList = ({ title, data }: { title?: string; data: Array<I
   const colorTheme = useTheme().palette
 
   return (
-    <Grid container direction={'column'} sx={{ border: 1, borderRadius: 2, paddingX: 1, paddingY: 1 }} spacing={1}>
+    <Grid container direction={'column'} sx={{ border: 1, borderRadius: 2, paddingX: 1, paddingY: 1 }}>
       <Grid item>
         <Typography marginBottom={1} variant="h5">
           {title}

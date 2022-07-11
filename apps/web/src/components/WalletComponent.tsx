@@ -1,16 +1,15 @@
-import { Avatar, Button, Grid, Stack, Typography, Menu, MenuItem, useTheme } from '@mui/material'
+import { Button, Grid, Stack, Menu, MenuItem, useTheme, CircularProgress } from '@mui/material'
+import useWallet from '@utils/useWallet'
 import { useRouter } from 'next/router'
-import { useCallback, useEffect, useState, MouseEvent } from 'react'
-import { useLocalStorage } from 'usehooks-ts'
-import { formatAddress } from '../utils/helper'
-import { useWeb3 } from '../utils/Web3Context'
+import { useCallback, useState, MouseEvent } from 'react'
 import { PrimaryDarkButton } from './buttons/Buttons'
+import Address from './users/Address'
+import ProfileImage from './users/Avatar'
 
 export function WalletComponent() {
   const router = useRouter()
   const colorTheme = useTheme().palette
-  const [connected] = useLocalStorage('WEB3_CONNECT_CACHED_PROVIDER', null)
-  const { connectWallet, disconnect, address, domain, avatar } = useWeb3()
+  const { connect, disconnect, address } = useWallet()
   const [loading, setLoading] = useState(false)
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
@@ -22,32 +21,26 @@ export function WalletComponent() {
     setAnchorEl(null)
   }
 
-  const connect = useCallback(async () => {
+  const connectWallet = useCallback(async () => {
     setLoading(true)
-    await connectWallet()
+    await connect()
     setLoading(false)
-  }, [connectWallet])
+  }, [connect])
 
-  const handleDisconnect = () => {
+  const handleDisconnect = useCallback(async () => {
+    await disconnect()
     handleClose()
-    disconnect()
-  }
+  }, [disconnect])
 
   const gotoProfile = (e: MouseEvent) => {
     e.preventDefault()
     router.push(`/users/${address}`)
   }
 
-  useEffect(() => {
-    if (connected) {
-      connect()
-    }
-  }, [connected])
-
-  return (
+  return loading ? <CircularProgress /> : (
     <Grid item>
       {!address ? (
-        <PrimaryDarkButton textcontent={loading ? 'Loading...' : 'Connect Wallet'} onClick={connect} />
+        <PrimaryDarkButton textcontent={loading ? 'Loading...' : 'Connect Wallet'} onClick={connectWallet} />
       ) : (
         <Button
           id="basic-button"
@@ -58,11 +51,8 @@ export function WalletComponent() {
           color={'backgroundLight100'}
         >
           <Stack direction={'row'} alignItems={'center'}>
-            <Avatar variant="circular" src={avatar || ''} />
-            <Stack direction={'column'} paddingLeft={1}>
-              <Typography variant="h6">{domain || null}</Typography>
-              <Typography variant="body1">{formatAddress(address)}</Typography>
-            </Stack>
+            <ProfileImage address={String(address)} />
+            <Address address={String(address)} showAddress  />
           </Stack>
         </Button>
       )}
@@ -83,3 +73,5 @@ export function WalletComponent() {
     </Grid>
   )
 }
+
+export default WalletComponent

@@ -1,55 +1,30 @@
-export type Identity = {
-  address: string
-  domain: string
-  ens: string
-  social: {
-    twitter: string
+export interface IPoapNft {
+  event: {
+    id: number
+    fancy_id: string
+    name: string
+    event_url: string
+    image_url: string
+    country?: string
+    city?: string
+    description: string
+    year: number
+    start_date: string
+    end_date: string
+    expiry_date: string
+    supply: number
   }
-  avatar: string
-  joinTime: number
-  followerCount: number
-  followingCount: number
+  tokenId: string
+  owner: string
+  chain: string
+  created: string
 }
 
-export type SocialConnection = {
-  address: string
-  alias: string
-  avatar: string
-  domain: string
-  d: string
-}
-
-export type SocialConnectionsPaginated = {
-  pageInfo: {
-    hasNextPage: boolean
-    hasPreviousPage: boolean
-    startCursor: string
-    endCursor: string
-  }
-  list: SocialConnection[]
-}
-
-export type AllSocialConnections = {
-  identity: {
-    avatar: string
-    followers: SocialConnectionsPaginated
-    followings: SocialConnectionsPaginated
-    friends: SocialConnectionsPaginated
-  }
-}
-
-export type RecommendationData = {
-  pageInfo: {
-    hasNextPage: boolean
-    hasPreviousPage: boolean
-    startCursor: string
-    endCursor: string
-  }
-  list: SocialConnection[]
-}
-
-export type AllRecommendations = {
-  recommendations: {
-    data: RecommendationData
-  }
+export interface IOatNft {
+  id: string
+  image: string
+  name: string
+  description?: string
+  animationURL?: string
+  chain: string
 }

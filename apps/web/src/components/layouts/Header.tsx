@@ -1,28 +1,23 @@
-import { Container, Grid, Typography, useTheme, styled } from '@mui/material'
+import { Container, Grid, Typography, useTheme, Link as A } from '@mui/material'
 import { useTranslation } from 'next-i18next'
 import Link from 'next/link'
 import { SwitchBox } from './SwitchBox'
-import { useRouter } from 'next/router'
-
 import { useScrollPosition } from '../../utils/useScrollPosition'
-import { WalletComponent } from '../WalletComponent'
+import { AtticcIcon } from '@c/icons/AtticcIcon'
+import Wallet from '../WalletComponent'
+import dynamic from 'next/dynamic'
 
-const NavContainer = styled(Container)(() => ({
-  padding: '8px',
-  display: 'flex',
-  alignItems: 'center',
-  minHeight: '60px',
-  color: 'white',
-}))
+// const LazyWallet = dynamic(() => import('../WalletComponent'), {
+//   ssr: false,
+// })
 
 const menu = [
   { title: 'Discover', path: '/users/' },
-  { title: 'Communities', path: '/communities/' },
+  // { title: 'Communities', path: '/communities/' },
 ]
 
 function Header() {
   const { t } = useTranslation('common')
-  const router = useRouter()
   const colorTheme = useTheme().palette
   const scrollPosition = useScrollPosition()
 
@@ -30,6 +25,8 @@ function Header() {
     <Container
       disableGutters
       sx={{
+        maxHeight: 68,
+        minHeight: 68,
         position: `sticky`,
         top: 0,
         zIndex: scrollPosition ? 1000 : 1,
@@ -38,29 +35,23 @@ function Header() {
         boxShadow: scrollPosition ? '0px 4px 21px rgba(0, 23, 46, 0.66)' : 'none',
       }}
     >
-      <NavContainer maxWidth="lg">
-        <Grid container spacing={2} sx={{ justifyContent: 'space-between' }}>
-          <Grid item sx={{ alignSelf: 'center' }}>
-            <Link href={'/'}>
-              <Typography
-                variant="actionMedium"
-                sx={{
-                  padding: 5,
-                  cursor: 'pointer',
-                  ':hover': {
-                    color: colorTheme.secondary.main,
-                  },
-                }}
-              >
-                Crypto Corner
-              </Typography>
+      <Grid container sx={{
+        display: 'flex', justifyContent: 'space-between', paddingX: 10, height: 68
+      }} alignItems={'center'} direction={'row'}>
+        <Grid item>
+          <Grid container direction={'row'} alignItems={'center'}>
+            <Link href={'/'} passHref>
+              <A>
+                <AtticcIcon color={colorTheme.dark} height={40} width={40} />
+              </A>
             </Link>
             {menu.map((m) => (
-              <Link href={m.path} key={m.title}>
+              <Link href={m.path} key={m.title} passHref>
                 <Typography
                   variant="actionMedium"
                   sx={{
-                    padding: 5,
+                    color: '#fff',
+                    paddingX: 5,
                     cursor: 'pointer',
                     ':hover': {
                       color: colorTheme.secondary.main,
@@ -72,14 +63,28 @@ function Header() {
               </Link>
             ))}
           </Grid>
-          <Grid item>
-            <Grid container direction={'row'}>
-              <SwitchBox />
-              <WalletComponent />
-            </Grid>
+        </Grid>
+        <Grid item>
+          <Grid container direction={'row'} alignItems={'center'}>
+            <Link href={'/chats'}>
+              <Typography
+                variant="actionMedium"
+                sx={{
+                  color: '#fff',
+                  cursor: 'pointer',
+                  ':hover': {
+                    color: colorTheme.secondary.main,
+                  },
+                }}
+              >
+                Chats
+              </Typography>
+            </Link>
+            <SwitchBox />
+            <Wallet />
           </Grid>
         </Grid>
-      </NavContainer>
+      </Grid>
     </Container>
   )
 }
