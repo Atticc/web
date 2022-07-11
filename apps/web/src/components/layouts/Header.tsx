@@ -1,4 +1,4 @@
-import { Container, Grid, Typography, useTheme, styled } from '@mui/material'
+import { Container, Grid, Typography, useTheme, styled, Link as A } from '@mui/material'
 import { useTranslation } from 'next-i18next'
 import Link from 'next/link'
 import { SwitchBox } from './SwitchBox'
@@ -6,6 +6,7 @@ import { useRouter } from 'next/router'
 import { useScrollPosition } from '../../utils/useScrollPosition'
 import { WalletComponent } from '../WalletComponent'
 import { APP_NAME } from '../../app/config'
+import { AtticcIcon } from '@c/icons/AtticcIcon'
 
 const NavContainer = styled(Container)(() => ({
   padding: '8px',
@@ -41,39 +42,48 @@ function Header() {
       <NavContainer maxWidth="lg">
         <Grid container spacing={2} sx={{ justifyContent: 'space-between' }}>
           <Grid item sx={{ alignSelf: 'center' }}>
-            <Link href={'/'}>
-              <Typography
-                variant="actionMedium"
-                sx={{
-                  padding: 5,
-                  cursor: 'pointer',
-                  ':hover': {
-                    color: colorTheme.secondary.main,
-                  },
-                }}
-              >
-                {APP_NAME}
-              </Typography>
-            </Link>
-            {menu.map((m) => (
-              <Link href={m.path} key={m.title}>
+            <Grid container direction={'row'}>
+              <Link href={'/'} passHref>
+                <A>
+                  <AtticcIcon color={colorTheme.dark} height={36} width={36} />
+                </A>
+              </Link>
+              {menu.map((m) => (
+                <Link href={m.path} key={m.title} passHref>
+                  <Typography
+                    variant="actionMedium"
+                    sx={{
+                      paddingTop: 1,
+                      paddingX: 5,
+                      cursor: 'pointer',
+                      ':hover': {
+                        color: colorTheme.secondary.main,
+                      },
+                    }}
+                  >
+                    {m.title}
+                  </Typography>
+                </Link>
+              ))}
+
+            </Grid>
+          </Grid>
+          <Grid item>
+            <Grid container direction={'row'}>
+              <Link href={'/chats'}>
                 <Typography
                   variant="actionMedium"
                   sx={{
-                    padding: 5,
+                    paddingTop: 2,
                     cursor: 'pointer',
                     ':hover': {
                       color: colorTheme.secondary.main,
                     },
                   }}
                 >
-                  {m.title}
+                  Chats
                 </Typography>
               </Link>
-            ))}
-          </Grid>
-          <Grid item>
-            <Grid container direction={'row'}>
               <SwitchBox />
               <WalletComponent />
             </Grid>
