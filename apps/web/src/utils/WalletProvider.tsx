@@ -102,6 +102,7 @@ export const WalletProvider = ({ children }: WalletProviderProps): JSX.Element =
         localStorage.removeItem(key)
       }
     })
+    setAddress(undefined)
     setSigner(undefined)
     setCyberConnect(undefined)
   }, [web3Modal])
@@ -177,6 +178,7 @@ export const WalletProvider = ({ children }: WalletProviderProps): JSX.Element =
       setProvider(provider)
       setSigner(signer)
       setAddress(await signer.getAddress())
+      initCyberConnect(provider.provider)
     }
     initCached()
   }, [web3Modal, handleAccountsChanged])

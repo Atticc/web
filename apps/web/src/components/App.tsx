@@ -7,6 +7,7 @@ import React from 'react'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import { getDesignTokens } from '@app/theme'
 import { WalletProvider } from '@utils/WalletProvider'
+import XmtpProvider from '@utils/XmtpContext'
 
 type AppProps = {
   children?: React.ReactNode
@@ -30,7 +31,11 @@ function App({ children }: AppProps) {
       <Provider store={store}>
         <ThemeProvider theme={theme}>
           <QueryClientProvider client={client}>
-            <WalletProvider>{children}</WalletProvider>
+            <WalletProvider>
+              <XmtpProvider>
+                <div>{children}</div>
+              </XmtpProvider>
+            </WalletProvider>
           </QueryClientProvider>
         </ThemeProvider>
       </Provider>

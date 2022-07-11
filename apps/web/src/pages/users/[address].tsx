@@ -14,6 +14,7 @@ import { APP_NAME } from '@/app/config'
 
 const NftSection = dynamic(() => import('@c/NFT/NftSection'), {
   suspense: false,
+  ssr: false
 })
 
 interface UserDetailProps {
@@ -43,8 +44,8 @@ const UserDetailPage: NextPage<UserDetailProps> = ({ address, userData }) => {
   return (
     <LayoutWithoutFooter>
       <Head>
-        <title>{title}</title>
-        <meta property="og:title" content={title} key="title" />
+        <title key="title">{title}</title>
+        <meta property="og:title" content={title} key="og:title" />
       </Head>
       <Grid container direction={'row'} columnGap={3} paddingX={5} marginTop={2}>
         <Grid item xs>

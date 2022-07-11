@@ -1,6 +1,7 @@
+import { NODE_ENV } from '@app/config'
 import { Conversation, Message, Stream } from '@xmtp/xmtp-js'
 import { useContext, useCallback, useState, useEffect } from 'react'
-import { XmtpContext } from './XMTPContext'
+import { XmtpContext } from './XmtpContext'
 
 type OnMessageCallback = () => void
 
@@ -31,7 +32,7 @@ const useConversation = (peerAddress: string, onMessageCallback?: OnMessageCallb
   useEffect(() => {
     const listMessages = async () => {
       if (!conversation) return
-      console.log('Listing messages for peer address', conversation.peerAddress)
+      NODE_ENV === 'development' && console.log('Listing messages for peer address', conversation.peerAddress)
       setLoading(true)
       const msgs = await conversation.messages({ pageSize: 100 })
       if (dispatchMessages) {

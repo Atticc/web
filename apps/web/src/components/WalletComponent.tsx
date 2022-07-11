@@ -1,16 +1,18 @@
-import { Avatar, Button, Grid, Stack, Typography, Menu, MenuItem, useTheme } from '@mui/material'
+import { Avatar, Button, Grid, Stack, Typography, Menu, MenuItem, useTheme, CircularProgress } from '@mui/material'
 import useEns from '@utils/useEns'
 import useWallet from '@utils/useWallet'
 import { useRouter } from 'next/router'
 import { useCallback, useState, MouseEvent } from 'react'
 import { formatAddress } from '../utils/helper'
 import { PrimaryDarkButton } from './buttons/Buttons'
+import Address from './users/Address'
+import ProfileImage from './users/Avatar'
 
 export function WalletComponent() {
   const router = useRouter()
   const colorTheme = useTheme().palette
   const { connect, disconnect, address, provider } = useWallet()
-  const { name, avatarUrl } = useEns(address)
+  const { name } = useEns(address)
   const [loading, setLoading] = useState(false)
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
@@ -38,9 +40,9 @@ export function WalletComponent() {
     router.push(`/users/${address}`)
   }
 
-  return (
+  return loading ? <CircularProgress /> : (
     <Grid item>
-      {!provider ? (
+      {!address ? (
         <PrimaryDarkButton textcontent={loading ? 'Loading...' : 'Connect Wallet'} onClick={connectWallet} />
       ) : (
         <Button
@@ -52,11 +54,8 @@ export function WalletComponent() {
           color={'backgroundLight100'}
         >
           <Stack direction={'row'} alignItems={'center'}>
-            <Avatar variant="circular" src={avatarUrl || ''} />
-            <Stack direction={'column'} paddingLeft={1}>
-              <Typography variant="h6">{name || null}</Typography>
-              <Typography variant="body1">{formatAddress(address || '')}</Typography>
-            </Stack>
+            <ProfileImage address={String(address)} />
+            <Address address={String(address)} showAddress  />
           </Stack>
         </Button>
       )}
