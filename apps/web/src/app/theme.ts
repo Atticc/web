@@ -75,32 +75,32 @@ export const getDesignTokens = (mode: PaletteMode) => ({
   },
   components: {
     MuiCssBaseline: {
-      styleOverrides: `
-        @font-face {
-          font-family: 'RightGroteskSpatialBold';
-          font-display: swap;
-          src: local('RightGrotesk'), local('RightGrotesk-SpatialBold'), url('/fonts/RightGrotesk-SpatialBold.woff2') format('woff2');
-          unicodeRange: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF;
-        }
-        @font-face {
-          font-family: 'RightGroteskSpatialDark';
-          font-display: swap;
-          src: local('RightGrotesk'), local('RightGrotesk-SpatialDark'), url('/fonts/RightGrotesk-SpatialDark.woff2') format('woff2');
-          unicodeRange: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF;
-        }
-        @font-face {
-          font-family: 'RightGroteskWideBold';
-          font-display: swap;
-          src: local('RightGrotesk'), local('RightGrotesk-WideBold'), url('/fonts/RightGrotesk-WideBold.woff2') format('woff2');
-          unicodeRange: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF;
-        }
-        @font-face {
-          font-family: 'RightGrotesk';
-          font-display: swap;
-          src: local('RightGrotesk'), local('RightGrotesk-Regular'), url('/fonts/RightGrotesk-Regular.woff2') format('woff2');
-          unicodeRange: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF;
-        }
-      `,
+      // styleOverrides: `
+      //   @font-face {
+      //     font-family: 'RightGroteskSpatialBold';
+      //     font-display: swap;
+      //     src: local('RightGrotesk'), local('RightGrotesk-SpatialBold'), url('/fonts/RightGrotesk-SpatialBold.woff2') format('woff2');
+      //     unicodeRange: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF;
+      //   }
+      //   @font-face {
+      //     font-family: 'RightGroteskSpatialDark';
+      //     font-display: swap;
+      //     src: local('RightGrotesk'), local('RightGrotesk-SpatialDark'), url('/fonts/RightGrotesk-SpatialDark.woff2') format('woff2');
+      //     unicodeRange: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF;
+      //   }
+      //   @font-face {
+      //     font-family: 'RightGroteskWideBold';
+      //     font-display: swap;
+      //     src: local('RightGrotesk'), local('RightGrotesk-WideBold'), url('/fonts/RightGrotesk-WideBold.woff2') format('woff2');
+      //     unicodeRange: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF;
+      //   }
+      //   @font-face {
+      //     font-family: 'RightGrotesk';
+      //     font-display: swap;
+      //     src: local('RightGrotesk'), local('RightGrotesk-Regular'), url('/fonts/RightGrotesk-Regular.woff2') format('woff2');
+      //     unicodeRange: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF;
+      //   }
+      // `,
     },
   },
   typography: {
@@ -115,19 +115,19 @@ export const getDesignTokens = (mode: PaletteMode) => ({
     ].join(','),
     h1: {
       fontSize: 48,
-      fontFamily: 'RightGroteskSpatialDark',
+      // fontFamily: 'RightGroteskSpatialDark',
       fontWeight: 400,
       lineHeight: '64px',
     },
     h2: {
       fontSize: 32,
-      fontFamily: 'RightGroteskSpatialBold',
+      // fontFamily: 'RightGroteskSpatialBold',
       fontWeight: 400,
       lineHeight: '48px',
     },
     h3: {
       fontSize: 24,
-      fontFamily: 'RightGroteskWideBold',
+      // fontFamily: 'RightGroteskWideBold',
       fontWeight: 400,
       lineHeight: '28.8px',
     },

@@ -7,6 +7,12 @@ module.exports = withTM({
   eslint: {
     dirs: ['pages', 'components', 'graphql', 'utils', 'app'],
   },
+  webpack: (config, { isServer }) => {
+    if (!isServer) {
+      config.resolve.fallback.fs = false
+    }
+    return config
+  },
   async headers() {
     return [
       {
