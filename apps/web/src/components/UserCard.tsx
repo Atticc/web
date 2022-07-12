@@ -9,6 +9,7 @@ import { formatAddress, isSameAddr } from '../utils/helper'
 import { PrimaryDarkButton } from './buttons/Buttons'
 import { TwitterIcon } from './icons/TwitterIcon'
 import UserConnectionModal from './modal/UserConnectionModal'
+import ProfileImage from './users/Avatar'
 
 export const UserCard = ({ user, isDetail = false }: { user: IUser; isDetail?: boolean }) => {
   const [showConnection, setShowConnection] = useState(false)
@@ -57,7 +58,7 @@ export const UserCard = ({ user, isDetail = false }: { user: IUser; isDetail?: b
         <Grid item sx={{ borderRadius: 3, border: 0.5, paddingX: 2, paddingY: 3 }}>
           <Stack direction={'column'} alignItems={'center'}>
             <Stack direction={'row'} alignItems={'center'} paddingBottom={2}>
-              <Avatar variant="circular" src={user?.avatar || user?.twitter?.avatar || ''} />
+              <ProfileImage src={user?.avatar || user?.twitter?.avatar} address={user?.address}/>
               <Stack direction={'column'} paddingLeft={1}>
                 <Typography variant="h5">{user?.domain || null}</Typography>
                 <Typography variant="body1">{formatAddress(user?.address)}</Typography>
@@ -121,7 +122,7 @@ export const UserCard = ({ user, isDetail = false }: { user: IUser; isDetail?: b
       <Link href={`/users/${user.address}`}>
         <Stack direction={'column'} alignItems={'center'}>
           <Stack direction={'row'} alignItems={'center'} paddingBottom={2}>
-            <Avatar variant="circular" src={user?.avatar || user?.twitter?.avatar || ''} />
+            <ProfileImage src={user?.avatar || user?.twitter?.avatar} address={user?.address} />
             <Stack direction={'column'} paddingLeft={1}>
               <Typography variant="h5">{user?.domain || null}</Typography>
               <Typography variant="body1">{formatAddress(user?.address)}</Typography>

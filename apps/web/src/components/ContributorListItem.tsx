@@ -2,6 +2,7 @@ import { Avatar, Grid, Stack, Typography, useTheme } from '@mui/material'
 import Link from 'next/link'
 import { IUser } from '../app/constants'
 import { formatAddress } from '../utils/helper'
+import ProfileImage from './users/Avatar'
 
 export const ContributorListItem = ({
   user,
@@ -30,7 +31,7 @@ export const ContributorListItem = ({
         }}
       >
         <Stack direction={'row'} alignItems={'center'}>
-          <Avatar variant="circular" src={user?.avatar || user?.twitter?.avatar || ''} />
+          <ProfileImage src={user?.avatar || user?.twitter?.avatar} address={user?.address} />
           <Stack direction={'column'} paddingLeft={1}>
             <Typography variant="h6">{user?.domain || null}</Typography>
             <Typography variant="body1">{formatAddress(user?.address)}</Typography>

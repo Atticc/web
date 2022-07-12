@@ -1,9 +1,9 @@
 import { Avatar } from '@mui/material'
-import { formatAddress } from '@utils/helper'
 import useEns from '@utils/useEns'
 
 type AvatarProps = {
   address: string
+  src?: string | undefined
 }
 
 function stringToColor(string: string) {
@@ -36,9 +36,14 @@ function stringAvatar(address: string) {
   };
 }
 
-const ProfileImage = ({ address }: AvatarProps) => {
+const ProfileImage = ({ address, src }: AvatarProps) => {
   const { avatarUrl } = useEns(address)
-  return <Avatar variant="circular" src={avatarUrl} alt={`Avatar for ${address}`} {...stringAvatar(address)} />
+  return <Avatar
+    variant="circular"
+    src={src || avatarUrl}
+    alt={`Avatar for ${address}`}
+    {...stringAvatar(address)}
+  />
 }
 
 export default ProfileImage
