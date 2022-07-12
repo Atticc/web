@@ -29,24 +29,6 @@ const ChatDetailsPage: NextPage = () => {
   const { connect: connectXmtp, disconnect: disconnectXmtp, client } = useXmtp()
   const { signer, connect: connectWallet } = useWallet()
 
-  const checkIfOnNetwork = useCallback(
-    async (address: string): Promise<boolean> => {
-      return client?.canMessage(address) || false
-    },
-    [client]
-  )
-
-  useEffect(() => {
-    async function check() {
-      if (await checkIfOnNetwork(contactAddress)) {
-      } else {
-        router.replace('/chats/')
-      }
-    }
-
-    check()
-  }, [contactAddress])
-
   const usePrevious = <T,>(value: T): T | undefined => {
     const ref = useRef<T>()
     useEffect(() => {
@@ -78,24 +60,12 @@ const ChatDetailsPage: NextPage = () => {
     connect()
   }, [signer, prevSigner, connectXmtp, disconnectXmtp])
 
-  const renderMessages = () => {
-    return <MessagePanel recipientAddress={contactAddress} key={contactAddress} />
-  }
-  const renderEmpty = () => {
-    return (
-      <Stack alignItems={'center'}>
-        <Typography variant="h4">Select a conversation</Typography>
-        <Typography variant="body2">Start a new conversation</Typography>
-        {!client ? <PrimaryDarkButton textcontent='Connect' onClick={handleConnect} /> : null}
-      </Stack>
-    )
-  }
-
   return (
     <LayoutWithoutFooter>
       <Head>
         <title key="title">{title}</title>
-        <meta property="og:title" content={title} key="og:title" />
+        <meta property="og:title" content={title} key="og-title" />
+        <meta name="twitter:title" content={title} key="tw-title" />
       </Head>
       <Grid container direction={'row'} columnSpacing={3} paddingX={5} marginTop={2} >
         <Grid item xs={12} md={3}>
@@ -105,7 +75,8 @@ const ChatDetailsPage: NextPage = () => {
         </Grid>
         <Grid item xs={12} md={8}>
           <Grid container direction={'column'} alignItems={'center'}>
-            {contactAddress ? renderMessages() : renderEmpty()}
+            <MessagePanel recipientAddress={contactAddress} key={contactAddress} onConnect={handleConnect} />
+            {/* {contactAddress ? renderMessages() : renderEmpty()} */}
           </Grid>
         </Grid>
       </Grid>

@@ -7,7 +7,7 @@ import { communities, IUser, posts } from '@app/constants'
 import { PostListItem } from '@c/PostListItem'
 import { UserCard } from '@c/UserCard'
 import { getIdentity, useIdentity } from '@req/cyberconnect/queries/getIdentity'
-import { isValidAddr } from '@utils/helper'
+import { formatAddress, isValidAddr } from '@utils/helper'
 import Head from 'next/head'
 import dynamic from 'next/dynamic'
 import { APP_NAME } from '@/app/config'
@@ -20,6 +20,7 @@ const NftSection = dynamic(() => import('@c/NFT/NftSection'), {
 interface UserDetailProps {
   address: string
   userData: IUser
+  title: string
 }
 
 const tabs = [
@@ -27,11 +28,10 @@ const tabs = [
   { label: 'Latests', value: 2 },
 ]
 
-const UserDetailPage: NextPage<UserDetailProps> = ({ address, userData }) => {
+const UserDetailPage: NextPage<UserDetailProps> = ({ address, userData, title }) => {
   const [tab, setTab] = useState(1)
   const colorTheme = useTheme().palette
   const { data: user, refetch } = useIdentity({ address, data: userData })
-  const title = `${user?.domain}(${address}) - ${APP_NAME} Profile`
 
   useEffect(() => {
     refetch()
@@ -45,7 +45,8 @@ const UserDetailPage: NextPage<UserDetailProps> = ({ address, userData }) => {
     <LayoutWithoutFooter>
       <Head>
         <title key="title">{title}</title>
-        <meta property="og:title" content={title} key="og:title" />
+        <meta property="og:title" content={title} key="og-title" />
+        <meta name="twitter:title" content={title} key="tw-title" />
       </Head>
       <Grid container direction={'row'} columnGap={3} paddingX={5} marginTop={2}>
         <Grid item xs>
@@ -103,6 +104,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   }
 
   return {
-    props: { address, userData },
+    props: { address, userData, title: `${userData?.domain || formatAddress(String(address))} - ${APP_NAME} Profile` },
   }
 }

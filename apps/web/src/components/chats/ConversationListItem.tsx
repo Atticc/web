@@ -1,6 +1,5 @@
 import { CircularProgress, Grid, Stack, Typography, useTheme } from '@mui/material'
 import Link from 'next/link'
-import { formatDate, truncate } from '@utils/helper'
 import { Message } from '@xmtp/xmtp-js'
 import { Conversation } from '@xmtp/xmtp-js/dist/types/src/conversations'
 import ProfileImage from '@c/users/Avatar'
@@ -13,6 +12,18 @@ type ConversationListItemProps = {
   isSelected: boolean
   onClick?: () => void
 }
+
+const truncate = (str: string | undefined, length: number): string | undefined => {
+  if (!str) {
+    return str
+  }
+  if (str.length > length) {
+    return `${str.substring(0, length - 3)}...`
+  }
+  return str
+}
+
+const formatDate = (d: Date | undefined): string => (d ? d.toLocaleDateString('en-US') : '')
 
 const getLatestMessage = (messages: Message[]): Message | null =>
   messages.length ? messages[messages.length - 1] : null

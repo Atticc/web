@@ -1,3 +1,5 @@
+import keccak from 'keccak'
+
 //format the address display
 export const formatAddress = (addr: string): string =>
   addr.length > 10 && addr.startsWith('0x') ? `${addr.substring(0, 6)}...${addr.substring(addr.length - 4)}` : addr
@@ -35,23 +37,42 @@ export const decodeNftTokenUri = (data: string = '') => {
   }
 }
 
-export const truncate = (str: string | undefined, length: number): string | undefined => {
-  if (!str) {
-    return str
-  }
-  if (str.length > length) {
-    return `${str.substring(0, length - 3)}...`
-  }
-  return str
+export const formatTime = (d: Date | undefined): string => d
+  ? d.toLocaleTimeString(undefined, {
+      hour12: true,
+      hour: 'numeric',
+      minute: '2-digit',
+    })
+  : ''
+
+export const stripHexPrefix = (value:string) : string => {
+  return value.slice(0, 2) === '0x' ? value.slice(2) : value
 }
 
-export const formatDate = (d: Date | undefined): string => (d ? d.toLocaleDateString('en-US') : '')
+export const toChecksumAddress = (address: string, chainId: string | null = null): string => {
+  if (typeof address !== 'string') {
+    return ''
+  }
 
-export const formatTime = (d: Date | undefined): string =>
-  d
-    ? d.toLocaleTimeString(undefined, {
-        hour12: true,
-        hour: 'numeric',
-        minute: '2-digit',
-      })
-    : ''
+  if (!/^(0x)?[0-9a-f]{40}$/i.test(address)) {
+    throw new Error(
+      `Given address "${address}" is not a valid Ethereum address.`
+    )
+  }
+
+  const stripAddress = stripHexPrefix(address).toLowerCase()
+  const prefix = chainId != null ? chainId.toString() + '0x' : ''
+  const keccakHash = keccak('keccak256')
+    .update(prefix + stripAddress)
+    .digest('hex')
+  let checksumAddress = '0x'
+
+  for (let i = 0; i < stripAddress.length; i++) {
+    checksumAddress +=
+      parseInt(keccakHash[i], 16) >= 8
+        ? stripAddress[i].toUpperCase()
+        : stripAddress[i]
+  }
+
+  return checksumAddress
+}

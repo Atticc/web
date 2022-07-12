@@ -30,9 +30,14 @@ function MyApp(props: MyAppProps) {
       <Head>
         <meta name="viewport" content="initial-scale=1, width=device-width" />
         <title key="title">{title}</title>
-        <meta property="og:title" content={title} key="og:title" />
-        <meta property="og:description" content={description} key="og:description" />
-        <meta property="og:image" content="../assets/attic.png" key="og:image" />
+        <meta property="description" content={description} key="description" />
+        <meta property="og:title" content={title} key="og-title" />
+        <meta property="og:description" content={description} key="og-description" />
+        <meta property="og:image" content="../assets/attic.png" key="og-image" />
+        <meta name="twitter:title" content={title} key="tw-title" />
+        <meta name="twitter:description" content={description} key="tw-description" />
+        <meta name="twitter:image" content="../assets/attic.png" key="tw-image" />
+        <meta name="twitter:card" content="summary_large_image" key="tw-card" />
       </Head>
       <AppWithoutSSR>
         <CssBaseline />
