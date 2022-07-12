@@ -6,11 +6,11 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 })
 
 module.exports = withBundleAnalyzer(withTM({
-  swcMinify: true,
+  // swcMinify: true,
   reactStrictMode: true,
   productionBrowserSourceMaps: false,
   eslint: {
-    dirs: ['pages', 'components', 'graphql', 'utils', 'app'],
+    dirs: ['src'],
   },
   webpack: (config, { isServer }) => {
     if (!isServer) {
@@ -18,36 +18,5 @@ module.exports = withBundleAnalyzer(withTM({
     }
     return config
   },
-  // async headers() {
-  //   return [
-  //     {
-  //       source: '/fonts/RightGrotesk-SpatialBold.woff2',
-  //       headers: [
-  //         {
-  //           key: 'Cache-Control',
-  //           value: 'public, max-age=31536000, immutable',
-  //         },
-  //       ],
-  //     },
-  //     {
-  //       source: '/fonts/RightGrotesk-SpatialDark.woff2',
-  //       headers: [
-  //         {
-  //           key: 'Cache-Control',
-  //           value: 'public, max-age=31536000, immutable',
-  //         },
-  //       ],
-  //     },
-  //     {
-  //       source: '/fonts/RightGrotesk-WideBold.woff2',
-  //       headers: [
-  //         {
-  //           key: 'Cache-Control',
-  //           value: 'public, max-age=31536000, immutable',
-  //         },
-  //       ],
-  //     },
-  //   ];
-  // },
   i18n,
 }));
