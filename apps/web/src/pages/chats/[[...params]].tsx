@@ -76,7 +76,6 @@ const ChatDetailsPage: NextPage = () => {
         <Grid item xs={12} md={8}>
           <Grid container direction={'column'} alignItems={'center'}>
             <MessagePanel recipientAddress={contactAddress} key={contactAddress} onConnect={handleConnect} />
-            {/* {contactAddress ? renderMessages() : renderEmpty()} */}
           </Grid>
         </Grid>
       </Grid>

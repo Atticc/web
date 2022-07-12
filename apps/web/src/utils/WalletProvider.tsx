@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useState, createContext } from 'react'
 import type {Signer, ethers as Ether} from 'ethers'
-// import { ethers } from 'ethers'
 import Web3Modal, { providers } from 'web3modal-dynamic-import'
 import CyberConnect from '@cyberlab/cyberconnect'
 import { ALCHEMY_RPC_ETH } from '@app/config'

@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useReducer, useState } from 'react'
-import { Conversation } from '@xmtp/xmtp-js'
+import { ClientOptions, Conversation } from '@xmtp/xmtp-js'
 import { Client, Message } from '@xmtp/xmtp-js'
 import { Signer } from 'ethers'
 import useMessageStore from './useMessageStore'
@@ -76,7 +76,10 @@ export const XmtpProvider = ({ children }: { children: JSX.Element }) => {
   useEffect(() => {
     const initClient = async () => {
       if (!wallet) return
-      setClient(await Client.create(wallet))
+      const opts: Partial<ClientOptions> = {
+        waitForPeersTimeoutMs: 30_000,
+      }
+      setClient(await Client.create(wallet, opts))
     }
     initClient()
   }, [wallet])

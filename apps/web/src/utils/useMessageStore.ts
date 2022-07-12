@@ -1,3 +1,4 @@
+import { NODE_ENV } from '@app/config'
 import { Message } from '@xmtp/xmtp-js'
 import { useCallback, useReducer } from 'react'
 import { MessageStoreEvent } from './XmtpContext'
@@ -19,7 +20,7 @@ const useMessageStore = () => {
       if (!newMessages.length) {
         return state
       }
-      console.log('Dispatching new messages for peer address', peerAddress)
+      NODE_ENV === 'development' && console.log('Dispatching new messages for peer address', peerAddress)
 
       return {
         ...state,
