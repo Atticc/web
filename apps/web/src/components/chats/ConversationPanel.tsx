@@ -49,7 +49,7 @@ export const ConversationPanel = ({ onConnect }: ConversationPanelProps) => {
     } else {
       setFriends([])
     }
-  }, [address])
+  }, [address, refetchConnection])
 
   const renderFriends = () => {
     if(isLoading) {

@@ -28,9 +28,13 @@ export const UserCard = ({ user, isDetail = false }: { user: IUser; isDetail?: b
   })
   const colorTheme = useTheme().palette
 
-  if (!user) {
-    return null
-  }
+  useEffect(() => {
+    if (!address) return
+    if (!user?.address) return
+
+    refetchFollowStatus()
+
+  }, [user.address, address, refetchFollowStatus])
 
   const onFollow = async () => {
     try {
@@ -46,11 +50,9 @@ export const UserCard = ({ user, isDetail = false }: { user: IUser; isDetail?: b
     }
   }
 
-  useEffect(() => {
-    if (address && user.address) {
-      refetchFollowStatus()
-    }
-  }, [user.address, address])
+  if (!user) {
+    return null
+  }
 
   if (isDetail) {
     return (
@@ -93,7 +95,7 @@ export const UserCard = ({ user, isDetail = false }: { user: IUser; isDetail?: b
             <Stack direction={'row'} alignItems={'center'}>
               {user?.twitter?.handle ? (
                 <Stack alignItems={'center'}>
-                  <a href={`https://twitter.com/${user?.twitter?.handle}`} target="_blank">
+                  <a href={`https://twitter.com/${user?.twitter?.handle}`} target="_blank" rel="noreferrer">
                     <TwitterIcon color={colorTheme.dark} height={24} width={24} />
                   </a>
                 </Stack>

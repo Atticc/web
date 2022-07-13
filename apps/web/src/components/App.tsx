@@ -28,7 +28,7 @@ function App({ children }: AppProps) {
 
   return (
     <ColorModeContext.Provider value={colorMode}>
-      <Provider store={store}>
+      {/* <Provider store={store}> */}
         <ThemeProvider theme={theme}>
           <QueryClientProvider client={client}>
             <WalletProvider>
@@ -38,7 +38,7 @@ function App({ children }: AppProps) {
             </WalletProvider>
           </QueryClientProvider>
         </ThemeProvider>
-      </Provider>
+      {/* </Provider> */}
     </ColorModeContext.Provider>
   )
 }

@@ -2,8 +2,8 @@ import type { NextPage } from 'next'
 import LayoutWithoutFooter from '../components/layouts/LayoutWithoutFooter'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useEffect, useState } from 'react'
-import { Grid, Tab, Tabs, Typography, useTheme } from '@mui/material'
-import { communities, IUser, posts, users } from '../app/constants'
+import { Grid, Tab, Tabs, useTheme } from '@mui/material'
+import { communities, IUser, posts } from '../app/constants'
 import { CommunitiesList } from '../components/CommunitiesList'
 import { ContributorsList } from '../components/ContributorsList'
 import { PostListItem } from '../components/PostListItem'
@@ -41,7 +41,7 @@ const Home: NextPage = () => {
     } else {
       fetchPopular()
     }
-  }, [address])
+  }, [address, fetchPopular, fetchRecommendations])
 
   const handleSetTab = (_: React.ChangeEvent<{}>, value: number) => {
     setTab(value)

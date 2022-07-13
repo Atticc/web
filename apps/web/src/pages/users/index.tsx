@@ -20,7 +20,7 @@ const Home: NextPage = () => {
 
   useEffect(() => {
     fetchPopular()
-  }, [])
+  }, [fetchPopular])
 
   const colorTheme = useTheme().palette
   return (

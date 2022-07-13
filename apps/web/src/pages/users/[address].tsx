@@ -34,8 +34,10 @@ const UserDetailPage: NextPage<UserDetailProps> = ({ address, userData, title })
   const { data: user, refetch } = useIdentity({ address, data: userData })
 
   useEffect(() => {
-    refetch()
-  }, [address])
+    if(isValidAddr(address)) {
+      refetch()
+    }
+  }, [address, refetch])
 
   const handleSetTab = (_: React.ChangeEvent<{}>, value: number) => {
     setTab(value)

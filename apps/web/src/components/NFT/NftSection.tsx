@@ -43,7 +43,7 @@ export const NftSection = ({
     } else {
       setNfts({ items: [], totalCount: 0 })
     }
-  }, [address])
+  }, [address, alchemy, fetchOATs])
 
   return !nfts?.items?.length && !poaps.length && !oats?.list?.length ? null : (
     <Grid container direction={'column'} border={1} sx={{ borderRadius: 4, padding: 2 }}>

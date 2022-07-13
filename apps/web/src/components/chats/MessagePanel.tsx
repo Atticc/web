@@ -52,7 +52,7 @@ export const MessagePanel = ({ recipientAddress, onConnect }: MessagePanelProps)
     if (recipientAddress?.length > 0) {
       check()
     }
-  }, [recipientAddress])
+  }, [recipientAddress, checkIfOnNetwork])
 
   if (loading && !messages?.length) {
     return (

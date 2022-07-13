@@ -44,7 +44,7 @@ const ChatDetailsPage: NextPage = () => {
     } else {
       await connectXmtp(signer)
     }
-  }, [connectWallet, connectXmtp])
+  }, [connectWallet, connectXmtp, signer])
 
   useEffect(() => {
     if (!signer && prevSigner) {

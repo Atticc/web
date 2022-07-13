@@ -115,6 +115,23 @@ export const WalletProvider = ({ children }: WalletProviderProps): JSX.Element =
     [address, disconnect]
   )
 
+  const handleSetup = useCallback(async (instance: any) => {
+    instance.on('accountsChanged', handleAccountsChanged)
+    try {
+      return import("ethers").then(async ({ ethers }) => {
+        const provider = new ethers.providers.Web3Provider(instance)
+        const signer = provider.getSigner()
+        setProvider(provider)
+        setSigner(signer)
+        setAddress(await signer.getAddress())
+        initCyberConnect(provider.provider)
+        return signer
+      })
+    } catch (e) {
+      console.log('Error while creating ethers provider');
+    }
+  }, [handleAccountsChanged, initCyberConnect])
+
   const connect = useCallback(async () => {
     if (!web3Modal) throw new Error('web3Modal not initialized')
     try {
@@ -134,7 +151,7 @@ export const WalletProvider = ({ children }: WalletProviderProps): JSX.Element =
       // modal, as "User closed modal"
       console.log('error', e)
     }
-  }, [web3Modal, handleAccountsChanged])
+  }, [web3Modal, handleSetup])
 
   useEffect(() => {
     const providerOptions: any = {
@@ -163,7 +180,7 @@ export const WalletProvider = ({ children }: WalletProviderProps): JSX.Element =
       }
     }
     setWeb3Modal(new Web3Modal({ cacheProvider: true, providerOptions, theme: theme.palette.mode }))
-  }, [])
+  }, [theme.palette.mode])
 
   useEffect(() => {
     if (!web3Modal) return
@@ -176,24 +193,7 @@ export const WalletProvider = ({ children }: WalletProviderProps): JSX.Element =
       await handleSetup(instance)
     }
     initCached()
-  }, [web3Modal, handleAccountsChanged])
-
-  const handleSetup = async (instance: any) => {
-    instance.on('accountsChanged', handleAccountsChanged)
-    try {
-      return import("ethers").then(async ({ethers}) => {
-        const provider = new ethers.providers.Web3Provider(instance)
-        const signer = provider.getSigner()
-        setProvider(provider)
-        setSigner(signer)
-        setAddress(await signer.getAddress())
-        initCyberConnect(provider.provider)
-        return signer
-      })
-    } catch (e) {
-      console.log('Error while creating ethers provider');
-    }
-  }
+  }, [web3Modal, handleAccountsChanged, handleSetup])
 
   return (
     <WalletContext.Provider

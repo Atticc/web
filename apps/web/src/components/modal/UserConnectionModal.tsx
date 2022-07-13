@@ -5,6 +5,7 @@ import { CloseIcon } from '../icons/ArrowIcon'
 import { useConnections } from '../../graphql/cyberconnect/queries/getConnections'
 import { ContributorsList } from '../ContributorsList'
 import { IUser } from '../../app/constants'
+import { isValidAddr } from '@utils/helper'
 
 const defaultConnections: {
   followers: Array<IUser>
@@ -85,8 +86,9 @@ const UserConnectionModal = ({
   }, [data])
 
   useEffect(() => {
+    if(!isValidAddr(address)) return
     refetch()
-  }, [address])
+  }, [address, refetch])
 
   const handleSetTab = (_: React.ChangeEvent<{}>, value: FollowType) => {
     setTab(value)
