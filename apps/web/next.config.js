@@ -1,11 +1,17 @@
 /** @type {import('next').NextConfig} */
 const { i18n } = require('./next-i18next.config');
+const { withSentryConfig } = require('@sentry/nextjs');
 const withTM = require('next-transpile-modules')(['ui']);
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 })
 
-module.exports = withBundleAnalyzer(withTM({
+const sentryWebpackPluginOptions = {
+  silent: true, // Suppresses all logs
+  // https://github.com/getsentry/sentry-webpack-plugin#options.
+};
+
+const moduleExports = {
   // swcMinify: true,
   reactStrictMode: true,
   productionBrowserSourceMaps: false,
@@ -19,4 +25,6 @@ module.exports = withBundleAnalyzer(withTM({
     return config
   },
   i18n,
-}));
+}
+
+module.exports = withBundleAnalyzer(withSentryConfig(withTM(moduleExports)));

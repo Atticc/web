@@ -1,6 +1,6 @@
 import { Nft, NftFilters } from '@alch/alchemy-web3'
 import { Divider, Grid, Stack, Typography } from '@mui/material'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useQuery } from 'react-query'
 import { IOatNft, IPoapNft } from '@app/types'
 import { useOATs } from '@req/galaxy/getOATs'
@@ -22,7 +22,7 @@ export const NftSection = ({
   address: string
   showMore?: boolean
 }) => {
-  const { alchemy } = useAlchemy()
+  const { alchemy } = useMemo(() => { return useAlchemy() }, [])
   const [nfts, setNfts] = useState<{ items: Array<Nft>; totalCount?: number }>({ items: [], totalCount: 0 })
   const [openNFTs, setOpenNFTs] = useState<boolean>(false)
   const { data: oats = {}, refetch: fetchOATs } = useOATs({ address })
