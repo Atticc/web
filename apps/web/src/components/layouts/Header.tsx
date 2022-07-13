@@ -5,11 +5,6 @@ import { SwitchBox } from './SwitchBox'
 import { useScrollPosition } from '../../utils/useScrollPosition'
 import { AtticcIcon } from '@c/icons/AtticcIcon'
 import Wallet from '../WalletComponent'
-import dynamic from 'next/dynamic'
-
-// const LazyWallet = dynamic(() => import('../WalletComponent'), {
-//   ssr: false,
-// })
 
 const menu = [
   { title: 'Discover', path: '/users/' },
@@ -42,7 +37,7 @@ function Header() {
           <Grid container direction={'row'} alignItems={'center'}>
             <Link href={'/'} passHref>
               <A>
-                <AtticcIcon color={colorTheme.dark} height={40} width={40} />
+                <AtticcIcon borderColor={colorTheme.dark.main} cColor={colorTheme.primary.main}  oColor={colorTheme.dark.main} aColor={colorTheme.primary.main}  tColor={colorTheme.dark.main} height={40} width={40} />
               </A>
             </Link>
             {menu.map((m) => (
