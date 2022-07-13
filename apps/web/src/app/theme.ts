@@ -2,26 +2,10 @@ import { alpha, PaletteMode } from '@mui/material'
 import { red } from '@mui/material/colors'
 
 export const getDesignTokens = (mode: PaletteMode) => ({
-  breakpoints: {
-    values: {
-      xs: 0,
-      sm: 600,
-      md: 900,
-      lg: 1200,
-      xl: 1536,
-      xxl: 2000,
-      xxxl: 2500,
-      xxxxl: 3000,
-      xxxxxl: 3500,
-      xxxxxxl: 4000,
-      xxxxxxxl: 4500,
-      xxxxxxxxl: 5000,
-    },
-  },
   palette: {
     mode,
     tonalOffset: 0.2,
-    primary: { main: '#B6394E' },
+    primary: { main: '#F26E21' },
     secondary: { main: '#0AB2A9' },
     modalbgcolor: { main: '#1c0715cc' },
     radioColor: {
@@ -36,6 +20,7 @@ export const getDesignTokens = (mode: PaletteMode) => ({
     ...(mode === 'light'
       ? {
           dark: { main: '#000000' },
+          light: { main: '#ffffff' },
           backgroundDark100: { main: '#320D1E' },
           backgroundDark200: { main: '#3B1325' },
           backgroundDark300: { main: '#3D1426', dark: '#4e2537' },
@@ -55,6 +40,7 @@ export const getDesignTokens = (mode: PaletteMode) => ({
         }
       : {
           dark: { main: '#ffffff' },
+          light: { main: '#000000' },
           backgroundDark100: { main: '#320D1E' },
           backgroundDark200: { main: '#3B1325' },
           backgroundDark300: { main: '#3D1426', dark: '#4e2537' },
@@ -74,7 +60,43 @@ export const getDesignTokens = (mode: PaletteMode) => ({
         }),
   },
   components: {
-    MuiCssBaseline: {
+    MuiButton: {
+      variants: [
+        {
+          props: { variant: 'outline' },
+          style: ({ theme: t }: {theme: any}) => ({
+            borderRadius: '10px',
+            borderWidth: '2px',
+            borderColor: t.palette.dark.main,
+            color: t.palette.dark.main,
+            borderStyle: 'solid',
+            padding: '10px 22px',
+            boxShadow: 'none',
+            textTransform: 'capitalize',
+            lineHeight: 'normal',
+            // backgroundColor: t.palette.primary.main,
+            '&:hover': {
+              textDecoration: 'none',
+              backgroundColor: t.palette.light.main,
+              borderColor: t.palette.light.main,
+              color: t.palette.primary.main,
+              '@media (hover: none)': {
+                color: t.palette.dark.main,
+                backgroundColor: t.palette.primary.main,
+                borderColor: t.palette.dark.main,
+              },
+            },
+          }),
+        },
+        {
+          props: { variant: 'outline', color: 'secondary' },
+          style: {
+            borderColor: 'light.main',
+          },
+        },
+      ],
+    },
+    // MuiCssBaseline: {
       // styleOverrides: `
       //   @font-face {
       //     font-family: 'RightGroteskSpatialBold';
@@ -82,30 +104,11 @@ export const getDesignTokens = (mode: PaletteMode) => ({
       //     src: local('RightGrotesk'), local('RightGrotesk-SpatialBold'), url('/fonts/RightGrotesk-SpatialBold.woff2') format('woff2');
       //     unicodeRange: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF;
       //   }
-      //   @font-face {
-      //     font-family: 'RightGroteskSpatialDark';
-      //     font-display: swap;
-      //     src: local('RightGrotesk'), local('RightGrotesk-SpatialDark'), url('/fonts/RightGrotesk-SpatialDark.woff2') format('woff2');
-      //     unicodeRange: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF;
-      //   }
-      //   @font-face {
-      //     font-family: 'RightGroteskWideBold';
-      //     font-display: swap;
-      //     src: local('RightGrotesk'), local('RightGrotesk-WideBold'), url('/fonts/RightGrotesk-WideBold.woff2') format('woff2');
-      //     unicodeRange: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF;
-      //   }
-      //   @font-face {
-      //     font-family: 'RightGrotesk';
-      //     font-display: swap;
-      //     src: local('RightGrotesk'), local('RightGrotesk-Regular'), url('/fonts/RightGrotesk-Regular.woff2') format('woff2');
-      //     unicodeRange: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF;
-      //   }
-      // `,
-    },
+    // },
   },
   typography: {
     fontFamily: [
-      'Roboto',
+      'Inter',
       '"Helvetica Neue"',
       'Arial',
       'sans-serif',
@@ -172,6 +175,8 @@ export const getDesignTokens = (mode: PaletteMode) => ({
 declare module '@mui/material/styles' {
   interface Palette {
     dark: Palette['primary']
+    light: Palette['primary']
+    primary: Palette['primary']
     backgroundDark100: Palette['primary']
     backgroundDark200: Palette['primary']
     backgroundDark300: Palette['primary']
@@ -194,6 +199,7 @@ declare module '@mui/material/styles' {
   }
   interface PaletteOptions {
     dark: PaletteOptions['primary']
+    light: PaletteOptions['primary']
     backgroundDark100: PaletteOptions['primary']
     backgroundDark200: PaletteOptions['primary']
     backgroundDark300: PaletteOptions['primary']
@@ -250,6 +256,8 @@ declare module '@mui/material/Typography' {
 declare module '@mui/material/Button' {
   interface ButtonPropsColorOverrides {
     dark: true
+    light: true
+    primary: true
     backgroundDark100: true
     backgroundDark200: true
     backgroundDark300: true
@@ -274,6 +282,7 @@ declare module '@mui/material/Button' {
 declare module '@mui/material/TextField' {
   interface TextFieldPropsColorOverrides {
     dark: true
+    light: true
     backgroundDark100: true
     backgroundDark200: true
     backgroundDark300: true
@@ -294,17 +303,11 @@ declare module '@mui/material/TextField' {
     radioCheckedColor: true
   }
 }
-
-declare module '@mui/material/styles' {
-  interface BreakpointOverrides {
-    xxl: true
-    xxxl: true
-    xxxxl: true
-    xxxxxl: true
-    xxxxxxl: true
-    xxxxxxxl: true
-    xxxxxxxxl: true
+declare module '@mui/material/Button' {
+  interface ButtonPropsVariantOverrides {
+    outline: true;
   }
 }
+
 
 export default getDesignTokens

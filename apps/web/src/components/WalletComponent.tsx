@@ -2,7 +2,7 @@ import { Button, Grid, Stack, Menu, MenuItem, useTheme, CircularProgress } from 
 import useWallet from '@utils/useWallet'
 import { useRouter } from 'next/router'
 import { useCallback, useState, MouseEvent } from 'react'
-import { PrimaryDarkButton } from './buttons/Buttons'
+import ArrowForwardIosRoundedIcon from '@mui/icons-material/ArrowForwardIosRounded'; 
 import Address from './users/Address'
 import ProfileImage from './users/Avatar'
 
@@ -40,7 +40,10 @@ export function WalletComponent() {
   return loading ? <CircularProgress /> : (
     <Grid item>
       {!address ? (
-        <PrimaryDarkButton textcontent={loading ? 'Loading...' : 'Connect Wallet'} onClick={connectWallet} />
+        <Button variant='outline' onClick={connectWallet} endIcon={<ArrowForwardIosRoundedIcon />}>
+          {loading ? 'Loading...' : 'Connect Wallet'}
+          </Button>
+        // <PrimaryDarkButton textcontent={loading ? 'Loading...' : 'Connect Wallet'} onClick={connectWallet} />
       ) : (
         <Button
           id="basic-button"
