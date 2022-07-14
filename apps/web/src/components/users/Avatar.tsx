@@ -1,4 +1,5 @@
 import { Avatar } from '@mui/material'
+import { toChecksumAddress } from '@utils/helper'
 import useEns from '@utils/useEns'
 
 type AvatarProps = {
@@ -26,23 +27,26 @@ function stringToColor(string: string) {
   return color;
 }
 
-function stringAvatar(address: string) {
+function stringAvatar(address: string, props: any) {
   return {
     sx: {
       bgcolor: stringToColor(address),
-      fontSize: 14
+      fontSize: 14,
+      ...(props.sx  || {})
     },
     children: `${address.slice(-4)}`,
   };
 }
 
-const ProfileImage = ({ address, src }: AvatarProps) => {
-  const { avatarUrl } = useEns(address)
+const ProfileImage = ({ address, src, ...props }: AvatarProps) => {
+  const addr = toChecksumAddress(address)
+  const { avatarUrl } = useEns(addr)
   return <Avatar
     variant="circular"
     src={src || avatarUrl}
     alt={`Avatar for ${address}`}
-    {...stringAvatar(address)}
+    {...props}
+    {...stringAvatar(addr, props)}
   />
 }
 

@@ -2,8 +2,7 @@ import type { GetServerSideProps, NextPage } from 'next'
 import LayoutWithoutFooter from '@c/layouts/LayoutWithoutFooter'
 import { useEffect, useState } from 'react'
 import { Grid, Tab, Tabs, useTheme } from '@mui/material'
-import { CommunitiesList } from '@c/CommunitiesList'
-import { communities, IUser, posts } from '@app/constants'
+import { IUser, posts } from '@app/constants'
 import { PostListItem } from '@c/PostListItem'
 import { UserCard } from '@c/UserCard'
 import { getIdentity, useIdentity } from '@req/cyberconnect/queries/getIdentity'
@@ -11,6 +10,7 @@ import { formatAddress, isValidAddr } from '@utils/helper'
 import Head from 'next/head'
 import dynamic from 'next/dynamic'
 import { APP_NAME } from '@/app/config'
+import { CommunitiesList } from '@c/CommunitiesList'
 
 const NftSection = dynamic(() => import('@c/NFT/NftSection'), {
   suspense: false,
@@ -51,12 +51,7 @@ const UserDetailPage: NextPage<UserDetailProps> = ({ address, userData, title })
         <meta name="twitter:title" content={title} key="tw-title" />
       </Head>
       <Grid container direction={'row'} columnGap={3} paddingX={5} marginTop={2}>
-        <Grid item xs>
-          <Grid container direction={'column'} alignItems={'center'} maxWidth={320}>
-            <CommunitiesList title={'Joined Communities'} data={communities} />
-          </Grid>
-        </Grid>
-        <Grid item xs={12} md={6}>
+        <Grid item xs={12} md={8}>
           <Tabs value={tab} onChange={handleSetTab} aria-label="Post Tabs" variant="fullWidth">
             {tabs.map((t) => (
               <Tab label={t.label} value={t.value} key={t.label} />
@@ -68,7 +63,7 @@ const UserDetailPage: NextPage<UserDetailProps> = ({ address, userData, title })
             ))}
           </Grid>
         </Grid>
-        <Grid item xs>
+        <Grid item xs md={3}>
           <Grid container direction={'column'} alignItems={'center'} gap={3} maxWidth={320}>
             <UserCard user={user} isDetail key={`user-${address}`} />
             <CommunitiesList title={'NFT Issued'} data={[]} />

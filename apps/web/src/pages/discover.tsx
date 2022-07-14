@@ -3,8 +3,7 @@ import LayoutWithoutFooter from '../components/layouts/LayoutWithoutFooter'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useEffect, useState } from 'react'
 import { Grid, Tab, Tabs, useTheme } from '@mui/material'
-import { communities, IUser, posts } from '../app/constants'
-import { CommunitiesList } from '../components/CommunitiesList'
+import { IUser, posts } from '../app/constants'
 import { ContributorsList } from '../components/ContributorsList'
 import { PostListItem } from '../components/PostListItem'
 import { useRecommendation } from '../graphql/cyberconnect/queries/getRecommendation'
@@ -64,7 +63,6 @@ const Home: NextPage = () => {
         </Grid>
         <Grid item xs>
           <Grid container direction={'column'} gap={3}>
-            <CommunitiesList title={'Top Communities'} data={communities} />
             <ContributorsList title={'Popular / Recommends'} data={users} showReason />
           </Grid>
         </Grid>

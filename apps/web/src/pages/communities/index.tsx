@@ -3,7 +3,6 @@ import LayoutWithoutFooter from '../../components/layouts/LayoutWithoutFooter'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useState } from 'react'
 import { Grid, Typography, useTheme } from '@mui/material'
-import { communities, ICommunity } from '../../app/constants'
 import { PrimaryDarkButton } from '../../components/buttons/Buttons'
 import { CommunityCard } from '../../components/CommunityCard'
 import CommunityCreateModal from '../../components/modal/CommunityCreateModal'
@@ -24,7 +23,7 @@ const Home: NextPage = () => {
           </Grid>
         </Grid>
 
-        <Grid item xs={10}>
+        {/* <Grid item xs={10}>
           <Grid container direction={'column'} spacing={2}>
             <Grid item>
               <Typography variant={'h3'}>My Communities</Typography>
@@ -43,7 +42,7 @@ const Home: NextPage = () => {
               ))}
             </Grid>
           </Grid>
-        </Grid>
+        </Grid> */}
       </Grid>
       <CommunityCreateModal open={showCreateModal} onClose={handleCloseCreateModal} />
     </LayoutWithoutFooter>

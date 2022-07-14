@@ -19,7 +19,7 @@ function LandingHeader() {
       }}
     >
       <Grid container sx={{
-        display: 'flex', justifyContent: 'space-between', paddingX: 10, height: 68
+        display: 'flex', justifyContent: 'space-between', paddingX: 2, height: 68
       }} alignItems={'center'} direction={'row'}>
         <Grid item>
           <Grid container direction={'row'} alignItems={'center'}>

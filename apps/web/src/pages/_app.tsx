@@ -24,6 +24,7 @@ interface MyAppProps extends AppProps {
 
 function MyApp(props: MyAppProps) {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props
+  const HOSTNAME = process.env.NEXT_PUBLIC_HOSTNAME
 
   return (
     <CacheProvider value={emotionCache}>
@@ -33,10 +34,10 @@ function MyApp(props: MyAppProps) {
         <meta property="description" content={description} key="description" />
         <meta property="og:title" content={title} key="og-title" />
         <meta property="og:description" content={description} key="og-description" />
-        <meta property="og:image" content="../assets/attic.png" key="og-image" />
+        <meta property="og:image" content={`${HOSTNAME}/assets/atticc.png`} key="og-image" />
         <meta name="twitter:title" content={title} key="tw-title" />
         <meta name="twitter:description" content={description} key="tw-description" />
-        <meta name="twitter:image" content="../assets/attic.png" key="tw-image" />
+        <meta name="twitter:image" content={`${HOSTNAME}/assets/atticc.png`} key="tw-image" />
         <meta name="twitter:card" content="summary_large_image" key="tw-card" />
       </Head>
       <AppWithoutSSR>

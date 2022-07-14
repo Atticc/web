@@ -72,9 +72,12 @@ export const getDesignTokens = (mode: PaletteMode) => ({
             borderStyle: 'solid',
             padding: '10px 22px',
             boxShadow: 'none',
-            textTransform: 'capitalize',
             lineHeight: 'normal',
-            // backgroundColor: t.palette.primary.main,
+            fontSize: 16,
+            '& #text': {
+              textTransform: 'capitalize',
+              fontWeight: 500,
+            },
             '&:hover': {
               textDecoration: 'none',
               backgroundColor: t.palette.light.main,
@@ -82,7 +85,7 @@ export const getDesignTokens = (mode: PaletteMode) => ({
               color: t.palette.primary.main,
               '@media (hover: none)': {
                 color: t.palette.dark.main,
-                backgroundColor: t.palette.primary.main,
+                backgroundColor: 'transparent',
                 borderColor: t.palette.dark.main,
               },
             },
@@ -116,6 +119,11 @@ export const getDesignTokens = (mode: PaletteMode) => ({
       '"Segoe UI Emoji"',
       '"Segoe UI Symbol"',
     ].join(','),
+    title: {
+      fontSize: 55,
+      fontWeight: 400,
+      lineHeight: '64px',
+    },
     h1: {
       fontSize: 48,
       // fontFamily: 'RightGroteskSpatialDark',
@@ -221,6 +229,7 @@ declare module '@mui/material/styles' {
     radioCheckedColor: PaletteOptions['primary']
   }
   interface TypographyVariants {
+    title: React.CSSProperties
     bodySmall: React.CSSProperties
     bodyMedium: React.CSSProperties
     bodyLarge: React.CSSProperties
@@ -231,6 +240,7 @@ declare module '@mui/material/styles' {
   }
 
   interface TypographyVariantsOptions {
+    title?: React.CSSProperties
     bodySmall?: React.CSSProperties
     bodyMedium?: React.CSSProperties
     bodyLarge?: React.CSSProperties
@@ -243,6 +253,7 @@ declare module '@mui/material/styles' {
 
 declare module '@mui/material/Typography' {
   interface TypographyPropsVariantOverrides {
+    title: true
     bodySmall: true
     bodyMedium: true
     bodyLarge: true
