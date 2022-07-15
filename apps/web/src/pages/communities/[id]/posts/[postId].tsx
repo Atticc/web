@@ -15,7 +15,7 @@ interface UserDetailProps {
   id: string
 }
 
-const Home: NextPage<UserDetailProps> = ({ postId, id }) => {
+const Home: NextPage = () => {
   const [tab, setTab] = useState(1)
   const [showCreateModal, setShowCreateModal] = useState(false)
   const handleCloseCreateModal = () => setShowCreateModal(false)
@@ -40,7 +40,7 @@ const Home: NextPage<UserDetailProps> = ({ postId, id }) => {
 
         <Grid item xs={12} md={6}>
           <Grid container direction={'column'} alignItems={'center'}>
-            <PostListItem post={posts.find((p) => String(p.id) === postId)} />
+            {/* <PostListItem post={posts.find((p) => String(p.id) === postId)} /> */}
             {comments.map((c) => (
               <CommentListItem comment={c} key={c.id} />
             ))}
@@ -49,7 +49,8 @@ const Home: NextPage<UserDetailProps> = ({ postId, id }) => {
         <Grid item xs>
           <Grid container direction={'column'} gap={3}>
             <Grid item sx={{ paddingTop: 2 }}>
-              <Typography variant={'h3'}>Community {id}</Typography>
+              {/* <Typography variant={'h3'}>Community {id}</Typography> */}
+              <Typography variant={'h3'}>Community</Typography>
             </Grid>
             <CommunitiesList title={'Utility NFTs'} data={[]} />
             {/* <ContributorsList title={'Top Contributors'} data={users} /> */}
@@ -64,10 +65,10 @@ const Home: NextPage<UserDetailProps> = ({ postId, id }) => {
 
 export default Home
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { postId, id } = context.query
+// export const getServerSideProps: GetServerSideProps = async (context) => {
+//   const { postId, id } = context.query
 
-  return {
-    props: { postId, id },
-  }
-}
+//   return {
+//     props: { postId, id },
+//   }
+// }

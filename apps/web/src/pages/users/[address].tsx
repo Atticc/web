@@ -11,6 +11,7 @@ import Head from 'next/head'
 import dynamic from 'next/dynamic'
 import { APP_NAME } from '@/app/config'
 import { CommunitiesList } from '@c/CommunitiesList'
+import { useRouter } from 'next/router'
 
 const NftSection = dynamic(() => import('@c/NFT/NftSection'), {
   suspense: false,
@@ -28,13 +29,17 @@ const tabs = [
   { label: 'Latests', value: 2 },
 ]
 
-const UserDetailPage: NextPage<UserDetailProps> = ({ address, userData, title }) => {
+const UserDetailPage: NextPage = () => {
+  const router = useRouter()
+  const { address } = router.query
+  const userData: IUser = { address: String(address) }
   const [tab, setTab] = useState(1)
   const colorTheme = useTheme().palette
-  const { data: user, refetch } = useIdentity({ address, data: userData })
-
+  const { data: user, refetch } = useIdentity({ address: String(address), data: userData })
+  const title = `${userData?.domain || formatAddress(String(address))} - ${APP_NAME} Profile`
+  
   useEffect(() => {
-    if (isValidAddr(address)) {
+    if (isValidAddr(String(address))) {
       refetch()
     }
   }, [address, refetch])
@@ -77,30 +82,30 @@ const UserDetailPage: NextPage<UserDetailProps> = ({ address, userData, title })
 
 export default UserDetailPage
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { address } = context.query
-  let userData: any = {}
+// export const getServerSideProps: GetServerSideProps = async (context) => {
+//   const { address } = context.query
+//   let userData: any = {}
 
-  try {
-    if (isValidAddr(String(address))) {
-      userData = await getIdentity(String(address))
-    } else {
-      throw new Error('ERR_WALLET_ADDRESS_PATH_INCORRECT')
-    }
-  } catch (err: any) {
-    console.warn(err.message)
-    return {
-      notFound: true,
-    }
-  }
+//   try {
+//     if (isValidAddr(String(address))) {
+//       userData = await getIdentity(String(address))
+//     } else {
+//       throw new Error('ERR_WALLET_ADDRESS_PATH_INCORRECT')
+//     }
+//   } catch (err: any) {
+//     console.warn(err.message)
+//     return {
+//       notFound: true,
+//     }
+//   }
 
-  if (!userData?.address) {
-    return {
-      notFound: true,
-    }
-  }
+//   if (!userData?.address) {
+//     return {
+//       notFound: true,
+//     }
+//   }
 
-  return {
-    props: { address, userData, title: `${userData?.domain || formatAddress(String(address))} - ${APP_NAME} Profile` },
-  }
-}
+//   return {
+//     props: { address, userData, title: `${userData?.domain || formatAddress(String(address))} - ${APP_NAME} Profile` },
+//   }
+// }

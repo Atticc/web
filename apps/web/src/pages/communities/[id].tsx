@@ -57,7 +57,7 @@ const Home: NextPage<UserDetailProps> = ({ id }) => {
         <Grid item xs>
           <Grid container direction={'column'}>
             <Grid item sx={{ paddingTop: 2 }}>
-              <Typography variant={'h3'}>Community {id}</Typography>
+              <Typography variant={'h3'}>Community</Typography>
             </Grid>
             <CommunitiesList title={'Utility NFTs'} data={[]} />
             {/* <ContributorsList title={'Top Contributors'} data={users} /> */}
@@ -72,10 +72,10 @@ const Home: NextPage<UserDetailProps> = ({ id }) => {
 
 export default Home
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { id } = context.query
+// export const getServerSideProps: GetServerSideProps = async (context) => {
+//   const { id } = context.query
 
-  return {
-    props: { id },
-  }
-}
+//   return {
+//     props: { id },
+//   }
+// }
