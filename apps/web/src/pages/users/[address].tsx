@@ -72,7 +72,7 @@ const UserDetailPage: NextPage = () => {
           <Grid container direction={'column'} alignItems={'center'} gap={3} maxWidth={320}>
             <UserCard user={user} isDetail key={`user-${address}`} />
             <CommunitiesList title={'NFT Issued'} data={[]} />
-            <NftSection title={'Collections'} address={address} key={`nft-${address}`} showMore />
+            <NftSection title={'Collections'} address={String(address)} key={`nft-${address}`} showMore />
           </Grid>
         </Grid>
       </Grid>
