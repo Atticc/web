@@ -1,13 +1,14 @@
 import { Container, Grid, Typography, useTheme, Link as A } from '@mui/material'
 import { useTranslation } from 'next-i18next'
 import Link from 'next/link'
-import { SwitchBox } from './SwitchBox'
 import { useScrollPosition } from '../../utils/useScrollPosition'
 import { AtticcIcon } from '@c/icons/AtticcIcon'
 import Wallet from '../WalletComponent'
+import SearchBox from '@c/SearchBox'
 
 const menu = [
   { title: 'Discover', path: '/users/' },
+  { title: 'Chats', path: '/chats/' },
   // { title: 'Communities', path: '/communities/' },
 ]
 
@@ -30,14 +31,30 @@ function Header() {
         boxShadow: scrollPosition ? '0px 4px 21px rgba(0, 23, 46, 0.66)' : 'none',
       }}
     >
-      <Grid container sx={{
-        display: 'flex', justifyContent: 'space-between', paddingX: 10, height: 68
-      }} alignItems={'center'} direction={'row'}>
+      <Grid
+        container
+        sx={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          paddingX: 10,
+          height: 68,
+        }}
+        alignItems={'center'}
+        direction={'row'}
+      >
         <Grid item>
           <Grid container direction={'row'} alignItems={'center'}>
             <Link href={'/'} passHref>
               <A>
-                <AtticcIcon borderColor={colorTheme.dark.main} cColor={colorTheme.primary.main}  oColor={colorTheme.dark.main} aColor={colorTheme.primary.main}  tColor={colorTheme.dark.main} height={40} width={40} />
+                <AtticcIcon
+                  borderColor={colorTheme.dark.main}
+                  cColor={colorTheme.primary.main}
+                  oColor={colorTheme.dark.main}
+                  aColor={colorTheme.primary.main}
+                  tColor={colorTheme.dark.main}
+                  height={40}
+                  width={40}
+                />
               </A>
             </Link>
             {menu.map((m) => (
@@ -61,21 +78,7 @@ function Header() {
         </Grid>
         <Grid item>
           <Grid container direction={'row'} alignItems={'center'}>
-            <Link href={'/chats'}>
-              <Typography
-                variant="actionMedium"
-                sx={{
-                  color: '#fff',
-                  cursor: 'pointer',
-                  ':hover': {
-                    color: colorTheme.secondary.main,
-                  },
-                }}
-              >
-                Chats
-              </Typography>
-            </Link>
-            <SwitchBox />
+            <SearchBox />
             <Wallet />
           </Grid>
         </Grid>

@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const { i18n } = require('./next-i18next.config');
 const { withSentryConfig } = require('@sentry/nextjs');
-const withTM = require('next-transpile-modules')(['ui']);
+// const withTM = require('next-transpile-modules')(['ui']);
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 })
@@ -33,4 +33,4 @@ const moduleExports = {
   i18n,
 }
 
-module.exports = withBundleAnalyzer(withSentryConfig(withTM(moduleExports)));
+module.exports = withBundleAnalyzer(withSentryConfig(moduleExports));
