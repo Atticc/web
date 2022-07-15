@@ -1,7 +1,7 @@
 # ci pipeline for deploying onboarding portal
 # image: node:alpine
 # image: amazon/aws-cli
-image: node:16.13-alpine3.13
+image: timbru31/node-alpine-git:16
 # And to cache them as well.
 cache:
   paths:
