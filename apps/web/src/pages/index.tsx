@@ -34,7 +34,7 @@ const items = [
   {
     name: 'wearehiring.eth',
     address: '0x7c04786f04c522ca664bb8b6804e0d182eec505f',
-    image: ''
+    image: './assets/0x7c04786f04c522ca664bb8b6804e0d182eec505f.png'
   },
   {
     name: 'wanghanyang.eth',
@@ -69,27 +69,27 @@ const items = [
   {
     name: 'chelseaaa.eth',
     address: '0x19af5e0a45c55c0f2edb5f48abbed82360de7dd7',
-    image: ''
+    image: './assets/0x19aF5e0a45c55c0f2edB5f48Abbed82360De7dD7.png'
   },
   {
     name: 'atticknight.eth',
     address: '0xc81082690edc8cde6d83a7549aa6a74534305372',
-    image: ''
+    image: './assets/0xC81082690EDC8CDE6D83a7549aa6a74534305372.png'
   },
   {
     name: '0xminion.eth',
     address: '0xe085327c5ad2f77147f10973fed45fb19d734f7e',
-    image: ''
+    image: './assets/0xe085327c5ad2f77147f10973fed45fb19d734f7e.png'
   },
   {
     name: 'atticcburger.eth',
     address: '0x39b626b217a4e4e52a734826c18eb880fdcbf57c',
-    image: ''
+    image: './assets/0x39b626b217a4e4e52a734826c18eb880fdcbf57c.png'
   },
   {
-    name: 'cy',
+    name: 'monify.eth',
     address: '0x4892eC28B9c865BB5b52c0321979E1ec22881f7c',
-    image: ''
+    image: './assets/0x4892eC28B9c865BB5b52c0321979E1ec22881f7c.png'
   },
 ]
 
@@ -148,10 +148,12 @@ const TestPage: NextPage = () => {
           <Grid container direction="column" px={3}>
             <Grid item>
               <Typography variant='title'>
-                The social community for all crypto owners.
+                Heyy,<br/>
+                atticc today!
               </Typography>
               <Typography variant='body1' pt={2}>
-                Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa nascetur mus ipsum dolor sit amet.
+                This is a crypto native social media for crypto native communities.<br/>
+                Own your data, chill with frens, experience web3. LFG!
               </Typography>
             </Grid>
             <Grid item pt={2}>

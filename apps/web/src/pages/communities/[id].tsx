@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { Grid, Tab, Tabs, Typography } from '@mui/material'
 import { PrimaryDarkButton } from '../../components/buttons/Buttons'
 import CommunityCreateModal from '../../components/modal/CommunityCreateModal'
-import { posts, users } from '../../app/constants'
+import { posts } from '../../app/constants'
 import { PostListItem } from '../../components/PostListItem'
 import { CommunitiesList } from '../../components/CommunitiesList'
 import { ContributorsList } from '../../components/ContributorsList'
@@ -60,7 +60,7 @@ const Home: NextPage<UserDetailProps> = ({ id }) => {
               <Typography variant={'h3'}>Community {id}</Typography>
             </Grid>
             <CommunitiesList title={'Utility NFTs'} data={[]} />
-            <ContributorsList title={'Top Contributors'} data={users} />
+            {/* <ContributorsList title={'Top Contributors'} data={users} /> */}
           </Grid>
         </Grid>
       </Grid>
