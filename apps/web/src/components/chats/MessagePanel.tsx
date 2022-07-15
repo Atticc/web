@@ -1,5 +1,5 @@
 import { CircularProgress, Divider, Grid, Stack, Typography, useTheme } from '@mui/material'
-import {useXmtp} from '@utils/useXmtp'
+import { useXmtp } from '@utils/useXmtp'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import useConversation from '@utils/useConversation'
 import MessageList from './MessageList'
@@ -8,7 +8,10 @@ import { PrimaryDarkButton } from '@c/buttons/Buttons'
 import { useRouter } from 'next/router'
 import { toChecksumAddress } from '@utils/helper'
 
-interface MessagePanelProps { recipientAddress: string, onConnect: () => void }
+interface MessagePanelProps {
+  recipientAddress: string
+  onConnect: () => void
+}
 
 export const MessagePanel = ({ recipientAddress, onConnect }: MessagePanelProps) => {
   const colorTheme = useTheme().palette
@@ -18,10 +21,7 @@ export const MessagePanel = ({ recipientAddress, onConnect }: MessagePanelProps)
   const scrollToMessagesEndRef = useCallback(() => {
     ;(messagesEndRef.current as any)?.scrollIntoView({ behavior: 'smooth' })
   }, [messagesEndRef])
-  const { messages, sendMessage, loading } = useConversation(
-    recipientAddress,
-    scrollToMessagesEndRef
-  )
+  const { messages, sendMessage, loading } = useConversation(recipientAddress, scrollToMessagesEndRef)
 
   const hasMessages = messages.length > 0
   useEffect(() => {
@@ -55,32 +55,36 @@ export const MessagePanel = ({ recipientAddress, onConnect }: MessagePanelProps)
   }, [recipientAddress, checkIfOnNetwork])
 
   if (loading && !messages?.length) {
+    return <CircularProgress />
+  }
+
+  if (error) {
     return (
-      <CircularProgress />
+      <Stack alignItems={'center'}>
+        <Typography variant="h4">{error}</Typography>
+      </Stack>
     )
   }
 
-  if(error) {
-    return <Stack alignItems={'center'}>
-      <Typography variant="h4">{error}</Typography>
-    </Stack>
-  }
-
   if (!recipientAddress || !walletAddress || !client) {
-    return <Stack alignItems={'center'}>
-      <Typography variant="h4">Select a conversation</Typography>
-      <Typography variant="body2">Start a new conversation</Typography>
-      {!client ? <PrimaryDarkButton textcontent='Connect' onClick={onConnect} /> : null}
-    </Stack>
+    return (
+      <Stack alignItems={'center'}>
+        <Typography variant="h4">Select a conversation</Typography>
+        <Typography variant="body2">Start a new conversation</Typography>
+        {!client ? <PrimaryDarkButton textcontent="Connect" onClick={onConnect} /> : null}
+      </Stack>
+    )
   }
 
   return (
-    <Grid container direction={'column'} maxHeight={'calc(100vh - 96px)'} minHeight={'calc(100vh - 96px)'} sx={{ overflowY: 'auto', display: 'flex' }}>
-      <MessageList
-        messagesEndRef={messagesEndRef}
-        messages={messages}
-        walletAddress={walletAddress}
-      />
+    <Grid
+      container
+      direction={'column'}
+      maxHeight={'calc(100vh - 96px)'}
+      minHeight={'calc(100vh - 96px)'}
+      sx={{ overflowY: 'auto', display: 'flex' }}
+    >
+      <MessageList messagesEndRef={messagesEndRef} messages={messages} walletAddress={walletAddress} />
       {walletAddress && <MessageInput onSend={sendMessage} />}
     </Grid>
   )

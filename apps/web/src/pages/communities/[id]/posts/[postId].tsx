@@ -5,7 +5,7 @@ import { Grid, Tab, Tabs, Typography } from '@mui/material'
 import { PrimaryDarkButton } from '../../../../components/buttons/Buttons'
 import { CommunitiesList } from '../../../../components/CommunitiesList'
 import { PostListItem } from '../../../../components/PostListItem'
-import { comments, posts, users } from '../../../../app/constants'
+import { comments, posts } from '../../../../app/constants'
 import { ContributorsList } from '../../../../components/ContributorsList'
 import CommunityCreateModal from '../../../../components/modal/CommunityCreateModal'
 import { CommentListItem } from '../../../../components/CommentListItem'
@@ -52,7 +52,7 @@ const Home: NextPage<UserDetailProps> = ({ postId, id }) => {
               <Typography variant={'h3'}>Community {id}</Typography>
             </Grid>
             <CommunitiesList title={'Utility NFTs'} data={[]} />
-            <ContributorsList title={'Top Contributors'} data={users} />
+            {/* <ContributorsList title={'Top Contributors'} data={users} /> */}
           </Grid>
         </Grid>
       </Grid>

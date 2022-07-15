@@ -14,7 +14,7 @@ import { CommunitiesList } from '@c/CommunitiesList'
 
 const NftSection = dynamic(() => import('@c/NFT/NftSection'), {
   suspense: false,
-  ssr: false
+  ssr: false,
 })
 
 interface UserDetailProps {
@@ -34,7 +34,7 @@ const UserDetailPage: NextPage<UserDetailProps> = ({ address, userData, title })
   const { data: user, refetch } = useIdentity({ address, data: userData })
 
   useEffect(() => {
-    if(isValidAddr(address)) {
+    if (isValidAddr(address)) {
       refetch()
     }
   }, [address, refetch])

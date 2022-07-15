@@ -86,7 +86,7 @@ const UserConnectionModal = ({
   }, [data])
 
   useEffect(() => {
-    if(!isValidAddr(address)) return
+    if (!isValidAddr(address)) return
     refetch()
   }, [address, refetch])
 

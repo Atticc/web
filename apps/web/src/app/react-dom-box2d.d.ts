@@ -1,2 +1,1 @@
-declare module 'react-dom-box2d';
-
+declare module 'react-dom-box2d'

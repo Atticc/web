@@ -13,8 +13,8 @@ const MessageInput = ({ onSend }: MessageInputProps): JSX.Element => {
   useEffect(() => setMessage(''), [router.query.recipientWalletAddr])
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setMessage(event.target.value);
-  };
+    setMessage(event.target.value)
+  }
 
   const onSubmit = useCallback(
     async (e: React.FormEvent<HTMLFormElement>) => {
@@ -29,15 +29,25 @@ const MessageInput = ({ onSend }: MessageInputProps): JSX.Element => {
   )
   return (
     <Grid item pt={3} width={'100%'}>
-      <Box component="form" autoComplete='off' onSubmit={onSubmit}>
-        <TextField margin="dense" type="text" label={'Message'} placeholder="Type something..." name="message"
-          value={message} required onChange={handleChange} fullWidth InputProps={{
+      <Box component="form" autoComplete="off" onSubmit={onSubmit}>
+        <TextField
+          margin="dense"
+          type="text"
+          label={'Message'}
+          placeholder="Type something..."
+          name="message"
+          value={message}
+          required
+          onChange={handleChange}
+          fullWidth
+          InputProps={{
             endAdornment: (
               <InputAdornment position="end">
                 <Chip label={'Send'} clickable component="button" disabled={!message} type={'submit'} />
               </InputAdornment>
-            )
-          }} />
+            ),
+          }}
+        />
       </Box>
     </Grid>
   )

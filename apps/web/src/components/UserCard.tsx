@@ -33,7 +33,6 @@ export const UserCard = ({ user, isDetail = false }: { user: IUser; isDetail?: b
     if (!user?.address) return
 
     refetchFollowStatus()
-
   }, [user.address, address, refetchFollowStatus])
 
   const onFollow = async () => {
@@ -60,7 +59,7 @@ export const UserCard = ({ user, isDetail = false }: { user: IUser; isDetail?: b
         <Grid item sx={{ borderRadius: 3, border: 0.5, paddingX: 2, paddingY: 3 }}>
           <Stack direction={'column'} alignItems={'center'}>
             <Stack direction={'row'} alignItems={'center'} paddingBottom={2}>
-              <ProfileImage src={user?.avatar || user?.twitter?.avatar} address={user?.address}/>
+              <ProfileImage src={user?.avatar || user?.twitter?.avatar} address={user?.address} />
               <Stack direction={'column'} paddingLeft={1}>
                 <Typography variant="h5">{user?.domain || null}</Typography>
                 <Typography variant="body1">{formatAddress(user?.address)}</Typography>

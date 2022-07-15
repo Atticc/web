@@ -23,9 +23,10 @@ export const CommentListItem = ({ comment }: { comment: IComment | undefined }) 
         alignSelf: 'end',
       }}
     >
-      <Typography variant="h3">{comment.message}</Typography>
-
-      <Typography variant="h5">author: {comment.owner}</Typography>
+      <Grid item>
+        <Typography variant="h3">{comment.message}</Typography>
+        <Typography variant="h5">{`author: ${comment.owner}`}</Typography>
+      </Grid>
     </Grid>
   )
 }

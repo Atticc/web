@@ -22,7 +22,7 @@ export const NftSection = ({
   address: string
   showMore?: boolean
 }) => {
-  const { alchemy } = useMemo(() => { return useAlchemy() }, [])
+  const { alchemy } = useAlchemy()
   const [nfts, setNfts] = useState<{ items: Array<Nft>; totalCount?: number }>({ items: [], totalCount: 0 })
   const [openNFTs, setOpenNFTs] = useState<boolean>(false)
   const { data: oats = {}, refetch: fetchOATs } = useOATs({ address })
@@ -43,7 +43,7 @@ export const NftSection = ({
     } else {
       setNfts({ items: [], totalCount: 0 })
     }
-  }, [address, alchemy, fetchOATs])
+  }, [address, fetchOATs])
 
   return !nfts?.items?.length && !poaps.length && !oats?.list?.length ? null : (
     <Grid container direction={'column'} border={1} sx={{ borderRadius: 4, padding: 2 }}>
@@ -92,7 +92,7 @@ export const NftSection = ({
         ) : null}
       </Grid>
       {showMore && (nfts?.items?.length > 3 || poaps.length > 3 || oats?.list?.length > 3) ? (
-        <Grid item marginTop={3} alignSelf='center'>
+        <Grid item marginTop={3} alignSelf="center">
           <PrimaryDarkButton textcontent={'View More'} onClick={() => setOpenNFTs(true)} />
         </Grid>
       ) : null}

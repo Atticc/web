@@ -10,7 +10,6 @@ import { appWithTranslation } from 'next-i18next'
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache()
 
-
 const AppWithoutSSR = dynamic(() => import('@c/App'), {
   ssr: false,
 })

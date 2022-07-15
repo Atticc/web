@@ -30,10 +30,7 @@ const useMessageStore = () => {
     {}
   )
 
-  const getMessages = useCallback(
-    (peerAddress: string) => messageStore[peerAddress] || [],
-    [messageStore]
-  )
+  const getMessages = useCallback((peerAddress: string) => messageStore[peerAddress] || [], [messageStore])
 
   return {
     getMessages,

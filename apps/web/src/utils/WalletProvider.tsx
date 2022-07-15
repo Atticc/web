@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState, createContext } from 'react'
-import type {Signer, ethers as Ether} from 'ethers'
+import type { Signer, ethers as Ether } from 'ethers'
 import Web3Modal, { providers } from 'web3modal-dynamic-import'
 import CyberConnect from '@cyberlab/cyberconnect'
 import { ALCHEMY_RPC_ETH } from '@app/config'
@@ -115,22 +115,25 @@ export const WalletProvider = ({ children }: WalletProviderProps): JSX.Element =
     [address, disconnect]
   )
 
-  const handleSetup = useCallback(async (instance: any) => {
-    instance.on('accountsChanged', handleAccountsChanged)
-    try {
-      return import("ethers").then(async ({ ethers }) => {
-        const provider = new ethers.providers.Web3Provider(instance)
-        const signer = provider.getSigner()
-        setProvider(provider)
-        setSigner(signer)
-        setAddress(await signer.getAddress())
-        initCyberConnect(provider.provider)
-        return signer
-      })
-    } catch (e) {
-      console.log('Error while creating ethers provider');
-    }
-  }, [handleAccountsChanged, initCyberConnect])
+  const handleSetup = useCallback(
+    async (instance: any) => {
+      instance.on('accountsChanged', handleAccountsChanged)
+      try {
+        return import('ethers').then(async ({ ethers }) => {
+          const provider = new ethers.providers.Web3Provider(instance)
+          const signer = provider.getSigner()
+          setProvider(provider)
+          setSigner(signer)
+          setAddress(await signer.getAddress())
+          initCyberConnect(provider.provider)
+          return signer
+        })
+      } catch (e) {
+        console.log('Error while creating ethers provider')
+      }
+    },
+    [handleAccountsChanged, initCyberConnect]
+  )
 
   const connect = useCallback(async () => {
     if (!web3Modal) throw new Error('web3Modal not initialized')

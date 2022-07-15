@@ -58,18 +58,21 @@ export const ConversationListItem = ({ conversation, isSelected }: ConversationL
           paddingX: 1,
         }}
       >
-        {loading
-          ? <CircularProgress />
-          : <Stack direction={'row'} alignItems={'center'}>
+        {loading ? (
+          <CircularProgress />
+        ) : (
+          <Stack direction={'row'} alignItems={'center'}>
             <ProfileImage address={conversation.peerAddress} />
             <Address address={conversation?.peerAddress || ''} />
-          </Stack>}
-          {latestMessage ? 
-          <Typography variant='body2'paddingTop={1} paddingLeft={1}>
-            {formatDate(latestMessage?.sent)}{`: `}
+          </Stack>
+        )}
+        {latestMessage ? (
+          <Typography variant="body2" paddingTop={1} paddingLeft={1}>
+            {formatDate(latestMessage?.sent)}
+            {`: `}
             {truncate(latestMessage.content, 55)}
           </Typography>
-          : null}
+        ) : null}
       </Grid>
     </Link>
   )

@@ -2,7 +2,7 @@ import { Button, Grid, Stack, Menu, MenuItem, useTheme, CircularProgress } from 
 import useWallet from '@utils/useWallet'
 import { useRouter } from 'next/router'
 import { useCallback, useState, MouseEvent } from 'react'
-import ArrowForwardIosRoundedIcon from '@mui/icons-material/ArrowForwardIosRounded'; 
+import ArrowForwardIosRoundedIcon from '@mui/icons-material/ArrowForwardIosRounded'
 import Address from './users/Address'
 import ProfileImage from './users/Avatar'
 
@@ -37,14 +37,16 @@ export function WalletComponent() {
     router.push(`/users/${address}`)
   }
 
-  return loading ? <CircularProgress /> : (
+  return loading ? (
+    <CircularProgress />
+  ) : (
     <Grid item>
       {!address ? (
-        <Button variant='outline' onClick={connectWallet} endIcon={<ArrowForwardIosRoundedIcon />}>
+        <Button variant="outline" onClick={connectWallet} endIcon={<ArrowForwardIosRoundedIcon />}>
           {loading ? 'Loading...' : 'Connect Wallet'}
-          </Button>
-        // <PrimaryDarkButton textcontent={loading ? 'Loading...' : 'Connect Wallet'} onClick={connectWallet} />
+        </Button>
       ) : (
+        // <PrimaryDarkButton textcontent={loading ? 'Loading...' : 'Connect Wallet'} onClick={connectWallet} />
         <Button
           id="basic-button"
           aria-controls={open ? 'basic-menu' : undefined}
@@ -55,7 +57,7 @@ export function WalletComponent() {
         >
           <Stack direction={'row'} alignItems={'center'}>
             <ProfileImage address={String(address)} />
-            <Address address={String(address)} showAddress  />
+            <Address address={String(address)} showAddress />
           </Stack>
         </Button>
       )}

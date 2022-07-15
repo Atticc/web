@@ -9,13 +9,11 @@ export type MessageListProps = {
   messagesEndRef: MutableRefObject<null>
 }
 
-
 const isOnSameDay = (d1?: Date, d2?: Date): boolean => {
   return d1?.toDateString() === d2?.toDateString()
 }
 
-const formatDate = (d?: Date) =>
-  d?.toLocaleString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
+const formatDate = (d?: Date) => d?.toLocaleString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
 
 const DateDivider = ({ date }: { date?: Date }): JSX.Element => (
   <Divider>
@@ -25,17 +23,13 @@ const DateDivider = ({ date }: { date?: Date }): JSX.Element => (
 
 const ConversationBeginningNotice = (): JSX.Element => (
   <Grid item alignItems={'center'} justifyItems={'center'} paddingBottom={4}>
-    <Typography variant='body2' textAlign={'center'}>
+    <Typography variant="body2" textAlign={'center'}>
       Start of the conversation
     </Typography>
   </Grid>
 )
 
-const MessagesList = ({
-  messages,
-  walletAddress,
-  messagesEndRef,
-}: MessageListProps): JSX.Element => {
+const MessagesList = ({ messages, walletAddress, messagesEndRef }: MessageListProps): JSX.Element => {
   let lastMessageDate: Date | undefined
 
   const renderMessage = (msg: Message) => {
@@ -43,25 +37,24 @@ const MessagesList = ({
     const dateHasChanged = !isOnSameDay(lastMessageDate, msg.sent)
     lastMessageDate = msg.sent
 
-    return <Grid item key={msg.id}>
-      {dateHasChanged ? <DateDivider date={msg.sent} /> : null}
-      <MessageListItem message={msg} isSender={isSender} />
-    </Grid>
+    return (
+      <Grid item key={msg.id}>
+        {dateHasChanged ? <DateDivider date={msg.sent} /> : null}
+        <MessageListItem message={msg} isSender={isSender} />
+      </Grid>
+    )
   }
 
   return (
     <Grid container sx={{ display: 'flex', flexGrow: 1 }}>
-      <Grid container sx={{ alignSelf: 'flex-end'}} width={'100%'}>
-
+      <Grid container sx={{ alignSelf: 'flex-end' }} width={'100%'}>
         <Grid item width={'100%'} flex={1}>
-          {messages && messages.length ? (
-            <ConversationBeginningNotice />
-          ) : null}
+          {messages && messages.length ? <ConversationBeginningNotice /> : null}
           {messages?.map(renderMessage)}
           <div ref={messagesEndRef} />
         </Grid>
       </Grid>
-      </Grid>
+    </Grid>
   )
 }
 export default React.memo(MessagesList)

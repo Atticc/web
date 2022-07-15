@@ -12,12 +12,12 @@ import dynamic from 'next/dynamic'
 
 const MessagePanel = dynamic(() => import('@c/chats/MessagePanel'), {
   ssr: false,
-  suspense: false
+  suspense: false,
 })
 
 const ConversationPanel = dynamic(() => import('@c/chats/ConversationPanel'), {
   ssr: false,
-  suspense: false
+  suspense: false,
 })
 
 const ChatDetailsPage: NextPage = () => {
@@ -67,9 +67,9 @@ const ChatDetailsPage: NextPage = () => {
         <meta property="og:title" content={title} key="og-title" />
         <meta name="twitter:title" content={title} key="tw-title" />
       </Head>
-      <Grid container direction={'row'} columnSpacing={3} paddingX={5} marginTop={2} >
+      <Grid container direction={'row'} columnSpacing={3} paddingX={5} marginTop={2}>
         <Grid item xs={12} md={3}>
-          <Grid container direction={'column'} alignItems={'center'} maxWidth={320} >
+          <Grid container direction={'column'} alignItems={'center'} maxWidth={320}>
             <ConversationPanel onConnect={handleConnect} />
           </Grid>
         </Grid>

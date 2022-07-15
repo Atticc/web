@@ -11,10 +11,9 @@ type MessageListItemProps = {
   isSender: boolean
 }
 
-
 export const MessageListItem = ({ isSender, message }: MessageListItemProps) => {
   const colorTheme = useTheme().palette
-  const {address} = useWallet()
+  const { address } = useWallet()
 
   if (!message) {
     return null
@@ -23,16 +22,20 @@ export const MessageListItem = ({ isSender, message }: MessageListItemProps) => 
   return (
     <Stack direction={isSender ? 'row-reverse' : 'row'} paddingY={2}>
       <ProfileImage address={message.senderAddress as string} />
-      <Stack direction={'column'} >
+      <Stack direction={'column'}>
         <Stack direction={isSender ? 'row-reverse' : 'row'}>
-          {isSender ? <Typography paddingX={1} variant='body1'>Me</Typography> : <Address address={address || ''} variant={'body1'} /> }
+          {isSender ? (
+            <Typography paddingX={1} variant="body1">
+              Me
+            </Typography>
+          ) : (
+            <Address address={address || ''} variant={'body1'} />
+          )}
           <Chip label={formatTime(message.sent)} variant="outlined" size="small" />
         </Stack>
         <Typography textAlign={isSender ? 'right' : 'left'} paddingX={1}>
-          {message.error ? (
-            `Error: ${message.error?.message}`
-          ) : 
-              message.content  // <Emoji text={message.content || ''} />
+          {
+            message.error ? `Error: ${message.error?.message}` : message.content // <Emoji text={message.content || ''} />
           }
         </Typography>
       </Stack>

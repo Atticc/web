@@ -28,7 +28,11 @@ export const ConversationPanel = ({ onConnect }: ConversationPanelProps) => {
   const { address } = useWallet()
   const [tab, setTab] = useState<ConversationListType>(ConversationListType.messages)
   const [friends, setFriends] = useState([])
-  const { data: connections, refetch: refetchConnection, isLoading } = useConnections({ address: String(address), first: 100 })
+  const {
+    data: connections,
+    refetch: refetchConnection,
+    isLoading,
+  } = useConnections({ address: String(address), first: 100 })
   const { conversations, loadingConversations, client } = useXmtp()
 
   const handleSetTab = (_: React.ChangeEvent<{}>, value: ConversationListType) => {
@@ -52,13 +56,15 @@ export const ConversationPanel = ({ onConnect }: ConversationPanelProps) => {
   }, [address, refetchConnection])
 
   const renderFriends = () => {
-    if(isLoading) {
+    if (isLoading) {
       return <CircularProgress />
     }
-    
-    return friends?.length > 0 
-      ? friends.map((f: IUser) => <ConversationFriendListItem user={f} key={f.address} />) 
-      : <Typography>No Friends...</Typography>
+
+    return friends?.length > 0 ? (
+      friends.map((f: IUser) => <ConversationFriendListItem user={f} key={f.address} />)
+    ) : (
+      <Typography>No Friends...</Typography>
+    )
   }
 
   const renderConversations = () => {
@@ -87,7 +93,7 @@ export const ConversationPanel = ({ onConnect }: ConversationPanelProps) => {
           ))}
         </Tabs>
       </Grid>
-      <Grid item key={tab} sx={{overflowY: 'auto'}} maxHeight={'calc(100vh - 156px)'}>
+      <Grid item key={tab} sx={{ overflowY: 'auto' }} maxHeight={'calc(100vh - 156px)'}>
         {tab == ConversationListType.friends ? renderFriends() : renderConversations()}
       </Grid>
     </Grid>

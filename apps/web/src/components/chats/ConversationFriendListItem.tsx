@@ -17,7 +17,7 @@ export const ConversationFriendListItem = ({ user }: { user: IUser | undefined }
     return null
   }
 
-  if(loading) {
+  if (loading) {
     return <CircularProgress />
   }
 

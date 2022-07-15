@@ -37,15 +37,16 @@ export const decodeNftTokenUri = (data: string = '') => {
   }
 }
 
-export const formatTime = (d: Date | undefined): string => d
-  ? d.toLocaleTimeString(undefined, {
-      hour12: true,
-      hour: 'numeric',
-      minute: '2-digit',
-    })
-  : ''
+export const formatTime = (d: Date | undefined): string =>
+  d
+    ? d.toLocaleTimeString(undefined, {
+        hour12: true,
+        hour: 'numeric',
+        minute: '2-digit',
+      })
+    : ''
 
-export const stripHexPrefix = (value:string) : string => {
+export const stripHexPrefix = (value: string): string => {
   return value.slice(0, 2) === '0x' ? value.slice(2) : value
 }
 
@@ -55,9 +56,7 @@ export const toChecksumAddress = (address: string, chainId: string | null = null
   }
 
   if (!/^(0x)?[0-9a-f]{40}$/i.test(address)) {
-    throw new Error(
-      `Given address "${address}" is not a valid Ethereum address.`
-    )
+    throw new Error(`Given address "${address}" is not a valid Ethereum address.`)
   }
 
   const stripAddress = stripHexPrefix(address).toLowerCase()
@@ -68,10 +67,7 @@ export const toChecksumAddress = (address: string, chainId: string | null = null
   let checksumAddress = '0x'
 
   for (let i = 0; i < stripAddress.length; i++) {
-    checksumAddress +=
-      parseInt(keccakHash[i], 16) >= 8
-        ? stripAddress[i].toUpperCase()
-        : stripAddress[i]
+    checksumAddress += parseInt(keccakHash[i], 16) >= 8 ? stripAddress[i].toUpperCase() : stripAddress[i]
   }
 
   return checksumAddress

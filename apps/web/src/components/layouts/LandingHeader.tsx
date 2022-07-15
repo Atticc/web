@@ -18,16 +18,32 @@ function LandingHeader() {
         top: 0,
       }}
     >
-      <Grid container sx={{
-        display: 'flex', justifyContent: 'space-between', paddingX: 2, height: 68
-      }} alignItems={'center'} direction={'row'}>
+      <Grid
+        container
+        sx={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          paddingX: 2,
+          height: 68,
+        }}
+        alignItems={'center'}
+        direction={'row'}
+      >
         <Grid item>
           <Grid container direction={'row'} alignItems={'center'}>
             <Link href={'/'} passHref>
               <A>
                 <Stack direction={'row'} alignItems={'center'} spacing={1}>
-                  <AtticcIcon tColor={'#fff'} oColor={'#fff'} borderColor={'#fff'} aColor={'#000'} cColor={'#000'} height={40} width={40} />
-                <AtticTextIcon />
+                  <AtticcIcon
+                    tColor={'#fff'}
+                    oColor={'#fff'}
+                    borderColor={'#fff'}
+                    aColor={'#000'}
+                    cColor={'#000'}
+                    height={40}
+                    width={40}
+                  />
+                  <AtticTextIcon />
                 </Stack>
               </A>
             </Link>

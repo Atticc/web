@@ -29,15 +29,15 @@ function App({ children }: AppProps) {
   return (
     <ColorModeContext.Provider value={colorMode}>
       {/* <Provider store={store}> */}
-        <ThemeProvider theme={theme}>
-          <QueryClientProvider client={client}>
-            <WalletProvider>
-              <XmtpProvider>
-                <div>{children}</div>
-              </XmtpProvider>
-            </WalletProvider>
-          </QueryClientProvider>
-        </ThemeProvider>
+      <ThemeProvider theme={theme}>
+        <QueryClientProvider client={client}>
+          <WalletProvider>
+            <XmtpProvider>
+              <div>{children}</div>
+            </XmtpProvider>
+          </WalletProvider>
+        </QueryClientProvider>
+      </ThemeProvider>
       {/* </Provider> */}
     </ColorModeContext.Provider>
   )
