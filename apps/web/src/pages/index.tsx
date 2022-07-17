@@ -108,10 +108,11 @@ const TestPage: NextPage = () => {
   const renderItem = (i: any) => {
     const top = Math.max(0, Math.floor(Math.random() * 240))
     const left = Math.max(0, Math.floor(Math.random() * (window.innerWidth - 120)))
+    const size = Math.min(120, window.innerWidth / 6)
 
     return (
-      <Item left={left} top={top} restitution={0.3} key={i.address} height={120} width={120} shape={'circle'}>
-        <div style={{ height: 120, width: 120 }}>
+      <Item left={left} top={top} restitution={0.3} key={i.address} height={size} width={size} shape={'circle'}>
+        <div style={{ height: size, width: size}}>
           <Link href={`/users/${i.address}`} passHref>
             <a>
               <Tooltip
@@ -122,14 +123,15 @@ const TestPage: NextPage = () => {
                   </Stack>
                 }
                 arrow
+                placement={'top'}
               >
                 <Avatar
                   src={i?.image}
                   alt={`${i.name} profile image`}
                   sx={{
                     bgcolor: 'transparent',
-                    width: 120,
-                    height: 120,
+                    width: size,
+                    height: size,
                     ':hover': {
                       filter: 'opacity(0.9)',
                       transform: 'scale(1.2)',
@@ -161,16 +163,16 @@ const TestPage: NextPage = () => {
       height={'100vh'}
       width={'100vw'}
       sx={{
-        overflow: 'none',
+        overflow: 'hidden',
         backgroundColor: '#F26E21',
       }}
     >
       <World
-        width={window.innerWidth}
-        height={window.innerHeight}
+        width={Math.floor(window.innerWidth)}
+        height={Math.floor(window.innerHeight)}
         gravity={[0, 9.8]}
         className="world"
-        style={{ backgroundColor: 'transparent', padding: 0, position: 'absolute' }}
+        style={{ backgroundColor: 'transparent', position: 'absolute', bottom: 0, right: 0, overflowX: 'hidden', overflowY: 'hidden' }}
       >
         {items.map(renderItem)}
       </World>
