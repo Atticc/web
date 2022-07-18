@@ -23,9 +23,10 @@ Build-Dev:
     - yarn install
   script:
     - yarn build
+    - yarn export
   artifacts:
     paths:
-      - apps/web/.next/
+      - out/
     expire_in: 1 hour
 
 Deploy-Dev:
@@ -41,6 +42,6 @@ Deploy-Dev:
     refs:
       - main
   script:
-    - aws s3 cp apps/web/.next/ s3://${S3_BUCKET_NAME}/main --recursive --quiet
+    - aws s3 cp out/ s3://${S3_BUCKET_NAME}/main --recursive --quiet
     - aws cloudfront create-invalidation --distribution-id ${DISTRIBUTION_ID} --paths "/*"
     - echo "https://atticc.xyz"
