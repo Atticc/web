@@ -23,7 +23,7 @@ Build-Dev:
     - yarn install
   script:
     - yarn build
-    - yarn export
+    - next export
   artifacts:
     paths:
       - out/
