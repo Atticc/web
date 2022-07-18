@@ -57,7 +57,7 @@ export function WalletComponent() {
         >
           <Stack direction={'row'} alignItems={'center'}>
             <ProfileImage address={String(address)} />
-            <Address address={String(address)} showAddress />
+            {/* <Address address={String(address)} showAddress /> */}
           </Stack>
         </Button>
       )}

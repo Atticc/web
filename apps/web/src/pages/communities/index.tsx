@@ -2,8 +2,7 @@ import type { NextPage } from 'next'
 import LayoutWithoutFooter from '../../components/layouts/LayoutWithoutFooter'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useState } from 'react'
-import { Grid, Typography, useTheme } from '@mui/material'
-import { PrimaryDarkButton } from '../../components/buttons/Buttons'
+import { Button, Grid, Typography, useTheme } from '@mui/material'
 import { CommunityCard } from '../../components/CommunityCard'
 import CommunityCreateModal from '../../components/modal/CommunityCreateModal'
 
@@ -18,7 +17,9 @@ const Home: NextPage = () => {
         <Grid item xs={2}>
           <Grid container direction={'column'} spacing={2} alignItems={'center'}>
             <Grid item xs>
-              <PrimaryDarkButton textcontent={'Create Community'} onClick={() => setShowCreateModal(true)} />
+              <Button variant="outline" onClick={() => setShowCreateModal(true)}>
+                {'Create Community'}
+              </Button>
             </Grid>
           </Grid>
         </Grid>

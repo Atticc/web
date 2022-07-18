@@ -17,9 +17,11 @@ export const getDesignTokens = (mode: PaletteMode) => ({
     error: {
       main: red.A400,
     },
+    white: { main: '#fff' },
+    black: { main: '#17181B' },
     ...(mode === 'light'
       ? {
-          dark: { main: '#000000' },
+          dark: { main: '#17181B' },
           light: { main: '#ffffff' },
           backgroundDark100: { main: '#320D1E' },
           backgroundDark200: { main: '#3B1325' },
@@ -40,7 +42,7 @@ export const getDesignTokens = (mode: PaletteMode) => ({
         }
       : {
           dark: { main: '#ffffff' },
-          light: { main: '#000000' },
+          light: { main: '#17181B' },
           backgroundDark100: { main: '#320D1E' },
           backgroundDark200: { main: '#3B1325' },
           backgroundDark300: { main: '#3D1426', dark: '#4e2537' },
@@ -67,8 +69,8 @@ export const getDesignTokens = (mode: PaletteMode) => ({
           style: ({ theme: t }: { theme: any }) => ({
             borderRadius: '10px',
             borderWidth: '2px',
-            borderColor: t.palette.dark.main,
-            color: t.palette.dark.main,
+            borderColor: t.palette.white.main,
+            color: t.palette.white.main,
             borderStyle: 'solid',
             padding: '10px 22px',
             boxShadow: 'none',
@@ -80,13 +82,13 @@ export const getDesignTokens = (mode: PaletteMode) => ({
             },
             '&:hover': {
               textDecoration: 'none',
-              backgroundColor: t.palette.light.main,
-              borderColor: t.palette.light.main,
+              backgroundColor: t.palette.black.main,
+              borderColor: t.palette.black.main,
               color: t.palette.primary.main,
               '@media (hover: none)': {
-                color: t.palette.dark.main,
+                color: t.palette.white.main,
                 backgroundColor: 'transparent',
-                borderColor: t.palette.dark.main,
+                borderColor: t.palette.white.main,
               },
             },
           }),
@@ -94,8 +96,25 @@ export const getDesignTokens = (mode: PaletteMode) => ({
         {
           props: { variant: 'outline', color: 'secondary' },
           style: {
-            borderColor: 'light.main',
+            borderColor: 'white.main',
           },
+        },
+      ],
+    },
+    MuiTypography: {
+      variants: [
+        {
+          props: { variant: 'action' },
+          style: ({ theme: t }: { theme: any }) => ({
+            fontSize: 16,
+            fontWeight: 600,
+            lineHeight: '19.35px',
+            letterSpacing: 0.1,
+            cursor: 'pointer',
+            '&:hover': {
+              color: t.palette.black.main,
+            },
+          }),
         },
       ],
     },
@@ -112,6 +131,7 @@ export const getDesignTokens = (mode: PaletteMode) => ({
   typography: {
     fontFamily: [
       'Inter',
+      'Poppins',
       '"Helvetica Neue"',
       'Arial',
       'sans-serif',
@@ -123,6 +143,7 @@ export const getDesignTokens = (mode: PaletteMode) => ({
       fontSize: 55,
       fontWeight: 400,
       lineHeight: '64px',
+      fontFamily: 'Poppins',
     },
     h1: {
       fontSize: 48,
@@ -164,8 +185,13 @@ export const getDesignTokens = (mode: PaletteMode) => ({
     },
     actionMedium: {
       fontSize: 16,
-      fontWeight: 500,
-      lineHeight: '18.75px',
+      fontWeight: 600,
+      lineHeight: '19.35px',
+      letterSpacing: 0.1,
+      cursor: 'pointer',
+      ':hover': {
+        color: 'black.main',
+      },
     },
     actionLarge: {
       fontSize: 20,
@@ -184,6 +210,8 @@ declare module '@mui/material/styles' {
   interface Palette {
     dark: Palette['primary']
     light: Palette['primary']
+    black: Palette['primary']
+    white: Palette['primary']
     primary: Palette['primary']
     backgroundDark100: Palette['primary']
     backgroundDark200: Palette['primary']
@@ -208,6 +236,8 @@ declare module '@mui/material/styles' {
   interface PaletteOptions {
     dark: PaletteOptions['primary']
     light: PaletteOptions['primary']
+    black: PaletteOptions['primary']
+    white: PaletteOptions['primary']
     backgroundDark100: PaletteOptions['primary']
     backgroundDark200: PaletteOptions['primary']
     backgroundDark300: PaletteOptions['primary']
@@ -253,6 +283,7 @@ declare module '@mui/material/styles' {
 
 declare module '@mui/material/Typography' {
   interface TypographyPropsVariantOverrides {
+    action: true
     title: true
     bodySmall: true
     bodyMedium: true
@@ -265,9 +296,14 @@ declare module '@mui/material/Typography' {
 }
 
 declare module '@mui/material/Button' {
+  interface ButtonPropsVariantOverrides {
+    outline: true
+  }
   interface ButtonPropsColorOverrides {
     dark: true
     light: true
+    black: true
+    white: true
     primary: true
     backgroundDark100: true
     backgroundDark200: true
@@ -294,6 +330,8 @@ declare module '@mui/material/TextField' {
   interface TextFieldPropsColorOverrides {
     dark: true
     light: true
+    black: true
+    white: true
     backgroundDark100: true
     backgroundDark200: true
     backgroundDark300: true
@@ -312,11 +350,6 @@ declare module '@mui/material/TextField' {
     textDark300: true
     radioColor: true
     radioCheckedColor: true
-  }
-}
-declare module '@mui/material/Button' {
-  interface ButtonPropsVariantOverrides {
-    outline: true
   }
 }
 

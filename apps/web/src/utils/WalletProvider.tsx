@@ -1,12 +1,12 @@
 import { useCallback, useEffect, useState, createContext } from 'react'
-import type { Signer, ethers as Ether } from 'ethers'
+import { Signer, ethers as Ether } from 'ethers'
 import Web3Modal, { providers } from 'web3modal-dynamic-import'
 import CyberConnect from '@cyberlab/cyberconnect'
 import { ALCHEMY_RPC_ETH } from '@app/config'
 import { useTheme } from '@mui/material/styles'
 
 export type WalletContextType = {
-  provider: Ether.providers.Web3Provider | undefined
+  provider: Ether.providers.Web3Provider | Ether.providers.BaseProvider | undefined
   signer: Signer | undefined
   address: string | undefined
   web3Modal: Web3Modal | undefined
@@ -41,7 +41,9 @@ type WalletProviderProps = {
 
 export const WalletProvider = ({ children }: WalletProviderProps): JSX.Element => {
   const theme = useTheme()
-  const [provider, setProvider] = useState<Ether.providers.Web3Provider>()
+  const [provider, setProvider] = useState<Ether.providers.WebSocketProvider | Ether.providers.BaseProvider>(
+    Ether.providers.getDefaultProvider()
+  )
   const [signer, setSigner] = useState<Signer>()
   const [cyberConnect, setCyberConnect] = useState<CyberConnect>()
   const [web3Modal, setWeb3Modal] = useState<Web3Modal>()
@@ -119,15 +121,15 @@ export const WalletProvider = ({ children }: WalletProviderProps): JSX.Element =
     async (instance: any) => {
       instance.on('accountsChanged', handleAccountsChanged)
       try {
-        return import('ethers').then(async ({ ethers }) => {
-          const provider = new ethers.providers.Web3Provider(instance)
-          const signer = provider.getSigner()
-          setProvider(provider)
-          setSigner(signer)
-          setAddress(await signer.getAddress())
-          initCyberConnect(provider.provider)
-          return signer
-        })
+        // return import('ethers').then(async ({ ethers }) => {
+        const provider = new Ether.providers.Web3Provider(instance)
+        const signer = provider.getSigner()
+        setProvider(provider)
+        setSigner(signer)
+        setAddress(await signer.getAddress())
+        initCyberConnect(provider.provider)
+        return signer
+        // })
       } catch (e) {
         console.log('Error while creating ethers provider')
       }

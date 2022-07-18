@@ -5,6 +5,7 @@ import { CacheProvider, EmotionCache } from '@emotion/react'
 import createEmotionCache from '@app/createEmotionCache'
 import dynamic from 'next/dynamic'
 import { APP_NAME } from '@app/config'
+import './styles.css'
 
 import { appWithTranslation } from 'next-i18next'
 // Client-side cache, shared for the whole session of the user in the browser.

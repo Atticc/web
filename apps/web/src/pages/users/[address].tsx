@@ -37,7 +37,7 @@ const UserDetailPage: NextPage = () => {
   const colorTheme = useTheme().palette
   const { data: user, refetch } = useIdentity({ address: String(address), data: userData })
   const title = `${userData?.domain || formatAddress(String(address))} - ${APP_NAME} Profile`
-  
+
   useEffect(() => {
     if (isValidAddr(String(address))) {
       refetch()

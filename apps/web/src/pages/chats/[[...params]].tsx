@@ -6,7 +6,6 @@ import Head from 'next/head'
 import { APP_NAME } from '@app/config'
 import useXmtp from '@utils/useXmtp'
 import useWallet from '@utils/useWallet'
-import { PrimaryDarkButton } from '@c/buttons/Buttons'
 import { useRouter } from 'next/router'
 import dynamic from 'next/dynamic'
 
