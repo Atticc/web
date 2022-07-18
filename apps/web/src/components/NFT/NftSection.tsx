@@ -92,7 +92,7 @@ export const NftSection = ({
       </Grid>
       {showMore && (nfts?.items?.length > 3 || poaps.length > 3 || oats?.list?.length > 3) ? (
         <Grid item marginTop={3} alignSelf="center">
-          <Button variant="outline" onClick={() => setOpenNFTs(true)}>
+          <Button variant="fill" onClick={() => setOpenNFTs(true)}>
             {'View More'}
           </Button>
         </Grid>

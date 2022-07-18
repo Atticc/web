@@ -71,7 +71,7 @@ export const MessagePanel = ({ recipientAddress, onConnect }: MessagePanelProps)
         <Typography variant="h4">Select a conversation</Typography>
         <Typography variant="body2">Start a new conversation</Typography>
         {!client ? (
-          <Button variant="outline" onClick={onConnect}>
+          <Button variant="fill" onClick={onConnect}>
             {'Connect'}
           </Button>
         ) : null}

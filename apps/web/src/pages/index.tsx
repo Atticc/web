@@ -5,14 +5,21 @@ import Link from 'next/link'
 import { AtticcIcon, LandingAtticIcon } from '@c/icons/AtticcIcon'
 import { LANDING_PROFILES } from '@app/constants'
 import Header from '@c/layouts/Header'
+import { useEffect, useState } from 'react'
+import { useDimensions } from '@utils/useDimensions'
 
 const TestPage: NextPage = () => {
   const color = useTheme().palette
+  const [size, setSize] = useState<number>(120)
+  const {height, width} = useDimensions()
+
+  useEffect(() => {
+    setSize(Math.min(120, window.innerWidth / 6))
+  }, [width])
 
   const renderItem = (i: any) => {
     const top = Math.max(0, Math.floor(Math.random() * 240))
     const left = Math.max(0, Math.floor(Math.random() * (window.innerWidth - 120)))
-    const size = Math.min(120, window.innerWidth / 6)
 
     return (
       <Item left={left} top={top} restitution={0.3} key={i.address} height={size} width={size} shape={'circle'}>
@@ -62,6 +69,23 @@ const TestPage: NextPage = () => {
     )
   }
 
+  const renderImage = () => (<World
+    key={`width-${String(Math.floor(width))}&height-${String(Math.floor(height)) }`}
+    width={Math.floor(window.innerWidth)}
+    height={Math.floor(window.innerHeight)}
+    gravity={[0, 9.8]}
+    style={{
+      backgroundColor: 'transparent',
+      position: 'absolute',
+      bottom: 0,
+      right: 0,
+      overflowX: 'hidden',
+      overflowY: 'hidden',
+    }}
+  >
+    {LANDING_PROFILES.map(renderItem)}
+  </World>)
+
   return (
     <Stack
       height={'100vh'}
@@ -71,28 +95,13 @@ const TestPage: NextPage = () => {
         backgroundColor: '#F26E21',
       }}
     >
-      <World
-        width={Math.floor(window.innerWidth)}
-        height={Math.floor(window.innerHeight)}
-        gravity={[0, 9.8]}
-        className="world"
-        style={{
-          backgroundColor: 'transparent',
-          position: 'absolute',
-          bottom: 0,
-          right: 0,
-          overflowX: 'hidden',
-          overflowY: 'hidden',
-        }}
-      >
-        {LANDING_PROFILES.map(renderItem)}
-      </World>
-      <Header showSearch={false} />
+      {renderImage()}
+      <Header showSearch={false} /> 
       <Grid container direction="row" justifyContent={'space-around'} height={'50vh'} alignItems={'center'} pt={10}>
         <Grid item md={7}>
           <Grid container direction="column" px={3}>
             <Grid item>
-              <Typography variant="title" color={color.white.main}>
+              <Typography variant="h1" color={color.white.main}>
                 Heyy, fant<span style={{ color: color.black.main, fontWeight: 600 }}>A</span>s
                 <span style={{ color: color.black.main, fontWeight: 600 }}>TTICC</span> day!
               </Typography>

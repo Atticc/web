@@ -85,7 +85,7 @@ export const ConversationPanel = ({ onConnect }: ConversationPanelProps) => {
   return (
     <Grid container direction={'column'} sx={{ paddingY: 1 }}>
       {!client ? (
-        <Button variant="outline" onClick={onConnect}>
+        <Button variant="fill" onClick={onConnect}>
           {'Connect'}
         </Button>
       ) : null}

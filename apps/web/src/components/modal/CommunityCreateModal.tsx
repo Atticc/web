@@ -59,7 +59,7 @@ const CommunityCreateModal = (props: {
           left: '50%',
           transform: 'translate(-50%, -50%)',
           width: '600px',
-          bgcolor: colorTheme.backgroundDark200.main,
+          bgcolor: colorTheme.gray.main,
           borderRadius: '12px',
           boxShadow: 24,
           padding: '26.5px',
@@ -79,13 +79,13 @@ const CommunityCreateModal = (props: {
             right: '26.5px',
           }}
         >
-          <CloseIcon color={colorTheme.textLight100}></CloseIcon>
+          <CloseIcon color={colorTheme.black}></CloseIcon>
         </Box>
         <Stack>
           <Stack flexDirection="row" justifyContent={'center'} alignItems={'center'}>
             <Typography
               variant="h2"
-              color={colorTheme.textLight100.main}
+              color={colorTheme.black.main}
               sx={{
                 marginRight: '20px',
               }}
@@ -95,7 +95,6 @@ const CommunityCreateModal = (props: {
           </Stack>
           <Stack
             sx={{
-              backgroundColor: colorTheme.backgroundDark100.main,
               borderRadius: '12px',
               padding: '24px 16px',
               margin: '10px 0 8px 0',
@@ -110,7 +109,6 @@ const CommunityCreateModal = (props: {
           </Stack>
           <Stack
             sx={{
-              backgroundColor: colorTheme.backgroundDark100.main,
               borderRadius: '12px',
               padding: '24px 16px',
               margin: '10px 0 8px 0',
@@ -125,7 +123,6 @@ const CommunityCreateModal = (props: {
           </Stack>
           <Stack
             sx={{
-              backgroundColor: colorTheme.backgroundDark100.main,
               borderRadius: '12px',
               padding: '24px 16px',
               margin: '10px 0 8px 0',
@@ -140,7 +137,6 @@ const CommunityCreateModal = (props: {
           </Stack>
           <Stack
             sx={{
-              backgroundColor: colorTheme.backgroundDark100.main,
               borderRadius: '12px',
               padding: '24px 16px',
               margin: '10px 0 8px 0',
