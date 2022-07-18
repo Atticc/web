@@ -1,4 +1,4 @@
-import { Container, Grid, Typography, useTheme,  Stack } from '@mui/material'
+import { Container, Grid, Typography, useTheme, Stack } from '@mui/material'
 import { useTranslation } from 'next-i18next'
 import Link from 'next/link'
 import { useScrollPosition } from '../../utils/useScrollPosition'
@@ -26,7 +26,9 @@ function Header({ showSearch = true }: { showSearch?: boolean }) {
       return null
     }
 
-    if(!showSearch && m.title === 'Chats') { return null }
+    if (!showSearch && m.title === 'Chats') {
+      return null
+    }
 
     const url = m.path.replace('<address>', address)
     return (
@@ -62,25 +64,38 @@ function Header({ showSearch = true }: { showSearch?: boolean }) {
           paddingX: 10,
           height: 68,
           maxHeight: 68,
-          minHeight: 68
+          minHeight: 68,
         }}
         alignItems={'center'}
         direction={'row'}
       >
-        <Grid item sx={{
-          maxHeight: 68,
-          minHeight: 68
-        }}>
-          <Grid container direction={'row'} alignItems={'center'} sx={{
+        <Grid
+          item
+          sx={{
             maxHeight: 68,
-            minHeight: 68
-          }}>
+            minHeight: 68,
+          }}
+        >
+          <Grid
+            container
+            direction={'row'}
+            alignItems={'center'}
+            sx={{
+              maxHeight: 68,
+              minHeight: 68,
+            }}
+          >
             <Link href={'/'} passHref>
               <a>
-                <Stack direction={'row'} alignItems={'center'} spacing={1} sx={{
-                  maxHeight: 68,
-                  minHeight: 68
-                }}>
+                <Stack
+                  direction={'row'}
+                  alignItems={'center'}
+                  spacing={1}
+                  sx={{
+                    maxHeight: 68,
+                    minHeight: 68,
+                  }}
+                >
                   <AtticcIcon
                     tColor={'#fff'}
                     oColor={'#fff'}
@@ -97,14 +112,22 @@ function Header({ showSearch = true }: { showSearch?: boolean }) {
             {menu.map(renderMenu)}
           </Grid>
         </Grid>
-        <Grid item sx={{
-          maxHeight: 68,
-          minHeight: 68
-        }}>
-          <Grid container direction={'row'} alignItems={'center'} sx={{
+        <Grid
+          item
+          sx={{
             maxHeight: 68,
-            minHeight: 68
-          }}>
+            minHeight: 68,
+          }}
+        >
+          <Grid
+            container
+            direction={'row'}
+            alignItems={'center'}
+            sx={{
+              maxHeight: 68,
+              minHeight: 68,
+            }}
+          >
             {showSearch ? <SearchBox /> : null}
             <Stack pr={2} />
             <Wallet />

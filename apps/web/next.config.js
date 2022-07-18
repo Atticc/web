@@ -1,5 +1,5 @@
 /** @type {import('next').NextConfig} */
-const { i18n } = require('./next-i18next.config');
+// const { i18n } = require('./next-i18next.config');
 const { withSentryConfig } = require('@sentry/nextjs');
 // const withTM = require('next-transpile-modules')(['ui']);
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
@@ -15,6 +15,7 @@ const moduleExports = {
   // swcMinify: true,
   reactStrictMode: true,
   productionBrowserSourceMaps: false,
+  // trailingSlash: true,
   eslint: {
     dirs: ['src'],
   },
@@ -30,7 +31,7 @@ const moduleExports = {
     }
     return config
   },
-  i18n,
+  // i18n,
 }
 
 module.exports = withBundleAnalyzer(withSentryConfig(moduleExports));

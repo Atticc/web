@@ -9,6 +9,7 @@
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev  --no-cache --parallel --continue",
+    "export": "turbo run export  --no-cache --parallel --continue",
     "clean": "turbo run clean && rm -rf node_modules",
     "lint": "turbo run lint",
     "format": "prettier --ignore-path .gitignore --write \"**/*.{ts,tsx,md}\""

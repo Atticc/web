@@ -11,7 +11,7 @@ import { useDimensions } from '@utils/useDimensions'
 const TestPage: NextPage = () => {
   const color = useTheme().palette
   const [size, setSize] = useState<number>(120)
-  const {height, width} = useDimensions()
+  const { height, width } = useDimensions()
 
   useEffect(() => {
     setSize(Math.min(120, window.innerWidth / 6))
@@ -69,22 +69,24 @@ const TestPage: NextPage = () => {
     )
   }
 
-  const renderImage = () => (<World
-    key={`width-${String(Math.floor(width))}&height-${String(Math.floor(height)) }`}
-    width={Math.floor(window.innerWidth)}
-    height={Math.floor(window.innerHeight)}
-    gravity={[0, 9.8]}
-    style={{
-      backgroundColor: 'transparent',
-      position: 'absolute',
-      bottom: 0,
-      right: 0,
-      overflowX: 'hidden',
-      overflowY: 'hidden',
-    }}
-  >
-    {LANDING_PROFILES.map(renderItem)}
-  </World>)
+  const renderImage = () => (
+    <World
+      key={`width-${String(Math.floor(width))}&height-${String(Math.floor(height))}`}
+      width={Math.floor(window.innerWidth)}
+      height={Math.floor(window.innerHeight)}
+      gravity={[0, 9.8]}
+      style={{
+        backgroundColor: 'transparent',
+        position: 'absolute',
+        bottom: 0,
+        right: 0,
+        overflowX: 'hidden',
+        overflowY: 'hidden',
+      }}
+    >
+      {LANDING_PROFILES.map(renderItem)}
+    </World>
+  )
 
   return (
     <Stack
@@ -96,7 +98,7 @@ const TestPage: NextPage = () => {
       }}
     >
       {renderImage()}
-      <Header showSearch={false} /> 
+      <Header showSearch={false} />
       <Grid container direction="row" justifyContent={'space-around'} height={'50vh'} alignItems={'center'} pt={10}>
         <Grid item md={7}>
           <Grid container direction="column" px={3}>
