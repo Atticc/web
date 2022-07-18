@@ -1,4 +1,4 @@
-import { CircularProgress, Grid, Stack, Tab, Tabs, Typography, useTheme } from '@mui/material'
+import { Button, CircularProgress, Grid, Stack, Tab, Tabs, Typography, useTheme } from '@mui/material'
 import { useXmtp } from '@utils/useXmtp'
 import { useEffect, useState } from 'react'
 import { useConnections } from '@req/cyberconnect/queries/getConnections'
@@ -6,7 +6,6 @@ import { isValidAddr } from '@utils/helper'
 import ConversationFriendListItem from './ConversationFriendListItem'
 import useWallet from '@utils/useWallet'
 import ConversationsList from './ConversationList'
-import { PrimaryDarkButton } from '@c/buttons/Buttons'
 import { IUser } from '@app/constants'
 
 type ConversationPanelProps = {
@@ -85,7 +84,11 @@ export const ConversationPanel = ({ onConnect }: ConversationPanelProps) => {
 
   return (
     <Grid container direction={'column'} sx={{ paddingY: 1 }}>
-      {!client ? <PrimaryDarkButton textcontent={'Connect'} onClick={onConnect} /> : null}
+      {!client ? (
+        <Button variant="fill" onClick={onConnect}>
+          {'Connect'}
+        </Button>
+      ) : null}
       <Grid item>
         <Tabs value={tab} onChange={handleSetTab} aria-label="Post Tabs" variant="fullWidth">
           {tabs.map((t) => (

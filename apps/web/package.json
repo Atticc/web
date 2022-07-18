@@ -4,8 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "dev:static": "serve ./out",
     "b": "ANALYZE=true yarn build",
     "build": "next build",
+    "export": "next build && next export",
     "start": "next start",
     "lint": "next lint",
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf .next",

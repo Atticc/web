@@ -1,10 +1,9 @@
-import { CircularProgress, Divider, Grid, Stack, Typography, useTheme } from '@mui/material'
+import { Button, CircularProgress, Divider, Grid, Stack, Typography, useTheme } from '@mui/material'
 import { useXmtp } from '@utils/useXmtp'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import useConversation from '@utils/useConversation'
 import MessageList from './MessageList'
 import MessageInput from './MessageInput'
-import { PrimaryDarkButton } from '@c/buttons/Buttons'
 import { useRouter } from 'next/router'
 import { toChecksumAddress } from '@utils/helper'
 
@@ -71,7 +70,11 @@ export const MessagePanel = ({ recipientAddress, onConnect }: MessagePanelProps)
       <Stack alignItems={'center'}>
         <Typography variant="h4">Select a conversation</Typography>
         <Typography variant="body2">Start a new conversation</Typography>
-        {!client ? <PrimaryDarkButton textcontent="Connect" onClick={onConnect} /> : null}
+        {!client ? (
+          <Button variant="fill" onClick={onConnect}>
+            {'Connect'}
+          </Button>
+        ) : null}
       </Stack>
     )
   }

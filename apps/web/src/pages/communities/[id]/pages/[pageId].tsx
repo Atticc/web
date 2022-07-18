@@ -7,7 +7,7 @@ interface UserDetailProps {
   id: string
 }
 
-const Home: NextPage= () => {
+const Home: NextPage = () => {
   return (
     <LayoutWithoutFooter>
       <Grid container spacing={3} direction={'row'} sx={{ paddingX: 4 }}>
@@ -15,9 +15,7 @@ const Home: NextPage= () => {
           {/* <Typography variant={'h2'}>
             Community {id}, Post {pageId}
           </Typography> */}
-          <Typography variant={'h2'}>
-            Community - Posts
-          </Typography>
+          <Typography variant={'h2'}>Community - Posts</Typography>
         </Grid>
       </Grid>
     </LayoutWithoutFooter>

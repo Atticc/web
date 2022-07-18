@@ -25,7 +25,7 @@ export const CommentListItem = ({ comment }: { comment: IComment | undefined }) 
     >
       <Grid item>
         <Typography variant="h3">{comment.message}</Typography>
-        <Typography variant="h5">{`author: ${comment.owner}`}</Typography>
+        <Typography variant="h5">{`author: ${comment?.authorAddress}`}</Typography>
       </Grid>
     </Grid>
   )

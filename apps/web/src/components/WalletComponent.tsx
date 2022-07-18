@@ -53,11 +53,10 @@ export function WalletComponent() {
           aria-haspopup="true"
           aria-expanded={open ? 'true' : undefined}
           onClick={handleClick}
-          color={'backgroundLight100'}
         >
           <Stack direction={'row'} alignItems={'center'}>
             <ProfileImage address={String(address)} />
-            <Address address={String(address)} showAddress />
+            {/* <Address address={String(address)} showAddress /> */}
           </Stack>
         </Button>
       )}

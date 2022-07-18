@@ -2,6 +2,8 @@ import React, { useEffect, useState, useCallback, useRef } from 'react'
 import { Autocomplete, Chip, Stack, TextField, Typography } from '@mui/material'
 import useWallet from '@utils/useWallet'
 import { IUser } from '@app/constants'
+import { formatAddress } from '@utils/helper'
+import Link from 'next/link'
 
 type SearchBoxProps = {
   recipientWalletAddress?: string
@@ -18,73 +20,66 @@ const SearchBox = ({ id, name, placeholder, onSubmit, ...props }: SearchBoxProps
   const [options, setOptions] = useState<Array<IUser>>([])
   const { resolveName, lookupAddress } = useWallet()
 
-  // const handleInputChange = async (e: React.SyntheticEvent) => {
-  //   const data = e.target as typeof e.target & {
-  //     value: string
-  //   }
-  //   // if (router.pathname !== '/dm') {
-  //   //   router.push('/dm')
-  //   // }
-  //   if (
-  //     data.value.endsWith('.eth') ||
-  //     (data.value.startsWith('0x') && data.value.length === 42)
-  //   ) {
-  //     handleSubmit(e, data.value)
-  //   }
-  // }
-
-  useEffect(() => {
-    const setLookupValue = async () => {
-      if (!lookupAddress) return
-      if (value.startsWith('0x') && value.length === 42) {
-        const name = await lookupAddress(value)
-        if (name) {
-          setValue(name)
-        }
-      }
-    }
-    setLookupValue()
-  }, [value, lookupAddress])
-
   const handleAutocomplete = async (event: any, newValue: string) => {
+    if (newValue.length < 5) {
+      setOptions([])
+      return
+    }
+
     if (newValue.startsWith('0x') && newValue.length === 42) {
       const name = await lookupAddress(newValue)
-      if (name) {
-        setValue(name)
-      }
-    } else if (newValue.endsWith('.eth') && newValue.length > 5) {
+      console.log('value', newValue)
+      console.log('name', name)
+      setOptions([
+        {
+          domain: name || '',
+          address: newValue,
+        },
+      ])
+    } else if (newValue.endsWith('.eth')) {
       const address = await resolveName(newValue)
+      console.log('value', newValue)
+      console.log('address', address)
       if (address) {
-        setValue(address)
+        setOptions([
+          {
+            domain: newValue,
+            address: address,
+          },
+        ])
       }
+    } else {
+      setOptions([])
     }
-    setOptions(options)
     setValue(newValue)
   }
 
   return (
-    <Stack direction={'column'} width={300} {...props}>
-      {/* { value && (
-        <Chip label={value} />
-      )} */}
+    <Stack direction={'column'} width={320} {...props}>
       <Autocomplete
         freeSolo
         filterSelectedOptions
+        getOptionLabel={(options) => (typeof options === 'string' ? options : options?.address)}
         fullWidth
         options={options}
         filterOptions={(x) => x}
-        renderInput={(params) => <TextField margin="dense" {...params} label="Search" fullWidth />}
-        // onChange={handleAutocomplete}
+        renderInput={(params) => (
+          <TextField margin="dense" {...params} size="small" label="Search" fullWidth variant="outlined" />
+        )}
         open={value.length > 4}
         onInputChange={handleAutocomplete}
         renderOption={(props, option) => {
           return (
-            <li {...props}>
-              <Stack direction={'column'}>
-                <Chip label={option.domain} />
-                <Typography>{option.address}</Typography>
-              </Stack>
-            </li>
+            <Link href={`/users/${option.address}`} passHref key={option.address}>
+              <a>
+                <li {...props}>
+                  <Stack direction={'column'}>
+                    {option.domain ? <Chip label={option.domain} /> : null}
+                    <Typography color={'#fff'}>{formatAddress(option.address)}</Typography>
+                  </Stack>
+                </li>
+              </a>
+            </Link>
           )
         }}
       />

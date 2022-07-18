@@ -1,8 +1,7 @@
 import type { GetServerSideProps, NextPage } from 'next'
 import LayoutWithoutFooter from '../../components/layouts/LayoutWithoutFooter'
 import { useState } from 'react'
-import { Grid, Tab, Tabs, Typography } from '@mui/material'
-import { PrimaryDarkButton } from '../../components/buttons/Buttons'
+import { Button, Grid, Tab, Tabs, Typography } from '@mui/material'
 import CommunityCreateModal from '../../components/modal/CommunityCreateModal'
 import { posts } from '../../app/constants'
 import { PostListItem } from '../../components/PostListItem'
@@ -32,10 +31,14 @@ const Home: NextPage<UserDetailProps> = ({ id }) => {
         <Grid item xs>
           <Grid container direction={'column'} alignItems={'center'}>
             <Grid item xs>
-              <PrimaryDarkButton textcontent={'Create Community'} onClick={() => setShowCreateModal(true)} />
+              <Button variant="outline" onClick={() => setShowCreateModal(true)}>
+                {'Create Community'}
+              </Button>
             </Grid>
             <Grid item xs>
-              <PrimaryDarkButton textcontent={'Create Post'} onClick={() => setShowCreateModal(true)} />
+              <Button variant="outline" onClick={() => setShowCreateModal(true)}>
+                {'Create Post'}
+              </Button>
             </Grid>
             <CommunitiesList title={'Channels'} data={[]} />
             <CommunitiesList title={'Toolkits'} data={[]} />

@@ -25,7 +25,7 @@ export const PostListItem = ({ post }: { post: IPost | undefined }) => {
       >
         <Typography variant="h3">{post.title}</Typography>
         <Typography variant="h5">{post.description}</Typography>
-        <Typography variant="h5">{`author: ${post.owner}`}</Typography>
+        <Typography variant="h5">{`author: ${post.authorAddress}`}</Typography>
       </Grid>
     </Link>
   )

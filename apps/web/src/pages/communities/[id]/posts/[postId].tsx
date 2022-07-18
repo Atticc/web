@@ -1,8 +1,7 @@
 import type { GetServerSideProps, NextPage } from 'next'
 import LayoutWithoutFooter from '../../../../components/layouts/LayoutWithoutFooter'
 import { useState } from 'react'
-import { Grid, Tab, Tabs, Typography } from '@mui/material'
-import { PrimaryDarkButton } from '../../../../components/buttons/Buttons'
+import { Button, Grid, Tab, Tabs, Typography } from '@mui/material'
 import { CommunitiesList } from '../../../../components/CommunitiesList'
 import { PostListItem } from '../../../../components/PostListItem'
 import { comments, posts } from '../../../../app/constants'
@@ -30,8 +29,12 @@ const Home: NextPage = () => {
         <Grid item xs>
           <Grid container direction={'column'} alignItems={'center'} gap={3}>
             <Grid container gap={2}>
-              <PrimaryDarkButton textcontent={'Create Community'} onClick={() => setShowCreateModal(true)} />
-              <PrimaryDarkButton textcontent={'Create Post'} onClick={() => setShowCreateModal(true)} />
+              <Button variant="outline" onClick={() => setShowCreateModal(true)}>
+                {'Create Community'}
+              </Button>
+              <Button variant="outline" onClick={() => setShowCreateModal(true)}>
+                {'Create Post'}
+              </Button>
             </Grid>
             <CommunitiesList title={'Channels'} data={[]} />
             <CommunitiesList title={'Toolkits'} data={[]} />
@@ -57,7 +60,6 @@ const Home: NextPage = () => {
           </Grid>
         </Grid>
       </Grid>
-
       <CommunityCreateModal open={showCreateModal} onClose={handleCloseCreateModal} />
     </LayoutWithoutFooter>
   )

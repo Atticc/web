@@ -5,8 +5,10 @@ import { CacheProvider, EmotionCache } from '@emotion/react'
 import createEmotionCache from '@app/createEmotionCache'
 import dynamic from 'next/dynamic'
 import { APP_NAME } from '@app/config'
+import './styles.css'
 
 import { appWithTranslation } from 'next-i18next'
+import { useRouter } from 'next/router'
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache()
 
@@ -24,6 +26,12 @@ interface MyAppProps extends AppProps {
 function MyApp(props: MyAppProps) {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props
   const HOSTNAME = process.env.NEXT_PUBLIC_HOSTNAME
+
+  const router = useRouter();
+  const path = (/#!(\/.*)$/.exec(router.asPath) || [])[1];
+  if (path) {
+    router.replace(path);
+  }
 
   return (
     <CacheProvider value={emotionCache}>

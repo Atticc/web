@@ -1,5 +1,5 @@
 import { Nft, NftFilters } from '@alch/alchemy-web3'
-import { Divider, Grid, Stack, Typography } from '@mui/material'
+import { Button, Divider, Grid, Stack, Typography } from '@mui/material'
 import { useEffect, useMemo, useState } from 'react'
 import { useQuery } from 'react-query'
 import { IOatNft, IPoapNft } from '@app/types'
@@ -7,7 +7,6 @@ import { useOATs } from '@req/galaxy/getOATs'
 import { POAP } from '@req/poap'
 import { isValidAddr } from '@utils/helper'
 import { useAlchemy } from '@utils/useAlchemy'
-import { PrimaryDarkButton } from '@c/buttons/Buttons'
 import NftCollectionModal from '@c/modal/NftCollectionModal'
 import { NftItem } from '@/components/NFT/NftItem'
 import { OatItem } from '@/components/NFT/OatItem'
@@ -93,7 +92,9 @@ export const NftSection = ({
       </Grid>
       {showMore && (nfts?.items?.length > 3 || poaps.length > 3 || oats?.list?.length > 3) ? (
         <Grid item marginTop={3} alignSelf="center">
-          <PrimaryDarkButton textcontent={'View More'} onClick={() => setOpenNFTs(true)} />
+          <Button variant="fill" onClick={() => setOpenNFTs(true)}>
+            {'View More'}
+          </Button>
         </Grid>
       ) : null}
       <NftCollectionModal

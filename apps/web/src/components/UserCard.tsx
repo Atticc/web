@@ -1,12 +1,11 @@
 import { ConnectionType } from '@cyberlab/cyberconnect'
-import { Avatar, Grid, Stack, Typography, useTheme } from '@mui/material'
+import { Avatar, Button, Grid, Stack, Typography, useTheme } from '@mui/material'
 import useWallet from '@utils/useWallet'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { IUser } from '../app/constants'
 import { useFollowStatus } from '../graphql/cyberconnect/queries/getFollowStatus'
 import { formatAddress, isSameAddr } from '../utils/helper'
-import { PrimaryDarkButton } from './buttons/Buttons'
 import { TwitterIcon } from './icons/TwitterIcon'
 import UserConnectionModal from './modal/UserConnectionModal'
 import ProfileImage from './users/Avatar'
@@ -86,10 +85,9 @@ export const UserCard = ({ user, isDetail = false }: { user: IUser; isDetail?: b
               </Stack>
             </Stack>
             {address && !isSameAddr(address, user.address) ? (
-              <PrimaryDarkButton
-                textcontent={loading ? 'loading...' : isFollowing ? 'Followed' : 'Follow'}
-                onClick={onFollow}
-              />
+              <Button variant="fill" onClick={onFollow}>
+                {loading ? 'loading...' : isFollowing ? 'Followed' : 'Follow'}
+              </Button>
             ) : null}
             <Stack direction={'row'} alignItems={'center'}>
               {user?.twitter?.handle ? (
