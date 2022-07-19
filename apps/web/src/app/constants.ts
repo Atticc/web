@@ -1,3 +1,5 @@
+import { NEXT_PUBLIC_HOSTNAME } from "./config"
+
 export interface IMenu {
   title: string
   path: string
@@ -236,7 +238,7 @@ export const LANDING_PROFILES = [
   {
     name: 'wearehiring.eth',
     address: '0x7c04786f04c522ca664bb8b6804e0d182eec505f',
-    image: './assets/0x7c04786f04c522ca664bb8b6804e0d182eec505f.png',
+    image: `https://img.seadn.io/files/221b5605376330cb13223a69612dc44c.png`,
   },
   {
     name: 'wanghanyang.eth',
@@ -276,26 +278,41 @@ export const LANDING_PROFILES = [
   {
     name: 'chelseaaa.eth',
     address: '0x19af5e0a45c55c0f2edb5f48abbed82360de7dd7',
-    image: './assets/0x19aF5e0a45c55c0f2edB5f48Abbed82360De7dD7.png',
+    image: `https://ipfs.io/ipfs/Qmbn2zive5a9JZueFPvwj9QmLRkhUx5qxcP64raMVkZS3z`,
   },
   {
     name: 'atticknight.eth',
     address: '0xc81082690edc8cde6d83a7549aa6a74534305372',
-    image: './assets/0xC81082690EDC8CDE6D83a7549aa6a74534305372.png',
+    image: `https://ipfs.io/ipfs/QmVCLxmzMstWpnCE2caF3AfRNEJmdiA6Z6a8BECnXqd98r/9131.png`,
   },
   {
     name: '0xminion.eth',
     address: '0xe085327c5ad2f77147f10973fed45fb19d734f7e',
-    image: './assets/0xe085327c5ad2f77147f10973fed45fb19d734f7e.png',
+    image: `https://assets.poap.xyz/you-have-met-0xminion-in-april-2022-irl-2022-logo-1650585174999.png`,
   },
   {
     name: 'atticcburger.eth',
     address: '0x39b626b217a4e4e52a734826c18eb880fdcbf57c',
-    image: './assets/0x39b626b217a4e4e52a734826c18eb880fdcbf57c.png',
+    image: `https://res.cloudinary.com/alchemyapi/image/upload/mainnet/c9928495abf7881dff1fe4c5198d837e.png`,
   },
   {
     name: 'monify.eth',
     address: '0x4892eC28B9c865BB5b52c0321979E1ec22881f7c',
-    image: './assets/0x4892eC28B9c865BB5b52c0321979E1ec22881f7c.png',
+    image: `https://pbs.twimg.com/profile_images/1506142245497765888/1uSkq1tO.jpg`,
+  },
+  {
+    name: 'leotech.eth',
+    address: '0xBE64E5a432b6595621cD3c17314E5d613cba470f',
+    image: `${NEXT_PUBLIC_HOSTNAME}/assets/0xBE64E5a432b6595621cD3c17314E5d613cba470f.jpg`,
+  },
+  {
+    name: 'simonzhang.eth',
+    address: '0xa14df28d307cfc91aeb3f22aa30aae1a69c68247',
+    image: `${NEXT_PUBLIC_HOSTNAME}/assets/0xa14df28d307cfc91aeb3f22aa30aae1a69c68247.jpg`,
+  },
+  {
+    name: 'littyc.eth',
+    address: '0xde616b9353112A41F60b385B2dbe6b0D996C08fC',
+    image: `https://lh3.googleusercontent.com/nz-13v5mb9fLuKUnscppW9WLBMqoMeXiu5_5ZtlgjBP1en-fmRcpmFfHfE_hSvjbP8b4eJzjywFx9sDMWBv4UD6GaRHNpUVz7O38CQ`,
   },
 ]

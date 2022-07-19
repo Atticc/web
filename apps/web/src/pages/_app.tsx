@@ -27,10 +27,10 @@ function MyApp(props: MyAppProps) {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props
   const HOSTNAME = process.env.NEXT_PUBLIC_HOSTNAME
 
-  const router = useRouter();
-  const path = (/#!(\/.*)$/.exec(router.asPath) || [])[1];
+  const router = useRouter()
+  const path = (/#!(\/.*)$/.exec(router.asPath) || [])[1]
   if (path) {
-    router.replace(path);
+    router.replace(path)
   }
 
   return (
