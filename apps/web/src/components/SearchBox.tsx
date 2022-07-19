@@ -1,9 +1,11 @@
-import React, { useEffect, useState, useCallback, useRef } from 'react'
-import { Autocomplete, Chip, Stack, TextField, Typography } from '@mui/material'
+import React, { useEffect, useState } from 'react'
+import { Autocomplete, Chip, CircularProgress, InputAdornment, Stack, TextField, Typography, useTheme } from '@mui/material'
 import useWallet from '@utils/useWallet'
 import { IUser } from '@app/constants'
 import { formatAddress } from '@utils/helper'
+import SearchIcon from '@mui/icons-material/Search';
 import Link from 'next/link'
+import { useDebounce } from 'usehooks-ts'
 
 type SearchBoxProps = {
   recipientWalletAddress?: string
@@ -15,42 +17,58 @@ type SearchBoxProps = {
 }
 
 const SearchBox = ({ id, name, placeholder, onSubmit, ...props }: SearchBoxProps): JSX.Element => {
-  const inputElement = useRef(null)
+  const color = useTheme().palette
+  const [loading, setLoading] = useState<boolean>(false)
   const [value, setValue] = useState<string>('')
+  const debounceValue = useDebounce(value)
   const [options, setOptions] = useState<Array<IUser>>([])
   const { resolveName, lookupAddress } = useWallet()
 
-  const handleAutocomplete = async (event: any, newValue: string) => {
-    if (newValue.length < 5) {
-      setOptions([])
-      return
-    }
-
-    if (newValue.startsWith('0x') && newValue.length === 42) {
-      const name = await lookupAddress(newValue)
-      console.log('value', newValue)
-      console.log('name', name)
-      setOptions([
-        {
-          domain: name || '',
-          address: newValue,
-        },
-      ])
-    } else if (newValue.endsWith('.eth')) {
-      const address = await resolveName(newValue)
-      console.log('value', newValue)
-      console.log('address', address)
-      if (address) {
-        setOptions([
-          {
-            domain: newValue,
-            address: address,
-          },
-        ])
+  useEffect(() => {
+    async function fetchOptions() {
+      if (debounceValue.length < 5) {
+        setOptions([])
+        return
       }
-    } else {
-      setOptions([])
+
+      try {
+        setLoading(true)
+        console.log('input', debounceValue)
+        if (debounceValue.startsWith('0x') && debounceValue.length === 42) {
+          const domain = await lookupAddress(debounceValue)
+          console.log('domain', domain)
+          setOptions([{
+            domain: domain || '',
+            address: debounceValue,
+          }])
+        } else if (debounceValue.endsWith('.eth')) {
+          const address = await resolveName(debounceValue)
+          console.log('address', address)
+          if (address) {
+            setOptions([{
+              domain: debounceValue,
+              address: address,
+            }])
+          } else {
+            throw new Error('Address not found')
+          }
+        } else {
+          throw new Error('Not met searching criteria')
+        }
+
+      } catch (_) {
+        console.log('this called')
+        setOptions([])
+      } finally {
+        setLoading(false)
+      }
     }
+    
+    fetchOptions()
+  }, [debounceValue])
+  
+
+  const handInputChanged = async (event: any, newValue: string) => {
     setValue(newValue)
   }
 
@@ -58,30 +76,69 @@ const SearchBox = ({ id, name, placeholder, onSubmit, ...props }: SearchBoxProps
     <Stack direction={'column'} width={320} {...props}>
       <Autocomplete
         freeSolo
-        filterSelectedOptions
-        getOptionLabel={(options) => (typeof options === 'string' ? options : options?.address)}
         fullWidth
+        disableListWrap
         options={options}
         filterOptions={(x) => x}
-        renderInput={(params) => (
-          <TextField margin="dense" {...params} size="small" label="Search" fullWidth variant="outlined" />
-        )}
+        filterSelectedOptions
+        loading={loading}
         open={value.length > 4}
-        onInputChange={handleAutocomplete}
+        renderInput={(params) => (
+          <TextField sx={{
+            '& label.Mui-focused': {
+              color: color.secondary.main,
+            },
+            '& label': {
+              color: color.secondary.main,
+            },
+            '& input': {
+              color: color.white.main,
+            },
+            '& .MuiOutlinedInput-root': {
+              '& fieldset': {
+                borderColor: color.secondary.main,
+              },
+              '&:hover fieldset': {
+                borderColor: color.secondary.main,
+              },
+              '&.Mui-focused fieldset': {
+                borderColor: color.secondary.main,
+              },
+            },
+          }}
+            margin="dense"
+            placeholder='Search Wallet Address or ENS'
+            variant="outlined"
+            {...params}
+            size="small"
+            fullWidth 
+            InputProps={{
+              ...params.InputProps,
+              startAdornment: <InputAdornment position="start"><SearchIcon color='secondary' /></InputAdornment>,
+              endAdornment: <React.Fragment>
+                {loading ? <CircularProgress color="secondary"/> : null}
+                {params.InputProps.endAdornment}
+                </React.Fragment>
+            }} />
+        )}
+        onInputChange={handInputChanged}
+        getOptionLabel={(options) => (typeof options === 'string' ? options : options?.address)}
         renderOption={(props, option) => {
+          console.log(props)
+          console.log(option)
           return (
-            <Link href={`/users/${option.address}`} passHref key={option.address}>
-              <a>
-                <li {...props}>
-                  <Stack direction={'column'}>
-                    {option.domain ? <Chip label={option.domain} /> : null}
-                    <Typography color={'#fff'}>{formatAddress(option.address)}</Typography>
-                  </Stack>
-                </li>
-              </a>
-            </Link>
-          )
-        }}
+              <li {...props}>
+          <Link href={`/users/${option.address}`} passHref key={option.address}>
+            <a>
+                <Stack direction={'column'}>
+                  {option.domain ? <Chip label={option.domain} /> : null}
+                  <Typography color={color.black.main}>{formatAddress(option.address)}</Typography>
+                </Stack>
+            </a>
+          </Link>
+              </li>
+        )}
+        }
       />
     </Stack>
   )

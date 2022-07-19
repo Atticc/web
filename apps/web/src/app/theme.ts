@@ -9,17 +9,11 @@ export const getDesignTokens = (mode: PaletteMode) => {
       mode,
       tonalOffset: 0.2,
       primary: { main: '#F26E21' },
-      secondary: { main: '#0AB2A9' },
-      modalbgcolor: { main: '#1c0715cc' },
-      radioColor: {
-        main: '#79263A',
-      },
-      radioCheckedColor: {
-        main: '#AA4656',
-      },
-      error: {
-        main: red.A400,
-      },
+      secondary: { main: '#FFC39F' },
+      modalbgcolor: { main: '#FFC39F' },
+      radioColor: { main: '#FFC39F' },
+      radioCheckedColor: { main: '#F26E21' },
+      error: { main: red.A400 },
       white: { main: '#fff' },
       black: { main: '#17181B' },
       gray: { main: '#B3B4C6' },
