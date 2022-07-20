@@ -105,7 +105,7 @@ export const getDesignTokens = (mode: PaletteMode) => {
                 fontWeight: 600,
               },
               '&:disabled': {
-                opacity: 0.6,
+                opacity: 0.4,
                 color: t.palette.white.main,
               },
               '&:hover': {

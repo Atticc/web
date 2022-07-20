@@ -4,7 +4,7 @@ import { IPoapNft } from '../../app/types'
 
 export const PoapItem = ({
   poap,
-  height = 276,
+  height = 262,
   width = 262,
 }: {
   poap: IPoapNft | undefined

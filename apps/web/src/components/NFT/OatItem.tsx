@@ -4,7 +4,7 @@ import { IOatNft } from '../../app/types'
 
 export const OatItem = ({
   oat,
-  height = 276,
+  height = 262,
   width = 262,
 }: {
   oat: IOatNft | undefined
