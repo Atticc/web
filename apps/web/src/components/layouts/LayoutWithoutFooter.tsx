@@ -5,7 +5,7 @@ function LayoutWithoutFooter({ children }: { children: React.ReactNode }) {
   const color = useTheme().palette
 
   return (
-    <Box  bgcolor={color.bgColor.main}>
+    <Box minHeight={'100vh'} bgcolor={color.bgColor.main}>
       <Header />
       <Container
         maxWidth={false}
