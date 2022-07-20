@@ -10,6 +10,7 @@ export const getDesignTokens = (mode: PaletteMode) => {
       tonalOffset: 0.2,
       primary: { main: '#F26E21' },
       secondary: { main: '#FFC39F' },
+      bgColor: { main: '#BCBCBC' },
       modalbgcolor: { main: '#FFC39F' },
       radioColor: { main: '#FFC39F' },
       radioCheckedColor: { main: '#F26E21' },
@@ -17,6 +18,7 @@ export const getDesignTokens = (mode: PaletteMode) => {
       white: { main: '#fff' },
       black: { main: '#17181B' },
       gray: { main: '#B3B4C6' },
+      lightGray: { main: '#8F8F8F' },
       ...(mode === 'light'
         ? {
             dark: { main: '#17181B' },
@@ -61,9 +63,32 @@ export const getDesignTokens = (mode: PaletteMode) => {
           },
           {
             props: { variant: 'outline', color: 'secondary' },
-            style: {
-              borderColor: 'white.main',
-            },
+             style: ({ theme: t }: { theme: any }) => ({
+              borderRadius: '10px',
+              borderWidth: '2px',
+              borderColor: t.palette.primary.main,
+              color: t.palette.primary.main,
+              borderStyle: 'solid',
+              padding: '10px 22px',
+              boxShadow: 'none',
+              lineHeight: 'normal',
+              fontSize: 16,
+              '& #text': {
+                textTransform: 'uppercase',
+                fontWeight: 600,
+              },
+              '&:hover': {
+                textDecoration: 'none',
+                backgroundColor: t.palette.black.main,
+                borderColor: t.palette.black.main,
+                color: t.palette.white.main,
+                '@media (hover: none)': {
+                  color: t.palette.primary.main,
+                  backgroundColor: 'transparent',
+                  borderColor: t.palette.primary.main,
+                },
+              },
+            }),
           },
           {
             props: { variant: 'fill' },
@@ -81,8 +106,8 @@ export const getDesignTokens = (mode: PaletteMode) => {
               },
               '&:hover': {
                 textDecoration: 'none',
-                color: t.palette.primary.main,
-                backgroundColor: t.palette.white.main,
+                color: t.palette.white.main,
+                backgroundColor:  t.palette.black.main,
                 '@media (hover: none)': {
                   color: t.palette.white.main,
                   backgroundColor: t.palette.primary.main,
@@ -92,9 +117,11 @@ export const getDesignTokens = (mode: PaletteMode) => {
           {
             props: { variant: 'icon', color: 'primary' },
             style: ({ theme: t }: { theme: any }) => ({
+              boderRadius: '50%',
               color: t.palette.primary.main,
-              backgroundColor: t.palette.white.main,
-              padding: '10px 22px',
+              backgroundColor: t.palette.bgColor.main,
+              padding: '0px',
+              minWidth: 'unset',
               boxShadow: 'none',
               lineHeight: 'normal',
               fontSize: 16,
@@ -108,7 +135,34 @@ export const getDesignTokens = (mode: PaletteMode) => {
                 backgroundColor: 'transparent',
                 '@media (hover: none)': {
                   color: t.palette.primary.main,
-                  backgroundColor: t.palette.white.main,
+                  backgroundColor: t.palette.bgColor.main,
+                },
+              },
+            }),
+          },
+          {
+            props: { variant: 'icon', color: 'secondary' },
+            style: ({ theme: t }: { theme: any }) => ({
+              color: t.palette.white.main,
+              backgroundColor: t.palette.primary.main,
+              minWidth: '40px',
+              minHeight: '40px',
+              padding: 0,
+              boxShadow: 'none',
+              lineHeight: 'normal',
+              fontSize: 16,
+              boderRadius: '50%',
+              '& #text': {
+                textTransform: 'uppercase',
+                fontWeight: 600,
+              },
+              '&:hover': {
+                textDecoration: 'none',
+                color: t.palette.white.main,
+                backgroundColor:  t.palette.black.main,
+                '@media (hover: none)': {
+                  color: t.palette.white.main,
+                  backgroundColor: t.palette.primary.main,
                 },
               },
             }),
@@ -246,7 +300,9 @@ declare module '@mui/material/styles' {
     black: Palette['primary']
     white: Palette['primary']
     gray: Palette['primary']
+    lightGray: Palette['primary']
     primary: Palette['primary']
+    bgColor: Palette['primary']
     modalbgcolor: Palette['primary']
     radioColor: Palette['primary']
     radioCheckedColor: Palette['primary']
@@ -257,6 +313,8 @@ declare module '@mui/material/styles' {
     black: PaletteOptions['primary']
     white: PaletteOptions['primary']
     gray: PaletteOptions['primary']
+    lightGray: PaletteOptions['primary']
+    bgColor: PaletteOptions['primary']
     modalbgcolor: PaletteOptions['primary']
     radioColor: PaletteOptions['primary']
     radioCheckedColor: PaletteOptions['primary']
@@ -290,6 +348,7 @@ declare module '@mui/material/Button' {
   interface ButtonPropsVariantOverrides {
     outline: true
     fill: true
+    icon: true
   }
   interface ButtonPropsColorOverrides {
     dark: true
@@ -297,6 +356,7 @@ declare module '@mui/material/Button' {
     black: true
     white: true
     gray: true
+    lightGray: true
     primary: true
     modalbgcolor: true
     radioColor: true
@@ -310,6 +370,7 @@ declare module '@mui/material/TextField' {
     black: true
     white: true
     gray: true
+    lightGray: true
     primary: true
     radioColor: true
     radioCheckedColor: true

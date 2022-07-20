@@ -5,6 +5,7 @@ import useEns from '@utils/useEns'
 type AvatarProps = {
   address: string
   src?: string | undefined
+  sx?: any
 }
 
 function stringToColor(string: string) {

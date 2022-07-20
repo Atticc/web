@@ -1,9 +1,11 @@
 import Header from './Header'
-import { Box, Container } from '@mui/material'
+import { Box, Container, useTheme } from '@mui/material'
 
 function LayoutWithoutFooter({ children }: { children: React.ReactNode }) {
+  const color = useTheme().palette
+
   return (
-    <Box maxHeight={'100vh'}>
+    <Box  bgcolor={color.bgColor.main}>
       <Header />
       <Container
         maxWidth={false}
