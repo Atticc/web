@@ -1,6 +1,6 @@
 import ProfileImage from '@c/users/Avatar'
 import { Box, Button, Grid, Stack, Typography, useTheme } from '@mui/material'
-import { formatAddress } from '@utils/helper'
+import { formatAddress, formatDate, formatTime } from '@utils/helper'
 import { IComment } from '../../app/constants'
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline'
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
@@ -28,7 +28,7 @@ export const CommentListItem = ({ comment }: { comment: IComment | undefined }) 
                 {comment.author?.domain || formatAddress(comment?.authorAddress) || ''}
               </Typography>
               <Stack direction={'row'}>
-                <Typography variant="body2">{comment.updatedAt}</Typography>
+                <Typography variant="body2">{formatDate(new Date(comment.updatedAt))} at {formatTime(new Date(comment.updatedAt))}</Typography>
               </Stack>
             </Stack>
             <Typography

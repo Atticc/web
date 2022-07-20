@@ -14,6 +14,7 @@ import { useRouter } from 'next/router'
 import { TabPanel } from '@c/tabs/TabPanel'
 import PostInput from '@c/posts/PostInput'
 import useWallet from '@utils/useWallet'
+import { Box } from '@mui/system'
 
 const NftSection = dynamic(() => import('@c/NFT/NftSection'), {
   suspense: false,
@@ -86,6 +87,7 @@ const UserDetailPage: NextPage = () => {
           <TabPanel value={tab} index={2}>
             <NftSection address={String(address)} key={`nft-${address}`} />
           </TabPanel>
+          <Box py={5} />
         </Grid>
       </Grid>
     </LayoutWithoutFooter>

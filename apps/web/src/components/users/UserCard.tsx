@@ -191,9 +191,11 @@ export const UserCard = ({ user, isDetail = false }: { user: IUser; isDetail?: b
                       {loading ? 'loading...' : isFollowing ? 'Followed' : 'Follow'}
                     </Button>
                   ) : null}
-                  <Button variant="fill" onClick={onFollow}>
-                    {'Message'}
-                  </Button>
+                  {address && !isSameAddr(address, user.address) ? (
+                    <Button variant="fill" onClick={onFollow}>
+                      {'Message'}
+                    </Button>
+                  ) : null}
                 </Stack>
               </Stack>
             </Grid>

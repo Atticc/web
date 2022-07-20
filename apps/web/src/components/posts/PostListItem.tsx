@@ -1,7 +1,7 @@
 import ProfileImage from '@c/users/Avatar'
 import { Button, Divider, Grid, Stack, Typography, useTheme } from '@mui/material'
 import { Box } from '@mui/system'
-import { formatAddress } from '@utils/helper'
+import { formatAddress, formatDate, formatTime } from '@utils/helper'
 import { IPost } from '../../app/constants'
 import CommentInput from './CommentInput'
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline'
@@ -33,7 +33,7 @@ export const PostListItem = ({ post }: { post: IPost | undefined }) => {
             <Stack direction={'row'} justifyContent={'space-between'} width={'100%'}>
               <Typography variant="h5">{post.author?.domain || formatAddress(post?.authorAddress) || ''}</Typography>
               <Stack direction={'row'}>
-                <Typography variant="body2">{post.updatedAt}</Typography>
+                <Typography variant="body2">{formatDate(new Date(post.updatedAt))} at {formatTime(new Date(post.updatedAt))}</Typography>
               </Stack>
             </Stack>
             <Typography

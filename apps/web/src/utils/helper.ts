@@ -37,6 +37,12 @@ export const decodeNftTokenUri = (data: string = '') => {
   }
 }
 
+export const formatDate = (d: Date | undefined): string => {
+  const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'long', day: 'numeric' };
+
+  return (d ? d.toLocaleDateString('en-US', options) : '')
+}
+
 export const formatTime = (d: Date | undefined): string =>
   d
     ? d.toLocaleTimeString(undefined, {
