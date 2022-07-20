@@ -17,15 +17,15 @@ export const NftList = ({
 }) => {
   function renderNFT(nft: Nft) {
     const key = `${nft.contract.address}-${nft.id.tokenId}`
-    return <NftItem key={key} nft={nft} size={148} />
+    return <NftItem key={key} nft={nft} />
   }
 
   function renderPOAP(poap: IPoapNft) {
-    return <PoapItem poap={poap} key={poap.tokenId} size={148} />
+    return <PoapItem poap={poap} key={poap.tokenId} />
   }
 
   function renderOAT(oat: IOatNft) {
-    return <OatItem oat={oat} key={oat.id} size={148} />
+    return <OatItem oat={oat} key={oat.id} />
   }
 
   return (

@@ -31,7 +31,7 @@ describe('NftItem', () => {
       },
     }
 
-    render(<NftItem nft={nft} size={80} />)
+    render(<NftItem nft={nft} />)
     const Img = screen.getByRole('img')
 
     expect(Img).toBeInTheDocument()
@@ -46,7 +46,7 @@ describe('NftItem', () => {
       },
     }
 
-    render(<NftItem nft={nft} size={80} />)
+    render(<NftItem nft={nft} />)
     const Img = screen.getByRole('img')
 
     expect(Img).toBeInTheDocument()
@@ -61,7 +61,7 @@ describe('NftItem', () => {
       },
     }
 
-    render(<NftItem nft={nft} size={80} />)
+    render(<NftItem nft={nft} />)
     const Img = screen.getByRole('img')
     waitForElementToBeRemoved(Img).catch((_) => {
       expect(Img).not.toBeInTheDocument()
@@ -77,7 +77,7 @@ describe('NftItem', () => {
       },
     }
 
-    render(<NftItem nft={nft} size={80} />)
+    render(<NftItem nft={nft} />)
     const Img = screen.getByRole('img')
 
     expect(Img).toBeInTheDocument()
