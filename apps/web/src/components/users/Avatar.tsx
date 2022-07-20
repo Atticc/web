@@ -32,6 +32,7 @@ function stringAvatar(address: string, props: any) {
     sx: {
       bgcolor: stringToColor(address),
       fontSize: 14,
+      color: 'black',
       ...(props.sx || {}),
     },
     children: `${address.slice(-4)}`,

@@ -1,8 +1,8 @@
-import { Avatar, CircularProgress, Stack, Tooltip, Typography } from '@mui/material'
+import { Avatar, Box, Card, CardContent, CardMedia, CircularProgress, Stack, Tooltip, Typography } from '@mui/material'
 import { useState } from 'react'
 import { IPoapNft } from '../../app/types'
 
-export const PoapItem = ({ poap, size = 80 }: { poap: IPoapNft | undefined; size?: number }) => {
+export const PoapItem = ({ poap, height = 276, width = 262 }: { poap: IPoapNft | undefined, height?: number, width?: number }) => {
   const [show, setShow] = useState(true)
   const [loading, setLoading] = useState(true)
   if (!poap) {
@@ -18,32 +18,28 @@ export const PoapItem = ({ poap, size = 80 }: { poap: IPoapNft | undefined; size
   }
 
   return show ? (
-    <Stack sx={{ position: 'relative', width: size, height: size }} alignItems={'center'} justifyContent={'center'}>
-      <Tooltip
-        title={
-          <Stack direction={'column'}>
-            <Typography>{poap.event?.name}</Typography>
-            <Typography>{poap.event?.description}</Typography>
-          </Stack>
-        }
-        arrow
-      >
-        <Avatar
-          variant={'rounded'}
-          alt={poap.event.name}
-          src={poap.event.image_url}
-          onLoad={handleLoad}
-          sx={{ width: size, height: size }}
-          onError={handleError}
-        />
-      </Tooltip>
-      {loading ? (
-        <CircularProgress
-          sx={{
-            position: 'absolute',
-          }}
-        />
-      ) : null}
-    </Stack>
+    <Card sx={{ maxWidth: width, width: width, borderRadius: '20px' }}>
+      <CardMedia
+        // sx={{objectFit: 'contain'}}
+        component="img"
+        height={height}
+        image={poap.event.image_url}
+        alt={poap.event.name}
+        onError={handleError}
+        onLoad={handleLoad}
+      />
+      <CardContent sx={{px: 4}}>
+          <Typography variant="body1" fontWeight={600} textAlign={'center'} textOverflow={'ellipsis'} sx={{
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            display: '-webkit-box',
+            WebkitLineClamp: '2',
+            WebkitBoxOrient: 'vertical',
+            wordBreak: 'break-word'
+          }} >
+            {poap.event.name}
+          </Typography>
+      </CardContent>
+    </Card>
   ) : null
 }

@@ -88,6 +88,29 @@ export const getDesignTokens = (mode: PaletteMode) => {
                   backgroundColor: t.palette.primary.main,
                 },
               },
+            })},
+          {
+            props: { variant: 'icon', color: 'primary' },
+            style: ({ theme: t }: { theme: any }) => ({
+              color: t.palette.primary.main,
+              backgroundColor: t.palette.white.main,
+              padding: '10px 22px',
+              boxShadow: 'none',
+              lineHeight: 'normal',
+              fontSize: 16,
+              '& #text': {
+                textTransform: 'uppercase',
+                fontWeight: 600,
+              },
+              '&:hover': {
+                textDecoration: 'none',
+                color: t.palette.black.main,
+                backgroundColor: 'transparent',
+                '@media (hover: none)': {
+                  color: t.palette.primary.main,
+                  backgroundColor: t.palette.white.main,
+                },
+              },
             }),
           },
         ],
@@ -109,6 +132,15 @@ export const getDesignTokens = (mode: PaletteMode) => {
           },
         ],
       },
+       MuiTab: {
+        styleOverrides: {
+          root: {
+            fontWeight: 600,
+            lineHeight: '19.4px',
+            fontSize: 16,
+          }
+        }
+      }
     },
     typography: {
       fontFamily: [

@@ -12,6 +12,7 @@ import dynamic from 'next/dynamic'
 import { APP_NAME } from '@/app/config'
 import { CommunitiesList } from '@c/CommunitiesList'
 import { useRouter } from 'next/router'
+import { TabPanel } from '@c/tabs/TabPanel'
 
 const NftSection = dynamic(() => import('@c/NFT/NftSection'), {
   suspense: false,
@@ -25,8 +26,8 @@ interface UserDetailProps {
 }
 
 const tabs = [
-  { label: 'Popular', value: 1 },
-  { label: 'Latests', value: 2 },
+  { label: 'Posts', value: 1 },
+  { label: 'Collections', value: 2 },
 ]
 
 const UserDetailPage: NextPage = () => {
@@ -55,27 +56,30 @@ const UserDetailPage: NextPage = () => {
         <meta property="og:title" content={title} key="og-title" />
         <meta name="twitter:title" content={title} key="tw-title" />
       </Head>
-      <Grid container direction={'row'} columnGap={3} paddingX={5} marginTop={2}>
-        <Grid item xs={12} md={8}>
-          <Tabs value={tab} onChange={handleSetTab} aria-label="Post Tabs" variant="fullWidth">
+
+      <Grid container direction={'column'} px={10} mt={2} display={'flex'}>
+        <Grid item width={1}>
+          <UserCard user={user} isDetail key={`user-${address}`} />
+        </Grid>
+        <Grid item width={1}>
+          <Tabs value={tab} onChange={handleSetTab} aria-label="Post Tabs" sx={{py: 4}}>
             {tabs.map((t) => (
-              <Tab label={t.label} value={t.value} key={t.label} />
+              <Tab label={t.label} value={t.value} key={t.label} sx={{mr: 3}} />
             ))}
           </Tabs>
-          <Grid container direction={'column'} alignItems={'center'}>
-            {posts.map((p) => (
-              <PostListItem key={p.id} post={p} />
-            ))}
-          </Grid>
-        </Grid>
-        <Grid item xs md={3}>
-          <Grid container direction={'column'} alignItems={'center'} gap={3} maxWidth={320}>
-            <UserCard user={user} isDetail key={`user-${address}`} />
-            <CommunitiesList title={'NFT Issued'} data={[]} />
-            <NftSection title={'Collections'} address={String(address)} key={`nft-${address}`} showMore />
-          </Grid>
+          <TabPanel value={tab} index={1}>
+            <Grid container direction={'column'} alignItems={'center'}>
+              {posts.map((p) => (
+                <PostListItem key={p.id} post={p} />
+              ))}
+            </Grid>
+          </TabPanel>
+          <TabPanel value={tab} index={2}>
+            <NftSection address={String(address)} key={`nft-${address}`} />
+          </TabPanel>
         </Grid>
       </Grid>
+
     </LayoutWithoutFooter>
   )
 }

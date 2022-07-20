@@ -6,15 +6,15 @@ function LayoutWithoutFooter({ children }: { children: React.ReactNode }) {
     <Box maxHeight={'100vh'}>
       <Header />
       <Container
+        maxWidth={false}
         sx={{
           margin: 0,
           padding: {
             xs: 0,
           },
           width: 1,
-          maxWidth: {
-            sm: 1,
-          },
+          maxWidth: 1,
+          overflowX: 'hidden'
         }}
       >
         {children}

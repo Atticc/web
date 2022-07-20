@@ -1,8 +1,8 @@
-import { Avatar, CircularProgress, Stack, Tooltip, Typography } from '@mui/material'
+import { Avatar, Card, CardContent, CardMedia, CircularProgress, Stack, Tooltip, Typography } from '@mui/material'
 import { useState } from 'react'
 import { IOatNft } from '../../app/types'
 
-export const OatItem = ({ oat, size = 80 }: { oat: IOatNft | undefined; size?: number }) => {
+export const OatItem = ({ oat, height = 276, width = 262 }: { oat: IOatNft | undefined; width?: number, height?: number }) => {
   const [show, setShow] = useState(true)
   const [loading, setLoading] = useState(true)
   if (!oat) {
@@ -18,32 +18,28 @@ export const OatItem = ({ oat, size = 80 }: { oat: IOatNft | undefined; size?: n
   }
 
   return show ? (
-    <Stack sx={{ position: 'relative', width: size, height: size }} alignItems={'center'} justifyContent={'center'}>
-      <Tooltip
-        title={
-          <Stack direction={'column'}>
-            <Typography>{oat?.name}</Typography>
-            <Typography>{oat?.description}</Typography>
-          </Stack>
-        }
-        arrow
-      >
-        <Avatar
-          variant={'rounded'}
-          alt={oat.name}
-          src={oat.image}
-          onLoad={handleLoad}
-          sx={{ width: size, height: size }}
-          onError={handleError}
-        />
-      </Tooltip>
-      {loading ? (
-        <CircularProgress
-          sx={{
-            position: 'absolute',
-          }}
-        />
-      ) : null}
-    </Stack>
+    <Card sx={{ maxWidth: width, width: width, borderRadius: '20px' }}>
+      <CardMedia
+        // sx={{objectFit: 'contain'}}
+        component="img"
+        height={height}
+        image={oat?.image}
+        alt={oat?.name}
+        onError={handleError}
+        onLoad={handleLoad}
+      />
+      <CardContent sx={{ px: 4 }}>
+        <Typography variant="body1" fontWeight={600} textAlign={'center'} textOverflow={'ellipsis'} sx={{
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
+          display: '-webkit-box',
+          WebkitLineClamp: '2',
+          WebkitBoxOrient: 'vertical',
+          wordBreak: 'break-word'
+        }} >
+          {oat.name}
+        </Typography>
+      </CardContent>
+    </Card>
   ) : null
 }

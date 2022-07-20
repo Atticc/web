@@ -1,10 +1,10 @@
 import { Nft } from '@alch/alchemy-web3'
-import { Avatar, CircularProgress, Stack, Tooltip, Typography } from '@mui/material'
+import { Avatar, Card, CardContent, CardMedia, CircularProgress, Stack, Tooltip, Typography } from '@mui/material'
 import { useState } from 'react'
 import { decodeNftTokenUri, replaceIPFS } from '@utils/helper'
 import { useEffect } from 'react'
 
-export const NftItem = ({ nft, size = 80 }: { nft: Nft | undefined; size?: number }) => {
+export const NftItem = ({ nft, height = 276, width = 262 }: { nft: Nft | undefined, height?: number, width?: number }) => {
   const [show, setShow] = useState(true)
   const [loading, setLoading] = useState(true)
   const [id, setId] = useState<number | undefined>(undefined)
@@ -44,37 +44,30 @@ export const NftItem = ({ nft, size = 80 }: { nft: Nft | undefined; size?: numbe
   }
 
   return show ? (
-    <Stack sx={{ position: 'relative', width: size, height: size }} alignItems={'center'} justifyContent={'center'}>
-      <Tooltip
-        followCursor
-        title={
-          <Stack direction={'column'}>
-            <Typography variant="h6">
-              {item?.title || item?.metadata?.name}
-              {id && id < 999_999_999_999 ? ` - ${id}` : ''}
-            </Typography>
-            <Typography variant="body1">{item?.metadata?.description}</Typography>
-            {loading ? <Typography>{JSON.stringify(nft?.tokenUri)}</Typography> : null}
-          </Stack>
-        }
-        arrow
-      >
-        <Avatar
-          variant={'rounded'}
-          alt={nft.title}
-          src={replaceIPFS(item?.media?.[0]?.gateway || item?.metadata?.image || item?.metadata?.image_url)}
-          onLoad={handleLoad}
-          sx={{ width: size, height: size }}
-          onError={handleError}
-        />
-      </Tooltip>
-      {loading ? (
-        <CircularProgress
-          sx={{
-            position: 'absolute',
-          }}
-        />
-      ) : null}
-    </Stack>
+    <Card sx={{ maxWidth: width, width: width, borderRadius: '20px' }}>
+      <CardMedia
+        // sx={{objectFit: 'contain'}}
+        component="img"
+        height={height}
+        image={replaceIPFS(item?.media?.[0]?.gateway || item?.metadata?.image || item?.metadata?.image_url)}
+        alt={item?.title || item?.metadata?.name}
+        onError={handleError}
+        onLoad={handleLoad}
+      />
+      <CardContent sx={{ px: 4 }}>
+        <Typography variant="body1" fontWeight={600} textAlign={'center'} textOverflow={'ellipsis'} sx={{
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
+          display: '-webkit-box',
+          WebkitLineClamp: '2',
+          WebkitBoxOrient: 'vertical',
+          wordBreak: 'break-word'
+        }} >
+          {item?.title || item?.metadata?.name}
+        </Typography>
+      </CardContent>
+    </Card>
   ) : null
+
+
 }
