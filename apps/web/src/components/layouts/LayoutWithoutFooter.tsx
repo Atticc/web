@@ -16,7 +16,7 @@ function LayoutWithoutFooter({ children }: { children: React.ReactNode }) {
           },
           width: 1,
           maxWidth: 1,
-          overflowX: 'hidden'
+          overflowX: 'hidden',
         }}
       >
         {children}

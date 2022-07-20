@@ -4,8 +4,8 @@ import { useState } from 'react'
 import { Button, Grid, Tab, Tabs, Typography } from '@mui/material'
 import CommunityCreateModal from '../../components/modal/CommunityCreateModal'
 import { posts } from '../../app/constants'
-import { PostListItem } from '../../components/PostListItem'
-import { CommunitiesList } from '../../components/CommunitiesList'
+import { PostListItem } from '../../components/posts/PostListItem'
+import { CommunitiesList } from '../../components/posts/CommunitiesList'
 import { ContributorsList } from '../../components/ContributorsList'
 
 interface UserDetailProps {

@@ -3,16 +3,17 @@ import LayoutWithoutFooter from '@c/layouts/LayoutWithoutFooter'
 import { useEffect, useState } from 'react'
 import { Grid, Tab, Tabs, useTheme } from '@mui/material'
 import { IUser, posts } from '@app/constants'
-import { PostListItem } from '@c/PostListItem'
-import { UserCard } from '@c/UserCard'
+import { PostListItem } from '@c/posts/PostListItem'
+import { UserCard } from '@c/users/UserCard'
 import { getIdentity, useIdentity } from '@req/cyberconnect/queries/getIdentity'
 import { formatAddress, isValidAddr } from '@utils/helper'
 import Head from 'next/head'
 import dynamic from 'next/dynamic'
 import { APP_NAME } from '@/app/config'
-import { CommunitiesList } from '@c/CommunitiesList'
 import { useRouter } from 'next/router'
 import { TabPanel } from '@c/tabs/TabPanel'
+import PostInput from '@c/posts/Input'
+import useWallet from '@utils/useWallet'
 
 const NftSection = dynamic(() => import('@c/NFT/NftSection'), {
   suspense: false,
@@ -33,6 +34,7 @@ const tabs = [
 const UserDetailPage: NextPage = () => {
   const router = useRouter()
   const { address } = router.query
+  const { address: authedAddress } = useWallet()
   const userData: IUser = { address: String(address) }
   const [tab, setTab] = useState(1)
   const colorTheme = useTheme().palette
@@ -62,13 +64,16 @@ const UserDetailPage: NextPage = () => {
           <UserCard user={user} isDetail key={`user-${address}`} />
         </Grid>
         <Grid item width={1}>
-          <Tabs value={tab} onChange={handleSetTab} aria-label="Post Tabs" sx={{py: 4}}>
+          <Tabs value={tab} onChange={handleSetTab} aria-label="Post Tabs" sx={{ py: 4 }}>
             {tabs.map((t) => (
-              <Tab label={t.label} value={t.value} key={t.label} sx={{mr: 3}} />
+              <Tab label={t.label} value={t.value} key={t.label} sx={{ mr: 3 }} />
             ))}
           </Tabs>
           <TabPanel value={tab} index={1}>
             <Grid container direction={'column'} alignItems={'center'}>
+              {authedAddress === address ? (
+                <PostInput onSend={async () => {}} authedAddress={String(authedAddress)} key={authedAddress} />
+              ) : null}
               {posts.map((p) => (
                 <PostListItem key={p.id} post={p} />
               ))}
@@ -79,7 +84,6 @@ const UserDetailPage: NextPage = () => {
           </TabPanel>
         </Grid>
       </Grid>
-
     </LayoutWithoutFooter>
   )
 }

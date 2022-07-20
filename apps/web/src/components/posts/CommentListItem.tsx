@@ -1,6 +1,6 @@
 import { Grid, Typography, useTheme } from '@mui/material'
 import Link from 'next/link'
-import { IComment } from '../app/constants'
+import { IComment } from '../../app/constants'
 
 export const CommentListItem = ({ comment }: { comment: IComment | undefined }) => {
   const colorTheme = useTheme().palette

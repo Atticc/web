@@ -2,7 +2,15 @@ import { Avatar, Card, CardContent, CardMedia, CircularProgress, Stack, Tooltip,
 import { useState } from 'react'
 import { IOatNft } from '../../app/types'
 
-export const OatItem = ({ oat, height = 276, width = 262 }: { oat: IOatNft | undefined; width?: number, height?: number }) => {
+export const OatItem = ({
+  oat,
+  height = 276,
+  width = 262,
+}: {
+  oat: IOatNft | undefined
+  width?: number
+  height?: number
+}) => {
   const [show, setShow] = useState(true)
   const [loading, setLoading] = useState(true)
   if (!oat) {
@@ -29,14 +37,20 @@ export const OatItem = ({ oat, height = 276, width = 262 }: { oat: IOatNft | und
         onLoad={handleLoad}
       />
       <CardContent sx={{ px: 4 }}>
-        <Typography variant="body1" fontWeight={600} textAlign={'center'} textOverflow={'ellipsis'} sx={{
-          overflow: 'hidden',
-          textOverflow: 'ellipsis',
-          display: '-webkit-box',
-          WebkitLineClamp: '2',
-          WebkitBoxOrient: 'vertical',
-          wordBreak: 'break-word'
-        }} >
+        <Typography
+          variant="body1"
+          fontWeight={600}
+          textAlign={'center'}
+          textOverflow={'ellipsis'}
+          sx={{
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            display: '-webkit-box',
+            WebkitLineClamp: '2',
+            WebkitBoxOrient: 'vertical',
+            wordBreak: 'break-word',
+          }}
+        >
           {oat.name}
         </Typography>
       </CardContent>

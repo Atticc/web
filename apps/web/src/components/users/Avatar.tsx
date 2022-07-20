@@ -32,7 +32,7 @@ function stringAvatar(address: string, props: any) {
   return {
     sx: {
       bgcolor: stringToColor(address),
-      fontSize: props.sx?.width ? Math.floor(props.sx?.width / 3 ): 14,
+      fontSize: props.sx?.width ? Math.floor(props.sx?.width / 3) : 14,
       color: 'black',
       ...(props.sx || {}),
     },

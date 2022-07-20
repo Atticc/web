@@ -1,9 +1,18 @@
 import React, { useEffect, useState } from 'react'
-import { Autocomplete, Chip, CircularProgress, InputAdornment, Stack, TextField, Typography, useTheme } from '@mui/material'
+import {
+  Autocomplete,
+  Chip,
+  CircularProgress,
+  InputAdornment,
+  Stack,
+  TextField,
+  Typography,
+  useTheme,
+} from '@mui/material'
 import useWallet from '@utils/useWallet'
 import { IUser } from '@app/constants'
 import { formatAddress } from '@utils/helper'
-import SearchIcon from '@mui/icons-material/Search';
+import SearchIcon from '@mui/icons-material/Search'
 import Link from 'next/link'
 import { useDebounce } from 'usehooks-ts'
 
@@ -37,25 +46,28 @@ const SearchBox = ({ id, name, placeholder, onSubmit, ...props }: SearchBoxProps
         if (debounceValue.startsWith('0x') && debounceValue.length === 42) {
           const domain = await lookupAddress(debounceValue)
           console.log('domain', domain)
-          setOptions([{
-            domain: domain || '',
-            address: debounceValue,
-          }])
+          setOptions([
+            {
+              domain: domain || '',
+              address: debounceValue,
+            },
+          ])
         } else if (debounceValue.endsWith('.eth')) {
           const address = await resolveName(debounceValue)
           console.log('address', address)
           if (address) {
-            setOptions([{
-              domain: debounceValue,
-              address: address,
-            }])
+            setOptions([
+              {
+                domain: debounceValue,
+                address: address,
+              },
+            ])
           } else {
             throw new Error('Address not found')
           }
         } else {
           throw new Error('Not met searching criteria')
         }
-
       } catch (_) {
         console.log('this called')
         setOptions([])
@@ -63,10 +75,9 @@ const SearchBox = ({ id, name, placeholder, onSubmit, ...props }: SearchBoxProps
         setLoading(false)
       }
     }
-    
+
     fetchOptions()
   }, [debounceValue])
-  
 
   const handInputChanged = async (event: any, newValue: string) => {
     setValue(newValue)
@@ -84,42 +95,50 @@ const SearchBox = ({ id, name, placeholder, onSubmit, ...props }: SearchBoxProps
         loading={loading}
         open={value.length > 4}
         renderInput={(params) => (
-          <TextField sx={{
-            '& label.Mui-focused': {
-              color: color.secondary.main,
-            },
-            '& label': {
-              color: color.secondary.main,
-            },
-            '& input': {
-              color: color.white.main,
-            },
-            '& .MuiOutlinedInput-root': {
-              '& fieldset': {
-                borderColor: color.secondary.main,
+          <TextField
+            sx={{
+              '& label.Mui-focused': {
+                color: color.secondary.main,
               },
-              '&:hover fieldset': {
-                borderColor: color.secondary.main,
+              '& label': {
+                color: color.secondary.main,
               },
-              '&.Mui-focused fieldset': {
-                borderColor: color.secondary.main,
+              '& input': {
+                color: color.white.main,
               },
-            },
-          }}
+              '& .MuiOutlinedInput-root': {
+                '& fieldset': {
+                  borderColor: color.secondary.main,
+                },
+                '&:hover fieldset': {
+                  borderColor: color.secondary.main,
+                },
+                '&.Mui-focused fieldset': {
+                  borderColor: color.secondary.main,
+                },
+              },
+            }}
             margin="dense"
-            placeholder='Search Wallet Address or ENS'
+            placeholder="Search Wallet Address or ENS"
             variant="outlined"
             {...params}
             size="small"
-            fullWidth 
+            fullWidth
             InputProps={{
               ...params.InputProps,
-              startAdornment: <InputAdornment position="start"><SearchIcon color='secondary' /></InputAdornment>,
-              endAdornment: <React.Fragment>
-                {loading ? <CircularProgress color="secondary"/> : null}
-                {params.InputProps.endAdornment}
+              startAdornment: (
+                <InputAdornment position="start">
+                  <SearchIcon color="secondary" />
+                </InputAdornment>
+              ),
+              endAdornment: (
+                <React.Fragment>
+                  {loading ? <CircularProgress color="secondary" /> : null}
+                  {params.InputProps.endAdornment}
                 </React.Fragment>
-            }} />
+              ),
+            }}
+          />
         )}
         onInputChange={handInputChanged}
         getOptionLabel={(options) => (typeof options === 'string' ? options : options?.address)}
@@ -127,18 +146,18 @@ const SearchBox = ({ id, name, placeholder, onSubmit, ...props }: SearchBoxProps
           console.log(props)
           console.log(option)
           return (
-              <li {...props}>
-          <Link href={`/users/${option.address}`} passHref key={option.address}>
-            <a>
-                <Stack direction={'column'}>
-                  {option.domain ? <Chip label={option.domain} /> : null}
-                  <Typography color={color.black.main}>{formatAddress(option.address)}</Typography>
-                </Stack>
-            </a>
-          </Link>
-              </li>
-        )}
-        }
+            <li {...props}>
+              <Link href={`/users/${option.address}`} passHref key={option.address}>
+                <a>
+                  <Stack direction={'column'}>
+                    {option.domain ? <Chip label={option.domain} /> : null}
+                    <Typography color={color.black.main}>{formatAddress(option.address)}</Typography>
+                  </Stack>
+                </a>
+              </Link>
+            </li>
+          )
+        }}
       />
     </Stack>
   )

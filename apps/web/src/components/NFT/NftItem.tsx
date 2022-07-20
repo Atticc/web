@@ -4,7 +4,15 @@ import { useState } from 'react'
 import { decodeNftTokenUri, replaceIPFS } from '@utils/helper'
 import { useEffect } from 'react'
 
-export const NftItem = ({ nft, height = 276, width = 262 }: { nft: Nft | undefined, height?: number, width?: number }) => {
+export const NftItem = ({
+  nft,
+  height = 276,
+  width = 262,
+}: {
+  nft: Nft | undefined
+  height?: number
+  width?: number
+}) => {
   const [show, setShow] = useState(true)
   const [loading, setLoading] = useState(true)
   const [id, setId] = useState<number | undefined>(undefined)
@@ -55,19 +63,23 @@ export const NftItem = ({ nft, height = 276, width = 262 }: { nft: Nft | undefin
         onLoad={handleLoad}
       />
       <CardContent sx={{ px: 4 }}>
-        <Typography variant="body1" fontWeight={600} textAlign={'center'} textOverflow={'ellipsis'} sx={{
-          overflow: 'hidden',
-          textOverflow: 'ellipsis',
-          display: '-webkit-box',
-          WebkitLineClamp: '2',
-          WebkitBoxOrient: 'vertical',
-          wordBreak: 'break-word'
-        }} >
+        <Typography
+          variant="body1"
+          fontWeight={600}
+          textAlign={'center'}
+          textOverflow={'ellipsis'}
+          sx={{
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            display: '-webkit-box',
+            WebkitLineClamp: '2',
+            WebkitBoxOrient: 'vertical',
+            wordBreak: 'break-word',
+          }}
+        >
           {item?.title || item?.metadata?.name}
         </Typography>
       </CardContent>
     </Card>
   ) : null
-
-
 }

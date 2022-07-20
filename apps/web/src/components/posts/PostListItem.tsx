@@ -1,6 +1,6 @@
 import { Grid, Typography, useTheme } from '@mui/material'
 import Link from 'next/link'
-import { IPost } from '../app/constants'
+import { IPost } from '../../app/constants'
 
 export const PostListItem = ({ post }: { post: IPost | undefined }) => {
   const colorTheme = useTheme().palette

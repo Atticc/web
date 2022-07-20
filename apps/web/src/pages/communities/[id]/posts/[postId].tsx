@@ -2,12 +2,12 @@ import type { GetServerSideProps, NextPage } from 'next'
 import LayoutWithoutFooter from '../../../../components/layouts/LayoutWithoutFooter'
 import { useState } from 'react'
 import { Button, Grid, Tab, Tabs, Typography } from '@mui/material'
-import { CommunitiesList } from '../../../../components/CommunitiesList'
-import { PostListItem } from '../../../../components/PostListItem'
+import { CommunitiesList } from '../../../../components/posts/CommunitiesList'
+import { PostListItem } from '../../../../components/posts/PostListItem'
 import { comments, posts } from '../../../../app/constants'
 import { ContributorsList } from '../../../../components/ContributorsList'
 import CommunityCreateModal from '../../../../components/modal/CommunityCreateModal'
-import { CommentListItem } from '../../../../components/CommentListItem'
+import { CommentListItem } from '../../../../components/posts/CommentListItem'
 
 interface UserDetailProps {
   postId: string

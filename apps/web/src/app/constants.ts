@@ -1,4 +1,4 @@
-import { NEXT_PUBLIC_HOSTNAME } from "./config"
+import { NEXT_PUBLIC_HOSTNAME } from './config'
 
 export interface IMenu {
   title: string

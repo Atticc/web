@@ -1,6 +1,6 @@
 import { Divider, Grid, Typography, useTheme } from '@mui/material'
 import Link from 'next/link'
-import { ICommunity } from '../app/constants'
+import { ICommunity } from '../../app/constants'
 
 export const CommunitiesList = ({ title, data }: { title?: string; data: Array<ICommunity> }) => {
   const colorTheme = useTheme().palette

@@ -4,7 +4,7 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useEffect, useState } from 'react'
 import { Grid, Typography, useTheme } from '@mui/material'
 import { IUser } from '../../app/constants'
-import { UserCard } from '../../components/UserCard'
+import { UserCard } from '../../components/users/UserCard'
 import { usePopular } from '../../graphql/cyberconnect/queries/getPopular'
 
 const Home: NextPage = () => {

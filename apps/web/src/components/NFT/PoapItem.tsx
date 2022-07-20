@@ -2,7 +2,15 @@ import { Avatar, Box, Card, CardContent, CardMedia, CircularProgress, Stack, Too
 import { useState } from 'react'
 import { IPoapNft } from '../../app/types'
 
-export const PoapItem = ({ poap, height = 276, width = 262 }: { poap: IPoapNft | undefined, height?: number, width?: number }) => {
+export const PoapItem = ({
+  poap,
+  height = 276,
+  width = 262,
+}: {
+  poap: IPoapNft | undefined
+  height?: number
+  width?: number
+}) => {
   const [show, setShow] = useState(true)
   const [loading, setLoading] = useState(true)
   if (!poap) {
@@ -28,17 +36,23 @@ export const PoapItem = ({ poap, height = 276, width = 262 }: { poap: IPoapNft |
         onError={handleError}
         onLoad={handleLoad}
       />
-      <CardContent sx={{px: 4}}>
-          <Typography variant="body1" fontWeight={600} textAlign={'center'} textOverflow={'ellipsis'} sx={{
+      <CardContent sx={{ px: 4 }}>
+        <Typography
+          variant="body1"
+          fontWeight={600}
+          textAlign={'center'}
+          textOverflow={'ellipsis'}
+          sx={{
             overflow: 'hidden',
             textOverflow: 'ellipsis',
             display: '-webkit-box',
             WebkitLineClamp: '2',
             WebkitBoxOrient: 'vertical',
-            wordBreak: 'break-word'
-          }} >
-            {poap.event.name}
-          </Typography>
+            wordBreak: 'break-word',
+          }}
+        >
+          {poap.event.name}
+        </Typography>
       </CardContent>
     </Card>
   ) : null

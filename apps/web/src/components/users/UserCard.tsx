@@ -4,16 +4,16 @@ import { Box } from '@mui/system'
 import useWallet from '@utils/useWallet'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
-import { IUser } from '../app/constants'
-import { useFollowStatus } from '../graphql/cyberconnect/queries/getFollowStatus'
-import { formatAddress, isSameAddr } from '../utils/helper'
-import EtherscanIcon from './icons/EtherscanIcon'
-import OpenseaIcon from './icons/OpenseaIcon'
-import ContentCopyIcon from '@mui/icons-material/ContentCopy';
-import { TwitterIcon } from './icons/TwitterIcon'
-import CopyToClipboard from './layouts/CopyToClipboard'
-import UserConnectionModal from './modal/UserConnectionModal'
-import ProfileImage from './users/Avatar'
+import { IUser } from '../../app/constants'
+import { useFollowStatus } from '../../graphql/cyberconnect/queries/getFollowStatus'
+import { formatAddress, isSameAddr } from '../../utils/helper'
+import EtherscanIcon from '../icons/EtherscanIcon'
+import OpenseaIcon from '../icons/OpenseaIcon'
+import ContentCopyIcon from '@mui/icons-material/ContentCopy'
+import { TwitterIcon } from '../icons/TwitterIcon'
+import CopyToClipboard from '../layouts/CopyToClipboard'
+import UserConnectionModal from '../modal/UserConnectionModal'
+import ProfileImage from './Avatar'
 
 export const UserCard = ({ user, isDetail = false }: { user: IUser; isDetail?: boolean }) => {
   const [showConnection, setShowConnection] = useState(false)
@@ -63,75 +63,131 @@ export const UserCard = ({ user, isDetail = false }: { user: IUser; isDetail?: b
       spacing={1}
       pt={0.5}
       pb={1}
-    // onClick={() => setShowConnection(true)}
-    // sx={{
-    //   cursor: 'pointer',
-    //   ':hover': {
-    //     filter: 'opacity(0.8)',
-    //   },
-    // }}
+      // onClick={() => setShowConnection(true)}
+      // sx={{
+      //   cursor: 'pointer',
+      //   ':hover': {
+      //     filter: 'opacity(0.8)',
+      //   },
+      // }}
     >
-      <Stack direction={'row'} alignItems={'center'} >
-        <Typography variant="body1" fontWeight={600}>{user?.followerCount || 0}</Typography>
-        <Typography pl={1} variant="body1" fontWeight={600} color={color.lightGray.main}>Follower</Typography>
+      <Stack direction={'row'} alignItems={'center'}>
+        <Typography variant="body1" fontWeight={600}>
+          {user?.followerCount || 0}
+        </Typography>
+        <Typography pl={1} variant="body1" fontWeight={600} color={color.lightGray.main}>
+          Follower
+        </Typography>
       </Stack>
       <Divider orientation={'vertical'} variant={'middle'} flexItem />
       <Stack direction={'row'} alignItems={'center'}>
-        <Typography variant="body1" fontWeight={600}>{user?.followingCount || 0}</Typography>
-        <Typography pl={1} variant="body1" fontWeight={600} color={color.lightGray.main}>Following</Typography>
+        <Typography variant="body1" fontWeight={600}>
+          {user?.followingCount || 0}
+        </Typography>
+        <Typography pl={1} variant="body1" fontWeight={600} color={color.lightGray.main}>
+          Following
+        </Typography>
       </Stack>
     </Stack>
   )
 
-  const renderSocial = () => <Grid item>
-    <Stack direction={'row'} alignItems={'center'} columnGap={1}>
-      {user?.twitter?.handle ? (
-        <Button sx={{ borderRadius: '50%' }} variant={'icon'} color={'secondary'} component={'a'} href={`https:twitter.com/${user?.twitter?.handle}`} target="_blank" rel="noreferrer">
-          <TwitterIcon color={color.white} height={24} width={24} />
-        </Button>
-      ) : null}
-      {user?.address ? (
-        <Button sx={{ borderRadius: '50%' }} variant={'icon'} color={'secondary'} component={'a'} href={`https://opensea.io/${user?.address}`} target="_blank" rel="noreferrer">
-          <OpenseaIcon color={color.white} height={24} width={24} />
-        </Button>) : null}
-      {user?.address ? (
-        <Button sx={{ borderRadius: '50%' }} variant={'icon'} color={'secondary'} component={'a'} href={`https://etherscan.io/address/${user?.address}`} target="_blank" rel="noreferrer">
-          <EtherscanIcon color={color.white} height={24} width={24} />
-        </Button>) : null}
-    </Stack>
-  </Grid>
+  const renderSocial = () => (
+    <Grid item>
+      <Stack direction={'row'} alignItems={'center'} columnGap={1}>
+        {user?.twitter?.handle ? (
+          <Button
+            sx={{ borderRadius: '50%' }}
+            variant={'icon'}
+            color={'secondary'}
+            component={'a'}
+            href={`https:twitter.com/${user?.twitter?.handle}`}
+            target="_blank"
+            rel="noreferrer"
+          >
+            <TwitterIcon color={color.white} height={24} width={24} />
+          </Button>
+        ) : null}
+        {user?.address ? (
+          <Button
+            sx={{ borderRadius: '50%' }}
+            variant={'icon'}
+            color={'secondary'}
+            component={'a'}
+            href={`https://opensea.io/${user?.address}`}
+            target="_blank"
+            rel="noreferrer"
+          >
+            <OpenseaIcon color={color.white} height={24} width={24} />
+          </Button>
+        ) : null}
+        {user?.address ? (
+          <Button
+            sx={{ borderRadius: '50%' }}
+            variant={'icon'}
+            color={'secondary'}
+            component={'a'}
+            href={`https://etherscan.io/address/${user?.address}`}
+            target="_blank"
+            rel="noreferrer"
+          >
+            <EtherscanIcon color={color.white} height={24} width={24} />
+          </Button>
+        ) : null}
+      </Stack>
+    </Grid>
+  )
 
   if (isDetail) {
     return (
-      <Grid container direction={'row'} justifyContent={'space-between'} bgcolor={color.white.main} borderRadius={4} px={4} pt={4} pb={5}>
+      <Grid
+        container
+        direction={'row'}
+        justifyContent={'space-between'}
+        bgcolor={color.white.main}
+        borderRadius={4}
+        px={4}
+        pt={4}
+        pb={5}
+      >
         <Grid item>
           <Grid container direction={'row'}>
             <Grid item>
               <Box sx={{ borderColor: 'black', borderWidth: 4, borderStyle: 'solid', borderRadius: '50%' }}>
-                <ProfileImage sx={{ height: 140, width: 140 }} src={user?.avatar || user?.twitter?.avatar} address={user?.address} />
+                <ProfileImage
+                  sx={{ height: 140, width: 140 }}
+                  src={user?.avatar || user?.twitter?.avatar}
+                  address={user?.address}
+                />
               </Box>
             </Grid>
             <Grid item>
-              <UserConnectionModal address={user.address} open={showConnection} onClose={() => setShowConnection(false)} />
-              <Stack direction={'column'} pl={2} display={'flex'} justifyContent={'center'} >
+              <UserConnectionModal
+                address={user.address}
+                open={showConnection}
+                onClose={() => setShowConnection(false)}
+              />
+              <Stack direction={'column'} pl={2} display={'flex'} justifyContent={'center'}>
                 <Stack direction={'column'}>
                   <Typography variant="h4">{user?.domain || null}</Typography>
                   <CopyToClipboard>
                     {({ copy }) => (
                       <Button onClick={() => copy(user?.address)} sx={{ p: 0, width: 'fit-content' }} component={'div'}>
-                        <ContentCopyIcon fontSize='small' />
-                        <Typography variant="body1" pl={1} fontWeight={600} color={color.lightGray.main}>{formatAddress(user?.address)}</Typography>
+                        <ContentCopyIcon fontSize="small" />
+                        <Typography variant="body1" pl={1} fontWeight={600} color={color.lightGray.main}>
+                          {formatAddress(user?.address)}
+                        </Typography>
                       </Button>
                     )}
                   </CopyToClipboard>
                 </Stack>
                 {renderFollowing()}
-                <Stack
-                  direction={'row'}
-                  spacing={1}
-                >
+                <Stack direction={'row'} spacing={1}>
                   {address && !isSameAddr(address, user.address) ? (
-                    <Button variant={isFollowing ? 'outline' : 'fill'} color={isFollowing ? 'secondary' : 'primary'} onClick={onFollow}>
+                    <Button
+                      variant={isFollowing ? 'outline' : 'fill'}
+                      color={isFollowing ? 'secondary' : 'primary'}
+                      onClick={onFollow}
+                    >
                       {loading ? 'loading...' : isFollowing ? 'Followed' : 'Follow'}
                     </Button>
                   ) : null}
