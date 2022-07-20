@@ -50,7 +50,6 @@ const TestPage: NextPage = () => {
                     },
                   }}
                 >
-                  {' '}
                   <AtticcIcon
                     tColor={'#fff'}
                     oColor={'#fff'}
@@ -99,9 +98,17 @@ const TestPage: NextPage = () => {
     >
       {renderImage()}
       <Header showSearch={false} />
-      <Grid container direction="row" justifyContent={'space-around'} height={'50vh'} alignItems={'center'} pt={10}>
-        <Grid item md={7}>
-          <Grid container direction="column" px={3}>
+      <Grid
+        container
+        direction="row"
+        justifyContent={'space-around'}
+        height={'50vh'}
+        alignItems={'center'}
+        pt={10}
+        px={10}
+      >
+        <Grid item md={8}>
+          <Grid container direction="column">
             <Grid item>
               <Typography variant="h1" color={color.white.main}>
                 Heyy, fant<span style={{ color: color.black.main, fontWeight: 600 }}>A</span>s

@@ -72,6 +72,24 @@ export interface ILike {
   postId?: string
 }
 
+export const users: Array<IUser> = [
+  {
+    domain: '',
+    avatar: '',
+    address: '0xbF9B4a79a3d9e6AA3cea0fc0134A923FBB111309',
+  },
+  {
+    domain: 'Vitalik.eth',
+    avatar: '',
+    address: '0xd8da6bf26964af9d7eed9e03e53415d37aa96045',
+  },
+  {
+    domain: '',
+    avatar: '',
+    address: '0x983110309620d911731ac0932219af06091b6744',
+  },
+]
+
 export const comments: Array<IComment> = [
   {
     message: 'Example comment 1',
@@ -111,7 +129,12 @@ export const comments: Array<IComment> = [
 export const posts: Array<IPost> = [
   {
     title: 'Example Post 1',
-    description: 'Example Post description 1',
+    description: `Example Post description 1
+    asdasd
+    asdsadaf
+    asfasfasf
+    asfa asfawg safwg
+    sdasda afwef`,
     id: '1',
     createdAt: Date(),
     updatedAt: Date(),
@@ -125,6 +148,7 @@ export const posts: Array<IPost> = [
     bookmarked: false,
     sharesCount: 0,
     pinned: false,
+    author: users[1],
   },
   {
     title: 'Example Post 2',
@@ -184,24 +208,6 @@ export const communities: Array<ICommunity> = [
     createdAt: Date(),
     updatedAt: Date(),
     owner: '0x983110309620d911731ac0932219af06091b6744',
-  },
-]
-
-export const users: Array<IUser> = [
-  {
-    domain: '',
-    avatar: '',
-    address: '0xbF9B4a79a3d9e6AA3cea0fc0134A923FBB111309',
-  },
-  {
-    domain: 'Vitalik.eth',
-    avatar: '',
-    address: '0xd8da6bf26964af9d7eed9e03e53415d37aa96045',
-  },
-  {
-    domain: '',
-    avatar: '',
-    address: '0x983110309620d911731ac0932219af06091b6744',
   },
 ]
 

@@ -12,7 +12,7 @@ import dynamic from 'next/dynamic'
 import { APP_NAME } from '@/app/config'
 import { useRouter } from 'next/router'
 import { TabPanel } from '@c/tabs/TabPanel'
-import PostInput from '@c/posts/Input'
+import PostInput from '@c/posts/PostInput'
 import useWallet from '@utils/useWallet'
 
 const NftSection = dynamic(() => import('@c/NFT/NftSection'), {
@@ -72,10 +72,14 @@ const UserDetailPage: NextPage = () => {
           <TabPanel value={tab} index={1}>
             <Grid container direction={'column'} alignItems={'center'}>
               {authedAddress === address ? (
-                <PostInput onSend={async () => {}} authedAddress={String(authedAddress)} key={authedAddress} />
+                <Grid item width={'100%'} pb={2}>
+                  <PostInput onSend={async () => {}} authedAddress={String(authedAddress)} key={authedAddress} />
+                </Grid>
               ) : null}
               {posts.map((p) => (
-                <PostListItem key={p.id} post={p} />
+                <Grid item width={'100%'} py={2} key={p.id}>
+                  <PostListItem post={p} />
+                </Grid>
               ))}
             </Grid>
           </TabPanel>

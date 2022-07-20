@@ -54,21 +54,24 @@ export const toChecksumAddress = (address: string, chainId: string | null = null
   if (typeof address !== 'string') {
     return ''
   }
+  try {
+    if (!/^(0x)?[0-9a-f]{40}$/i.test(address)) {
+      throw new Error(`Given address "${address}" is not a valid Ethereum address.`)
+    }
 
-  if (!/^(0x)?[0-9a-f]{40}$/i.test(address)) {
-    throw new Error(`Given address "${address}" is not a valid Ethereum address.`)
+    const stripAddress = stripHexPrefix(address).toLowerCase()
+    const prefix = chainId != null ? chainId.toString() + '0x' : ''
+    const keccakHash = keccak('keccak256')
+      .update(prefix + stripAddress)
+      .digest('hex')
+    let checksumAddress = '0x'
+
+    for (let i = 0; i < stripAddress.length; i++) {
+      checksumAddress += parseInt(keccakHash[i], 16) >= 8 ? stripAddress[i].toUpperCase() : stripAddress[i]
+    }
+
+    return checksumAddress
+  } catch (_) {
+    return address
   }
-
-  const stripAddress = stripHexPrefix(address).toLowerCase()
-  const prefix = chainId != null ? chainId.toString() + '0x' : ''
-  const keccakHash = keccak('keccak256')
-    .update(prefix + stripAddress)
-    .digest('hex')
-  let checksumAddress = '0x'
-
-  for (let i = 0; i < stripAddress.length; i++) {
-    checksumAddress += parseInt(keccakHash[i], 16) >= 8 ? stripAddress[i].toUpperCase() : stripAddress[i]
-  }
-
-  return checksumAddress
 }

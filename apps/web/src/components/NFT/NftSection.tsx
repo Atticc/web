@@ -72,7 +72,7 @@ export const NftSection = ({ address }: { address: string }) => {
       } catch (_) {}
     }
     if (isValidAddr(address)) {
-      NODE_ENV !== 'development' && fetchNFTs() 
+      NODE_ENV !== 'development' && fetchNFTs()
     } else {
       setNfts({ items: [], totalCount: 0 })
     }
