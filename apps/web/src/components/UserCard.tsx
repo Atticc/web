@@ -57,6 +57,50 @@ export const UserCard = ({ user, isDetail = false }: { user: IUser; isDetail?: b
     return null
   }
 
+  const renderFollowing = () => (
+    <Stack
+      direction={'row'}
+      spacing={1}
+      pt={0.5}
+      pb={1}
+    // onClick={() => setShowConnection(true)}
+    // sx={{
+    //   cursor: 'pointer',
+    //   ':hover': {
+    //     filter: 'opacity(0.8)',
+    //   },
+    // }}
+    >
+      <Stack direction={'row'} alignItems={'center'} >
+        <Typography variant="body1" fontWeight={600}>{user?.followerCount || 0}</Typography>
+        <Typography pl={1} variant="body1" fontWeight={600} color={color.lightGray.main}>Follower</Typography>
+      </Stack>
+      <Divider orientation={'vertical'} variant={'middle'} flexItem />
+      <Stack direction={'row'} alignItems={'center'}>
+        <Typography variant="body1" fontWeight={600}>{user?.followingCount || 0}</Typography>
+        <Typography pl={1} variant="body1" fontWeight={600} color={color.lightGray.main}>Following</Typography>
+      </Stack>
+    </Stack>
+  )
+
+  const renderSocial = () => <Grid item>
+    <Stack direction={'row'} alignItems={'center'} columnGap={1}>
+      {user?.twitter?.handle ? (
+        <Button sx={{ borderRadius: '50%' }} variant={'icon'} color={'secondary'} component={'a'} href={`https:twitter.com/${user?.twitter?.handle}`} target="_blank" rel="noreferrer">
+          <TwitterIcon color={color.white} height={24} width={24} />
+        </Button>
+      ) : null}
+      {user?.address ? (
+        <Button sx={{ borderRadius: '50%' }} variant={'icon'} color={'secondary'} component={'a'} href={`https://opensea.io/${user?.address}`} target="_blank" rel="noreferrer">
+          <OpenseaIcon color={color.white} height={24} width={24} />
+        </Button>) : null}
+      {user?.address ? (
+        <Button sx={{ borderRadius: '50%' }} variant={'icon'} color={'secondary'} component={'a'} href={`https://etherscan.io/address/${user?.address}`} target="_blank" rel="noreferrer">
+          <EtherscanIcon color={color.white} height={24} width={24} />
+        </Button>) : null}
+    </Stack>
+  </Grid>
+
   if (isDetail) {
     return (
       <Grid container direction={'row'} justifyContent={'space-between'} bgcolor={color.white.main} borderRadius={4} px={4} pt={4} pb={5}>
@@ -69,76 +113,37 @@ export const UserCard = ({ user, isDetail = false }: { user: IUser; isDetail?: b
             </Grid>
             <Grid item>
               <UserConnectionModal address={user.address} open={showConnection} onClose={() => setShowConnection(false)} />
-              <Stack direction={'column'} pl={2}>
+              <Stack direction={'column'} pl={2} display={'flex'} justifyContent={'center'} >
                 <Stack direction={'column'}>
                   <Typography variant="h4">{user?.domain || null}</Typography>
                   <CopyToClipboard>
                     {({ copy }) => (
-                      <Button onClick={() => copy(user?.address)} sx={{ p: 0, width: 'fit-content'}} component={'div'}>
+                      <Button onClick={() => copy(user?.address)} sx={{ p: 0, width: 'fit-content' }} component={'div'}>
                         <ContentCopyIcon fontSize='small' />
                         <Typography variant="body1" pl={1} fontWeight={600} color={color.lightGray.main}>{formatAddress(user?.address)}</Typography>
                       </Button>
                     )}
                   </CopyToClipboard>
                 </Stack>
+                {renderFollowing()}
                 <Stack
                   direction={'row'}
                   spacing={1}
-                  pt={0.5}
-                  pb={1}
-                  // onClick={() => setShowConnection(true)}
-                  // sx={{
-                  //   cursor: 'pointer',
-                  //   ':hover': {
-                  //     filter: 'opacity(0.8)',
-                  //   },
-                  // }}
                 >
-                  <Stack direction={'row'} alignItems={'center'} >
-                    <Typography variant="body1" fontWeight={600}>{user?.followerCount || 0}</Typography>
-                    <Typography pl={1} variant="body1" fontWeight={600} color={color.lightGray.main}>Follower</Typography>
-                  </Stack>
-                  <Divider />
-                  <Stack direction={'row'} alignItems={'center'}>
-                    <Typography variant="body1" fontWeight={600}>{user?.followingCount || 0}</Typography>
-                    <Typography pl={1} variant="body1" fontWeight={600} color={color.lightGray.main}>Following</Typography>
-                  </Stack>
-                </Stack>
-                <Stack
-                  direction={'row'}
-                  spacing={1}
-                  >
                   {address && !isSameAddr(address, user.address) ? (
                     <Button variant={isFollowing ? 'outline' : 'fill'} color={isFollowing ? 'secondary' : 'primary'} onClick={onFollow}>
                       {loading ? 'loading...' : isFollowing ? 'Followed' : 'Follow'}
                     </Button>
                   ) : null}
-                    <Button variant="fill" onClick={onFollow}>
-                      {'Message'}
-                    </Button>
-                  </Stack>
+                  <Button variant="fill" onClick={onFollow}>
+                    {'Message'}
+                  </Button>
+                </Stack>
               </Stack>
             </Grid>
           </Grid>
         </Grid>
-        <Grid item>
-          <Stack direction={'row'} alignItems={'center'} columnGap={1}>
-            {user?.twitter?.handle ? (
-              <Button sx={{ borderRadius: '50%' }} variant={'icon'} color={'secondary'} component={'a'} href={`https:twitter.com/${user?.twitter?.handle}`} target="_blank" rel="noreferrer">
-                <TwitterIcon color={color.white} height={24} width={24} />
-              </Button>
-            ) : null}
-            {user?.address ? (
-              <Button sx={{ borderRadius: '50%' }} variant={'icon'} color={'secondary'} component={'a'} href={`https://opensea.io/${user?.address}`} target="_blank" rel="noreferrer">
-                <OpenseaIcon color={color.white} height={24} width={24} />
-              </Button>) : null}
-            {user?.address ? (
-              <Button sx={{ borderRadius: '50%' }} variant={'icon'} color={'secondary'} component={'a'} href={`https://etherscan.io/address/${user?.address}`} target="_blank" rel="noreferrer">
-                <EtherscanIcon color={color.white} height={24} width={24} />
-              </Button>) : null}
-          </Stack>
-
-        </Grid>
+        {renderSocial()}
       </Grid>
     )
   }

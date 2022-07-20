@@ -10,7 +10,7 @@ export const getDesignTokens = (mode: PaletteMode) => {
       tonalOffset: 0.2,
       primary: { main: '#F26E21' },
       secondary: { main: '#FFC39F' },
-      bgColor: { main: '#BCBCBC' },
+      bgColor: { main: '#CDCDCD' },
       modalbgcolor: { main: '#FFC39F' },
       radioColor: { main: '#FFC39F' },
       radioCheckedColor: { main: '#F26E21' },
