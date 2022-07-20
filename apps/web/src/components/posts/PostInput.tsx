@@ -4,6 +4,7 @@ import { Box, Button, InputAdornment, InputAdornmentProps, TextField, useTheme }
 import useEns from '@utils/useEns'
 import styled from '@emotion/styled'
 import FilterIcon from '@mui/icons-material/Filter'
+import { createPost } from '@req/atticc/posts'
 
 const EndAdornment = styled(InputAdornment)<InputAdornmentProps>({
   alignSelf: 'flex-end',
@@ -18,6 +19,7 @@ type PostInputProps = {
 
 const PostInput = ({ onSend, authedAddress }: PostInputProps): JSX.Element => {
   const [message, setMessage] = useState('')
+  const [image, setImage] = useState(null)
   const router = useRouter()
   const color = useTheme().palette
   const { name = '' } = useEns(authedAddress)
@@ -36,8 +38,10 @@ const PostInput = ({ onSend, authedAddress }: PostInputProps): JSX.Element => {
       if (!message) {
         return
       }
-      setMessage('')
+      await createPost({ address: authedAddress, description: message, imageUrl: image })
       await onSend(message)
+      setMessage('')
+      setImage(null)
     },
     [onSend, message]
   )

@@ -2,7 +2,7 @@ import type { GetServerSideProps, NextPage } from 'next'
 import LayoutWithoutFooter from '@c/layouts/LayoutWithoutFooter'
 import { useEffect, useState } from 'react'
 import { Grid, Tab, Tabs, useTheme } from '@mui/material'
-import { IUser, posts } from '@app/constants'
+import { IPost, IUser } from '@app/constants'
 import { PostListItem } from '@c/posts/PostListItem'
 import { UserCard } from '@c/users/UserCard'
 import { getIdentity, useIdentity } from '@req/cyberconnect/queries/getIdentity'
@@ -15,6 +15,7 @@ import { TabPanel } from '@c/tabs/TabPanel'
 import PostInput from '@c/posts/PostInput'
 import useWallet from '@utils/useWallet'
 import { Box } from '@mui/system'
+import { usePosts } from '@req/atticc/posts'
 
 const NftSection = dynamic(() => import('@c/NFT/NftSection'), {
   suspense: false,
@@ -36,6 +37,7 @@ const UserDetailPage: NextPage = () => {
   const router = useRouter()
   const { address } = router.query
   const { address: authedAddress } = useWallet()
+  const { data: posts = [], refetch: refetchPosts, isLoading } = usePosts({ addresses: [address as string] })
   const userData: IUser = { address: String(address) }
   const [tab, setTab] = useState(1)
   const colorTheme = useTheme().palette
@@ -45,8 +47,9 @@ const UserDetailPage: NextPage = () => {
   useEffect(() => {
     if (isValidAddr(String(address))) {
       refetch()
+      refetchPosts()
     }
-  }, [address, refetch])
+  }, [address, refetch, refetchPosts])
 
   const handleSetTab = (_: React.ChangeEvent<{}>, value: number) => {
     setTab(value)
@@ -74,10 +77,16 @@ const UserDetailPage: NextPage = () => {
             <Grid container direction={'column'} alignItems={'center'}>
               {authedAddress === address ? (
                 <Grid item width={'100%'} pb={2}>
-                  <PostInput onSend={async () => {}} authedAddress={String(authedAddress)} key={authedAddress} />
+                  <PostInput
+                    onSend={async () => {
+                      await refetchPosts()
+                    }}
+                    authedAddress={String(authedAddress)}
+                    key={authedAddress}
+                  />
                 </Grid>
               ) : null}
-              {posts.map((p) => (
+              {posts?.map((p: IPost) => (
                 <Grid item width={'100%'} py={2} key={p.id}>
                   <PostListItem post={p} />
                 </Grid>

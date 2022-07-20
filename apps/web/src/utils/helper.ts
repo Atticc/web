@@ -2,12 +2,12 @@ import keccak from 'keccak'
 
 //format the address display
 export const formatAddress = (addr: string): string =>
-  addr.length > 10 && addr.startsWith('0x') ? `${addr.substring(0, 6)}...${addr.substring(addr.length - 4)}` : addr
+  addr?.length > 10 && addr?.startsWith('0x') ? `${addr.substring(0, 6)}...${addr.substring(addr.length - 4)}` : addr
 
 //check if the address is valid
 export const isValidAddr = (address: string) => {
   const re = /^0x[a-fA-F0-9]{40}$/
-  return address.match(re)
+  return address?.match(re) || false
 }
 
 export const isSameAddr = (addr1: string, addr2: string) => {
@@ -38,9 +38,9 @@ export const decodeNftTokenUri = (data: string = '') => {
 }
 
 export const formatDate = (d: Date | undefined): string => {
-  const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'long', day: 'numeric' };
+  const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'long', day: 'numeric' }
 
-  return (d ? d.toLocaleDateString('en-US', options) : '')
+  return d ? d.toLocaleDateString('en-US', options) : ''
 }
 
 export const formatTime = (d: Date | undefined): string =>

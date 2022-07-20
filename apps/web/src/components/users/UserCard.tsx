@@ -191,6 +191,11 @@ export const UserCard = ({ user, isDetail = false }: { user: IUser; isDetail?: b
                       {loading ? 'loading...' : isFollowing ? 'Followed' : 'Follow'}
                     </Button>
                   ) : null}
+                  {isSameAddr(address as string, user.address) ? (
+                    <Button variant={'outline'} color={'secondary'} onClick={onFollow}>
+                      {'Edit Profile'}
+                    </Button>
+                  ) : null}
                   {address && !isSameAddr(address, user.address) ? (
                     <Button variant="fill" onClick={onFollow}>
                       {'Message'}

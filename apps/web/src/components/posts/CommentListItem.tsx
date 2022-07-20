@@ -28,7 +28,9 @@ export const CommentListItem = ({ comment }: { comment: IComment | undefined }) 
                 {comment.author?.domain || formatAddress(comment?.authorAddress) || ''}
               </Typography>
               <Stack direction={'row'}>
-                <Typography variant="body2">{formatDate(new Date(comment.updatedAt))} at {formatTime(new Date(comment.updatedAt))}</Typography>
+                <Typography variant="body2">
+                  {formatDate(new Date(comment.updatedAt))} at {formatTime(new Date(comment.updatedAt))}
+                </Typography>
               </Stack>
             </Stack>
             <Typography

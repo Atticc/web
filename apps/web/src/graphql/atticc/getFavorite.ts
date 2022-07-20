@@ -19,11 +19,11 @@ interface GetFavoriteRequest {
 export const GET_FAV = gql`
   query MyQuery($address: String, $commentId: uuid, $postId: uuid, type: ACTION_TYPE = 'LIKE') {
   atticcdev_action(where: {
-    user_address: {_eq: $address}, action: {_eq: $type}, post_id: {_eq: $postId}, comment_id: {_eq: $commentId}
+    userAddress: {_eq: $address}, action: {_eq: $type}, postId: {_eq: $postId}, commentId: {_eq: $commentId}
   }) {
-    user_address
-    post_id
-    comment_id
+    userAddress
+    postId
+    commentId
     action
   }
 }

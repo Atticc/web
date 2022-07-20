@@ -33,7 +33,9 @@ export const PostListItem = ({ post }: { post: IPost | undefined }) => {
             <Stack direction={'row'} justifyContent={'space-between'} width={'100%'}>
               <Typography variant="h5">{post.author?.domain || formatAddress(post?.authorAddress) || ''}</Typography>
               <Stack direction={'row'}>
-                <Typography variant="body2">{formatDate(new Date(post.updatedAt))} at {formatTime(new Date(post.updatedAt))}</Typography>
+                <Typography variant="body2">
+                  {formatDate(new Date(post.updatedAt))} at {formatTime(new Date(post.updatedAt))}
+                </Typography>
               </Stack>
             </Stack>
             <Typography
