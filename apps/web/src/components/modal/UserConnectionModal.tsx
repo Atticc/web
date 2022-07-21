@@ -154,7 +154,7 @@ const UserConnectionModal = ({
               margin: '10px 0 8px 0',
             }}
           >
-            <ContributorsList data={connections[tab]} hasBorder={false} />
+            <ContributorsList data={connections[tab]} />
           </Stack>
         </Stack>
       </Box>

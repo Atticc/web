@@ -96,7 +96,7 @@ const UserDetailPage: NextPage = () => {
               ) : !posts?.length ? (
                 <Stack direction="column" alignItems={'center'}>
                   <Typography variant="h4">No Posts yet</Typography>
-                  <Typography variant="body1">This person haven't post anything in awhile...</Typography>
+                  <Typography variant="body1">{`This person haven't post anything in awhile...`}</Typography>
                 </Stack>
               ) : null}
               {posts?.map((p: IPost) => (
