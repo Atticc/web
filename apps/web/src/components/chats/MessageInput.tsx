@@ -1,12 +1,13 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { Ref, useCallback, useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { Box, Chip, Grid, InputAdornment, TextField } from '@mui/material'
 
 type MessageInputProps = {
   onSend: (msg: string) => Promise<void>
+  scrollRef: () => void
 }
 
-const MessageInput = ({ onSend }: MessageInputProps): JSX.Element => {
+const MessageInput = ({ onSend, scrollRef }: MessageInputProps): JSX.Element => {
   const [message, setMessage] = useState('')
   const router = useRouter()
 
@@ -24,6 +25,7 @@ const MessageInput = ({ onSend }: MessageInputProps): JSX.Element => {
       }
       setMessage('')
       await onSend(message)
+      scrollRef()
     },
     [onSend, message]
   )

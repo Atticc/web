@@ -46,7 +46,7 @@ const MessagesList = ({ messages, walletAddress, messagesEndRef }: MessageListPr
   }
 
   return (
-    <Grid container sx={{ display: 'flex', flexGrow: 1 }}>
+    <Grid container sx={{ display: 'flex', flexGrow: 1, overflowY: 'auto' }} maxHeight={'calc(100vh - 200px)'}>
       <Grid container sx={{ alignSelf: 'flex-end' }} width={'100%'}>
         <Grid item width={'100%'} flex={1}>
           {messages && messages.length ? <ConversationBeginningNotice /> : null}

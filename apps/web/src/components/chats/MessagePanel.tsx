@@ -85,10 +85,10 @@ export const MessagePanel = ({ recipientAddress, onConnect }: MessagePanelProps)
       direction={'column'}
       maxHeight={'calc(100vh - 96px)'}
       minHeight={'calc(100vh - 96px)'}
-      sx={{ overflowY: 'auto', display: 'flex' }}
+      sx={{ overflowY: 'hidden', display: 'flex' }}
     >
       <MessageList messagesEndRef={messagesEndRef} messages={messages} walletAddress={walletAddress} />
-      {walletAddress && <MessageInput onSend={sendMessage} />}
+      {walletAddress && <MessageInput onSend={sendMessage} scrollRef={scrollToMessagesEndRef} />}
     </Grid>
   )
 }

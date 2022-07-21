@@ -77,7 +77,8 @@ export const XmtpProvider = ({ children }: { children: JSX.Element }) => {
     const initClient = async () => {
       if (!wallet) return
       const opts: Partial<ClientOptions> = {
-        waitForPeersTimeoutMs: 30_000,
+        waitForPeersTimeoutMs: 20_000,
+        // env: 'production',
       }
       setClient(await Client.create(wallet, opts))
     }

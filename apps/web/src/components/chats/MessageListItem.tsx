@@ -29,7 +29,7 @@ export const MessageListItem = ({ isSender, message }: MessageListItemProps) => 
               Me
             </Typography>
           ) : (
-            <Address address={address || ''} variant={'body1'} />
+            <Address address={message.senderAddress || ''} variant={'body1'} />
           )}
           <Chip label={formatTime(message.sent)} variant="outlined" size="small" />
         </Stack>

@@ -152,7 +152,6 @@ export const WalletProvider = ({ children }: WalletProviderProps): JSX.Element =
   const connect = useCallback(async () => {
     if (!web3Modal) throw new Error('web3Modal not initialized')
     try {
-      
       const instance = await web3Modal.connect()
       instance.request({
         method: 'wallet_switchEthereumChain',
