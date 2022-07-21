@@ -63,13 +63,13 @@ export const UserCard = ({ user, isDetail = false }: { user: IUser; isDetail?: b
       spacing={1}
       pt={0.5}
       pb={1}
-      // onClick={() => setShowConnection(true)}
-      // sx={{
-      //   cursor: 'pointer',
-      //   ':hover': {
-      //     filter: 'opacity(0.8)',
-      //   },
-      // }}
+      onClick={() => setShowConnection(true)}
+      sx={{
+        cursor: 'pointer',
+        ':hover': {
+          filter: 'opacity(0.8)',
+        },
+      }}
     >
       <Stack direction={'row'} alignItems={'center'}>
         <Typography variant="body1" fontWeight={600}>
