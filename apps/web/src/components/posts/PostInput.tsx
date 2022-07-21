@@ -15,9 +15,10 @@ const EndAdornment = styled(InputAdornment)<InputAdornmentProps>({
 type PostInputProps = {
   onSend: (msg: string) => Promise<void>
   authedAddress: string
+  line?: number
 }
 
-const PostInput = ({ onSend, authedAddress }: PostInputProps): JSX.Element => {
+const PostInput = ({ onSend, authedAddress, line = 4 }: PostInputProps): JSX.Element => {
   const [message, setMessage] = useState('')
   const [image, setImage] = useState(null)
   const router = useRouter()
@@ -60,7 +61,7 @@ const PostInput = ({ onSend, authedAddress }: PostInputProps): JSX.Element => {
         type="text"
         label={`What's new${name ? `, ${name}` : ''}?`}
         placeholder="Type your thoughts..."
-        minRows={4}
+        minRows={line}
         maxRows={8}
         name="message"
         value={message}

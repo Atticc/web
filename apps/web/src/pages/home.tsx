@@ -11,6 +11,7 @@ import { usePopular } from '../graphql/cyberconnect/queries/getPopular'
 import { isValidAddr } from '../utils/helper'
 import useWallet from '@utils/useWallet'
 import { usePosts } from '@req/atticc/posts'
+import PostInput from '@c/posts/PostInput'
 
 const tabs = [
   { label: 'Explore', value: 0 },
@@ -51,23 +52,31 @@ const Home: NextPage = () => {
 
   return (
     <LayoutWithoutFooter>
-      <Grid container gap={3} direction={'row'} sx={{ paddingX: 10 }} marginTop={2}>
-        <Grid item xs={9}>
+      <Grid container direction={'row'} sx={{ paddingX: 10 }} marginTop={2} justifyContent={'space-between'}>
+        <Grid item md={8}>
           <Grid container direction={'column'}>
-            <Tabs value={tab} onChange={handleSetTab} aria-label="Post Tabs" variant="fullWidth">
+            {/* <Tabs value={tab} onChange={handleSetTab} aria-label="Post Tabs" variant="fullWidth">
               {tabs.map((t) => (
                 <Tab label={t.label} value={t.value} key={t.label} />
               ))}
-            </Tabs>
+            </Tabs> */}
+            <PostInput
+              authedAddress={address as string}
+              onSend={async () => {
+                await refetchPosts()
+              }}
+              line={2}
+            />
             {posts?.map((p: IPost) => (
               <Grid item width={'100%'} py={2} key={p.id}>
                 <PostListItem post={p} />
               </Grid>
             ))}
+            <Grid item height={50} />
           </Grid>
         </Grid>
-        <Grid item xs>
-          <Grid container direction={'column'} gap={3}>
+        <Grid item md={4} pl={2}>
+          <Grid container direction={'column'}>
             <ContributorsList title={'Recommendations'} data={users} showReason />
           </Grid>
         </Grid>

@@ -6,17 +6,20 @@ export const ContributorsList = ({
   title,
   data,
   showReason = false,
-  hasBorder = true,
 }: {
   title?: string
   data: Array<IUser>
   showReason?: boolean
-  hasBorder?: boolean
 }) => {
-  const colorTheme = useTheme().palette
+  const color = useTheme().palette
 
   return (
-    <Grid container direction={'column'} border={hasBorder ? 1 : 0} sx={{ borderRadius: 2, paddingX: 1, paddingY: 1 }}>
+    <Grid
+      container
+      direction={'column'}
+      sx={{ borderRadius: 4, paddingX: 3.5, paddingY: 4 }}
+      bgcolor={color.white.main}
+    >
       <Grid item>
         <Typography marginBottom={1} variant="h5">
           {title}
