@@ -259,7 +259,6 @@ export const getDesignTokens = (mode: PaletteMode) => {
       },
       h5: {
         fontSize: 16,
-        fontFamily: 'Poppins',
         fontWeight: 600,
         lineHeight: '30px',
         [theme.breakpoints.up('md')]: {

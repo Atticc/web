@@ -123,7 +123,7 @@ const CommentInput = ({ onSend, postId }: CommentInputProps): JSX.Element => {
           }}
         />
         <Stack direction={'row'} py={2}>
-          {image ? <Avatar src={image} sx={{ width: 120, height: 120 }} variant={'rounded'} /> : null}
+          {image ? <Avatar src={image} sx={{ width: 140, height: 140 }} variant={'rounded'} /> : null}
           {imageLoading ? <CircularProgress size={90} /> : null}
         </Stack>
       </Stack>

@@ -72,18 +72,14 @@ export const UserCard = ({ user, isDetail = false }: { user: IUser; isDetail?: b
       }}
     >
       <Stack direction={'row'} alignItems={'center'}>
-        <Typography variant="bodyBold1">
-          {user?.followerCount || 0}
-        </Typography>
+        <Typography variant="bodyBold1">{user?.followerCount || 0}</Typography>
         <Typography pl={1} variant="bodyBold1" color={color.lightGray.main}>
           Follower
         </Typography>
       </Stack>
       <Divider orientation={'vertical'} variant={'middle'} flexItem />
       <Stack direction={'row'} alignItems={'center'}>
-        <Typography variant="bodyBold1">
-          {user?.followingCount || 0}
-        </Typography>
+        <Typography variant="bodyBold1">{user?.followingCount || 0}</Typography>
         <Typography pl={1} variant="bodyBold1" color={color.lightGray.main}>
           Following
         </Typography>

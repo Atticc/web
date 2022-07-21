@@ -117,7 +117,7 @@ const PostInput = ({ onSend, authedAddress, line = 4 }: PostInputProps): JSX.Ele
         }}
       />
       <Stack direction={'row'} py={2}>
-        {image ? <Avatar src={image} sx={{ width: '100%', height: 240 }} variant={'rounded'} /> : null}
+        {image ? <Avatar src={image} sx={{ width: '100%', height: 480 }} variant={'rounded'} /> : null}
         {imageLoading ? <CircularProgress size={90} /> : null}
       </Stack>
 

@@ -72,7 +72,7 @@ export const PostListItem = ({ post }: { post: IPost | undefined }) => {
               {item.description}
             </Typography>
             {item?.imageUrl ? (
-              <Avatar src={item?.imageUrl} variant={'rounded'} sx={{ width: '100%', height: 240, pt: 2 }} />
+              <Avatar src={item?.imageUrl} variant={'rounded'} sx={{ width: '100%', height: 480, pt: 2 }} />
             ) : null}
             <Stack direction={'row'} alignItems="center" pt={2}>
               <Button sx={{ pr: 2 }} disabled>

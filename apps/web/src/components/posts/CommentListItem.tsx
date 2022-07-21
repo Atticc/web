@@ -56,7 +56,7 @@ export const CommentListItem = ({ comment }: { comment: IComment | undefined }) 
               {comment.message}
             </Typography>
             {comment?.imageUrl ? (
-              <Avatar src={comment?.imageUrl} variant={'rounded'} sx={{ width: 120, height: 120, py: 2 }} />
+              <Avatar src={comment?.imageUrl} variant={'rounded'} sx={{ width: 140, height: 140, py: 2 }} />
             ) : null}
             <Stack direction={'row'} alignItems="center" pt={1}>
               {/* <Button sx={{ pr: 2 }}>
