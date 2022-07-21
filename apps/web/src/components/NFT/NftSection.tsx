@@ -1,5 +1,5 @@
 import { Nft, NftFilters } from '@alch/alchemy-web3'
-import { Button, Divider, Grid, Stack, Typography } from '@mui/material'
+import { Button, CircularProgress, Divider, Grid, Stack, Typography } from '@mui/material'
 import { useEffect, useMemo, useState } from 'react'
 import { useQuery } from 'react-query'
 import { IOatNft, IPoapNft } from '@app/types'
@@ -57,28 +57,38 @@ const TypeSection = ({
 
 export const NftSection = ({ address }: { address: string }) => {
   const { alchemy } = useAlchemy()
+  const [loading, setLoading] = useState(false)
   const [nfts, setNfts] = useState<{ items: Array<Nft>; totalCount?: number }>({ items: [], totalCount: 0 })
-  const { data: oats = {}, refetch: fetchOATs } = useOATs({ address })
-  const { data: { data: poaps = [] } = {} } = useQuery(['poap', address], () => POAP.getNFTs({ address }))
+  const { data: oats = {}, refetch: fetchOATs, isLoading: oatLoading, isFetching: oatFetching } = useOATs({ address })
+  const {
+    data: { data: poaps = [] } = {},
+    isLoading: poapLoading,
+    isFetching: poapFetching,
+  } = useQuery(['poap', address], () => POAP.getNFTs({ address }))
 
   useEffect(() => {
     async function fetchNFTs() {
       try {
+        setLoading(true)
         const { ownedNfts, totalCount } = await alchemy.getNfts({ owner: address, filters: [NftFilters.SPAM] })
         setNfts({ items: ownedNfts.filter((n) => !n?.error), totalCount: totalCount })
-      } catch (_) {}
+      } catch (_) {
+      } finally {
+        setLoading(false)
+      }
       try {
         await fetchOATs()
       } catch (_) {}
     }
     if (isValidAddr(address)) {
+      fetchNFTs()
       NODE_ENV !== 'development' && fetchNFTs()
     } else {
       setNfts({ items: [], totalCount: 0 })
     }
   }, [address, fetchOATs])
 
-  return !nfts?.items?.length && !poaps.length && !oats?.list?.length ? null : (
+  return (
     <Grid container direction={'column'} width={1}>
       {nfts?.items?.length > 0 ? (
         <TypeSection label={'NFTS'} height={740}>
@@ -94,12 +104,25 @@ export const NftSection = ({ address }: { address: string }) => {
           ))}
         </TypeSection>
       ) : null}
+      {loading || poapLoading || poapFetching || oatLoading || oatFetching ? (
+        <CircularProgress size={100} color="primary" />
+      ) : null}
       {oats?.list?.length > 0 ? (
         <TypeSection label={'OATS'}>
           {oats?.list?.map((o: IOatNft) => (
             <OatItem oat={o} key={o.id} />
           ))}
         </TypeSection>
+      ) : null}
+      {!oats?.list?.length &&
+      !poaps?.length &&
+      !nfts?.items?.length &&
+      !oatLoading &&
+      !poapLoading &&
+      !loading &&
+      !oatFetching &&
+      !poapFetching ? (
+        <Typography variant={'h2'}>No Collection Found.</Typography>
       ) : null}
     </Grid>
   )
