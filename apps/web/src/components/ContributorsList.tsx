@@ -1,4 +1,4 @@
-import { Divider, Grid, Typography, useTheme } from '@mui/material'
+import { CircularProgress, Divider, Grid, Stack, Typography, useTheme } from '@mui/material'
 import { IUser } from '../app/constants'
 import { ContributorListItem } from './ContributorListItem'
 
@@ -26,6 +26,9 @@ export const ContributorsList = ({
         </Typography>
         {title ? <Divider /> : null}
       </Grid>
+      {!data.length ? <Stack pt={5} direction={'column'} alignItems={'center'}>
+        <CircularProgress />
+      </Stack>:null}
       {data?.map((u) => (
         <ContributorListItem user={u} key={u.address} showReason={showReason} />
       ))}

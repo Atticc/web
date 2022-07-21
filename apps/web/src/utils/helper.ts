@@ -46,7 +46,7 @@ export const formatDate = (d: Date | undefined): string => {
 export const formatTime = (d: Date | undefined): string =>
   d
     ? d.toLocaleTimeString(undefined, {
-        hour12: true,
+        hour12: false,
         hour: 'numeric',
         minute: '2-digit',
       })

@@ -6,7 +6,7 @@ import { IPost, IUser } from '@app/constants'
 import { PostListItem } from '@c/posts/PostListItem'
 import { UserCard } from '@c/users/UserCard'
 import { getIdentity, useIdentity } from '@req/cyberconnect/queries/getIdentity'
-import { formatAddress, isValidAddr } from '@utils/helper'
+import { formatAddress, isValidAddr, toChecksumAddress } from '@utils/helper'
 import Head from 'next/head'
 import dynamic from 'next/dynamic'
 import { APP_NAME } from '@/app/config'
@@ -42,11 +42,11 @@ const UserDetailPage: NextPage = () => {
     refetch: refetchPosts,
     isLoading,
     isFetching,
-  } = usePosts({ addresses: [address as string] })
+  } = usePosts({ addresses: [toChecksumAddress(address as string)] })
   const userData: IUser = { address: String(address) }
   const [tab, setTab] = useState(1)
   const colorTheme = useTheme().palette
-  const { data: user, refetch } = useIdentity({ address: String(address), data: userData })
+  const { data: user, refetch } = useIdentity({ address: toChecksumAddress(address as string), data: userData })
   const title = `${userData?.domain || formatAddress(String(address))} - ${APP_NAME} Profile`
 
   useEffect(() => {

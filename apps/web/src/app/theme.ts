@@ -11,7 +11,7 @@ export const getDesignTokens = (mode: PaletteMode) => {
       primary: { main: '#F26E21' },
       secondary: { main: '#FFC39F' },
       bgColor: { main: '#DEDEDE' },
-      modalbgcolor: { main: '#FFC39F' },
+      modalbgcolor: { main: '#DEDEDEDE' },
       radioColor: { main: '#FFC39F' },
       radioCheckedColor: { main: '#F26E21' },
       error: { main: red.A400 },
