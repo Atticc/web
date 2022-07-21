@@ -1,5 +1,5 @@
 import ProfileImage from '@c/users/Avatar'
-import { Button, Divider, Grid, Stack, Typography, useTheme } from '@mui/material'
+import { Button, Divider, Grid, Stack, Tooltip, Typography, useTheme } from '@mui/material'
 import { Box } from '@mui/system'
 import { formatAddress, formatDate, formatTime } from '@utils/helper'
 import { IPost } from '../../app/constants'
@@ -15,7 +15,7 @@ import Link from 'next/link'
 
 export const PostListItem = ({ post }: { post: IPost | undefined }) => {
   const [item, setItem] = useState(post)
-  const colorTheme = useTheme().palette
+  const color = useTheme().palette
   const [commentSize, setCommentSize] = useState(1)
   const { data: postData = [], refetch: refetchPost, isLoading } = usePosts({ postId: post?.id })
 
@@ -30,7 +30,7 @@ export const PostListItem = ({ post }: { post: IPost | undefined }) => {
   }
 
   return (
-    <Grid container direction={'column'} borderRadius={4} px={4} py={5} bgcolor={colorTheme.white.main}>
+    <Grid container direction={'column'} borderRadius={4} px={4} py={5} bgcolor={color.white.main}>
       <Grid item>
         <Stack direction={'row'}>
           <Stack direction={'column'}>
@@ -76,21 +76,31 @@ export const PostListItem = ({ post }: { post: IPost | undefined }) => {
               {item.description}
             </Typography>
             <Stack direction={'row'} alignItems="center" pt={2}>
-              <Button sx={{ pr: 2 }}>
+              <Button sx={{ pr: 2 }} disabled>
                 <ChatBubbleOutlineIcon fontSize="small" />
-                <Typography pl={1}>{item.commentsCount}</Typography>
+                <Typography pl={1} color={color.black.main} fontWeight={600}>
+                  {item.comments?.length || item.commentsCount}
+                </Typography>
               </Button>
               <Button sx={{ px: 2 }}>
                 <FavoriteBorderIcon fontSize="small" />
-                <Typography pl={1}>{item.likesCount}</Typography>
+                <Typography pl={1} color={color.black.main} fontWeight={600}>
+                  {item.likesCount}
+                </Typography>
               </Button>
-              <Button sx={{ px: 2 }}>
-                <ShareIcon fontSize="small" />
-                <Typography pl={1}>{item.sharesCount}</Typography>
-              </Button>
-              <Button sx={{ px: 2 }}>
-                <MoreHorizIcon fontSize="small" />
-              </Button>
+              <Tooltip title={'Coming soon'}>
+                <Button sx={{ px: 2 }} disabled>
+                  <ShareIcon fontSize="small" />
+                  <Typography pl={1} color={color.black.main} fontWeight={600}>
+                    {item.sharesCount}
+                  </Typography>
+                </Button>
+              </Tooltip>
+              <Tooltip title={'Coming soon'}>
+                <Button sx={{ px: 2 }}>
+                  <MoreHorizIcon fontSize="small" />
+                </Button>
+              </Tooltip>
             </Stack>
             <Divider flexItem sx={{ py: 1 }} />
             <CommentInput

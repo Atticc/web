@@ -1,5 +1,5 @@
 import { ConnectionType } from '@cyberlab/cyberconnect'
-import { Button, Divider, Grid, Stack, Typography, useTheme } from '@mui/material'
+import { Button, Divider, Grid, Stack, Tooltip, Typography, useTheme } from '@mui/material'
 import { Box } from '@mui/system'
 import useWallet from '@utils/useWallet'
 import Link from 'next/link'
@@ -192,14 +192,18 @@ export const UserCard = ({ user, isDetail = false }: { user: IUser; isDetail?: b
                     </Button>
                   ) : null}
                   {isSameAddr(address as string, user.address) ? (
-                    <Button variant={'outline'} color={'secondary'} onClick={onFollow}>
-                      {'Edit Profile'}
-                    </Button>
+                    <Tooltip title={'Coming soon'}>
+                      <Button variant={'outline'} color={'secondary'} onClick={onFollow} disabled>
+                        {'Edit Profile'}
+                      </Button>
+                    </Tooltip>
                   ) : null}
                   {address && !isSameAddr(address, user.address) ? (
-                    <Button variant="fill" onClick={onFollow}>
-                      {'Message'}
-                    </Button>
+                    <Link passHref href={`/chats/${user?.address}`}>
+                      <Button variant="fill" onClick={onFollow} component={'a'}>
+                        {'Message'}
+                      </Button>
+                    </Link>
                   ) : null}
                 </Stack>
               </Stack>

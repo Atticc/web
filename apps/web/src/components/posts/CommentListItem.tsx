@@ -1,5 +1,5 @@
 import ProfileImage from '@c/users/Avatar'
-import { Box, Button, Grid, Stack, Typography, useTheme } from '@mui/material'
+import { Box, Button, Grid, Stack, Tooltip, Typography, useTheme } from '@mui/material'
 import { formatAddress, formatDate, formatTime } from '@utils/helper'
 import { IComment } from '../../app/constants'
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline'
@@ -8,7 +8,7 @@ import MoreHorizIcon from '@mui/icons-material/MoreHoriz'
 import Link from 'next/link'
 
 export const CommentListItem = ({ comment }: { comment: IComment | undefined }) => {
-  const colorTheme = useTheme().palette
+  const color = useTheme().palette
 
   if (!comment) {
     return null
@@ -61,17 +61,21 @@ export const CommentListItem = ({ comment }: { comment: IComment | undefined }) 
               {comment.message}
             </Typography>
             <Stack direction={'row'} alignItems="center" pt={1}>
-              <Button sx={{ pr: 2 }}>
+              {/* <Button sx={{ pr: 2 }}>
                 <ChatBubbleOutlineIcon fontSize="small" />
-                <Typography pl={1}>{comment.repliesCount}</Typography>
-              </Button>
-              <Button sx={{ px: 2 }}>
+                <Typography pl={1} color={color.black.main} fontWeight={600}>{comment.repliesCount}</Typography>
+              </Button> */}
+              <Button sx={{ pr: 2 }}>
                 <FavoriteBorderIcon fontSize="small" />
-                <Typography pl={1}>{comment.likesCount}</Typography>
+                <Typography pl={1} color={color.black.main} fontWeight={600}>
+                  {comment.likesCount}
+                </Typography>
               </Button>
-              <Button sx={{ px: 2 }}>
-                <MoreHorizIcon fontSize="small" />
-              </Button>
+              <Tooltip title={'Coming soon'}>
+                <Button sx={{ pr: 2 }}>
+                  <MoreHorizIcon fontSize="small" />
+                </Button>
+              </Tooltip>
             </Stack>
           </Stack>
         </Stack>
