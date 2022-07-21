@@ -6,7 +6,7 @@ import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { IUser } from '../../app/constants'
 import { useFollowStatus } from '../../graphql/cyberconnect/queries/getFollowStatus'
-import { formatAddress, isSameAddr } from '../../utils/helper'
+import { formatAddress, isSameAddr, toChecksumAddress } from '../../utils/helper'
 import EtherscanIcon from '../icons/EtherscanIcon'
 import OpenseaIcon from '../icons/OpenseaIcon'
 import ContentCopyIcon from '@mui/icons-material/ContentCopy'
@@ -100,7 +100,7 @@ export const UserCard = ({ user, isDetail = false }: { user: IUser; isDetail?: b
             variant={'icon'}
             color={'secondary'}
             component={'a'}
-            href={`https:twitter.com/${user?.twitter?.handle}`}
+            href={`https://twitter.com/${user?.twitter?.handle}`}
             target="_blank"
             rel="noreferrer"
           >
@@ -152,13 +152,11 @@ export const UserCard = ({ user, isDetail = false }: { user: IUser; isDetail?: b
         <Grid item>
           <Grid container direction={'row'}>
             <Grid item>
-              <Box sx={{ borderColor: 'black', borderWidth: 4, borderStyle: 'solid', borderRadius: '50%' }}>
-                <ProfileImage
-                  sx={{ height: 140, width: 140 }}
-                  src={user?.avatar || user?.twitter?.avatar || undefined}
-                  address={user?.address}
-                />
-              </Box>
+              <ProfileImage
+                sx={{ height: 140, width: 140 }}
+                src={user?.avatar || user?.twitter?.avatar || undefined}
+                address={user?.address}
+              />
             </Grid>
             <Grid item>
               <UserConnectionModal
@@ -199,8 +197,8 @@ export const UserCard = ({ user, isDetail = false }: { user: IUser; isDetail?: b
                     </Tooltip>
                   ) : null}
                   {address && !isSameAddr(address, user.address) ? (
-                    <Link passHref href={`/chats/${user?.address}`}>
-                      <Button variant="fill" onClick={onFollow} component={'a'}>
+                    <Link passHref href={`/chats/${toChecksumAddress(user?.address)}`}>
+                      <Button variant="fill" component={'a'}>
                         {'Message'}
                       </Button>
                     </Link>
