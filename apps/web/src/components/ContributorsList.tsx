@@ -26,9 +26,11 @@ export const ContributorsList = ({
         </Typography>
         {title ? <Divider /> : null}
       </Grid>
-      {!data.length ? <Stack pt={5} direction={'column'} alignItems={'center'}>
-        <CircularProgress />
-      </Stack>:null}
+      {!data.length ? (
+        <Stack pt={5} direction={'column'} alignItems={'center'}>
+          <CircularProgress />
+        </Stack>
+      ) : null}
       {data?.map((u) => (
         <ContributorListItem user={u} key={u.address} showReason={showReason} />
       ))}

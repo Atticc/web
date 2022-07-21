@@ -1,10 +1,22 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { ChangeEvent, useCallback, useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
-import { Box, Button, InputAdornment, InputAdornmentProps, TextField, useTheme } from '@mui/material'
+import {
+  Avatar,
+  Box,
+  Button,
+  CircularProgress,
+  InputAdornment,
+  InputAdornmentProps,
+  Stack,
+  TextField,
+  useTheme,
+} from '@mui/material'
 import useEns from '@utils/useEns'
 import styled from '@emotion/styled'
 import FilterIcon from '@mui/icons-material/Filter'
 import { createPost } from '@req/atticc/posts'
+import useWeb3Storage from '@utils/useWeb3Storage'
+import { renameFile } from '@utils/helper'
 
 const EndAdornment = styled(InputAdornment)<InputAdornmentProps>({
   alignSelf: 'flex-end',
@@ -20,10 +32,12 @@ type PostInputProps = {
 
 const PostInput = ({ onSend, authedAddress, line = 4 }: PostInputProps): JSX.Element => {
   const [message, setMessage] = useState('')
+  const [imageLoading, setImageLoading] = useState(false)
   const [image, setImage] = useState(null)
   const router = useRouter()
   const color = useTheme().palette
   const { name = '' } = useEns(authedAddress)
+  const { upload } = useWeb3Storage()
 
   useEffect(() => setMessage(''), [router.query.recipientWalletAddr])
 
@@ -31,7 +45,24 @@ const PostInput = ({ onSend, authedAddress, line = 4 }: PostInputProps): JSX.Ele
     setMessage(event.target.value)
   }
 
-  const handleUploadImage = () => {}
+  const handleUploadImage = async (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (file) {
+      try {
+        // setImage(null)
+        setImageLoading(true)
+        const { imageGatewayURL } = await upload({
+          file: renameFile(file, String(+new Date())),
+          address: authedAddress,
+        })
+
+        setImage(imageGatewayURL)
+      } catch (_) {
+      } finally {
+        setImageLoading(false)
+      }
+    }
+  }
 
   const onSubmit = useCallback(
     async (e: React.FormEvent<HTMLFormElement>) => {
@@ -44,7 +75,7 @@ const PostInput = ({ onSend, authedAddress, line = 4 }: PostInputProps): JSX.Ele
       setMessage('')
       setImage(null)
     },
-    [onSend, message]
+    [onSend, message, image]
   )
   return (
     <Box
@@ -71,13 +102,25 @@ const PostInput = ({ onSend, authedAddress, line = 4 }: PostInputProps): JSX.Ele
         InputProps={{
           endAdornment: (
             <EndAdornment position="end">
-              <Button onClick={handleUploadImage} variant={'icon'} size={'small'}>
+              <input
+                style={{ display: 'none' }}
+                accept="image/*"
+                id="post-image-upload"
+                type="file"
+                onChange={handleUploadImage}
+              />
+              <Button variant={'icon'} size={'small'} component={'label'} htmlFor="post-image-upload">
                 <FilterIcon fontSize={'small'} />
               </Button>
             </EndAdornment>
           ),
         }}
       />
+      <Stack direction={'row'} py={2}>
+        {image ? <Avatar src={image} sx={{ width: '100%', height: 240 }} variant={'rounded'} /> : null}
+        {imageLoading ? <CircularProgress size={90} /> : null}
+      </Stack>
+
       <Button fullWidth variant={'fill'} sx={{ mt: 2 }} type={'submit'} disabled={!message}>
         Post
       </Button>

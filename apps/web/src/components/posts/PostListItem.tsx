@@ -1,5 +1,5 @@
 import ProfileImage from '@c/users/Avatar'
-import { Button, Divider, Grid, Stack, Tooltip, Typography, useTheme } from '@mui/material'
+import { Avatar, Button, Divider, Grid, Stack, Tooltip, Typography, useTheme } from '@mui/material'
 import { Box } from '@mui/system'
 import { formatAddress, formatDate, formatTime } from '@utils/helper'
 import { IPost } from '../../app/constants'
@@ -71,6 +71,9 @@ export const PostListItem = ({ post }: { post: IPost | undefined }) => {
             >
               {item.description}
             </Typography>
+            {item?.imageUrl ? (
+              <Avatar src={item?.imageUrl} variant={'rounded'} sx={{ width: '100%', height: 240, pt: 2 }} />
+            ) : null}
             <Stack direction={'row'} alignItems="center" pt={2}>
               <Button sx={{ pr: 2 }} disabled>
                 <ChatBubbleOutlineIcon fontSize="small" />

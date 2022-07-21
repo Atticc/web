@@ -1,13 +1,23 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { ChangeEvent, useCallback, useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
-import { Button, InputAdornment, InputAdornmentProps, Stack, TextField, useTheme } from '@mui/material'
-import useEns from '@utils/useEns'
+import {
+  Avatar,
+  Button,
+  CircularProgress,
+  InputAdornment,
+  InputAdornmentProps,
+  Stack,
+  TextField,
+  useTheme,
+} from '@mui/material'
 import styled from '@emotion/styled'
 import FilterIcon from '@mui/icons-material/Filter'
 import useWallet from '@utils/useWallet'
 import ProfileImage from '@c/users/Avatar'
 import SendIcon from '@mui/icons-material/Send'
 import { createComment } from '@req/atticc/comments'
+import { renameFile } from '@utils/helper'
+import useWeb3Storage from '@utils/useWeb3Storage'
 
 const EndAdornment = styled(InputAdornment)<InputAdornmentProps>({
   flexDirection: 'row',
@@ -20,9 +30,11 @@ type CommentInputProps = {
 
 const CommentInput = ({ onSend, postId }: CommentInputProps): JSX.Element => {
   const [message, setMessage] = useState('')
+  const [imageLoading, setImageLoading] = useState(false)
   const [image, setImage] = useState(null)
   const router = useRouter()
   const { address } = useWallet()
+  const { upload } = useWeb3Storage()
   const color = useTheme().palette
 
   useEffect(() => setMessage(''), [router.query.recipientWalletAddr])
@@ -31,7 +43,23 @@ const CommentInput = ({ onSend, postId }: CommentInputProps): JSX.Element => {
     setMessage(event.target.value)
   }
 
-  const handleUploadImage = () => {}
+  const handleUploadImage = async (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (file) {
+      try {
+        // setImage(null)
+        setImageLoading(true)
+        const { imageGatewayURL } = await upload({
+          file: renameFile(file, String(+new Date())),
+          address: String(address),
+        })
+        setImage(imageGatewayURL)
+      } catch (_) {
+      } finally {
+        setImageLoading(false)
+      }
+    }
+  }
 
   const onSubmit = useCallback(
     async (e: React.FormEvent<HTMLFormElement>) => {
@@ -39,11 +67,14 @@ const CommentInput = ({ onSend, postId }: CommentInputProps): JSX.Element => {
       if (!message) {
         return
       }
-      await createComment({ address: address as string, message, imageUrl: image, postId })
+      const payload = { address: address as string, message, imageUrl: image, postId }
+      console.log(payload)
+      await createComment(payload)
       await onSend(message)
       setMessage('')
+      setImage(null)
     },
-    [onSend, message]
+    [onSend, message, image, postId]
   )
   if (!address) {
     return <></>
@@ -58,31 +89,44 @@ const CommentInput = ({ onSend, postId }: CommentInputProps): JSX.Element => {
       py={2}
       borderRadius={4}
       flexDirection={'row'}
-      alignItems={'center'}
+      alignItems={'flex-start'}
     >
       <ProfileImage address={address} sx={{ height: 70, width: 70 }} />
-      <TextField
-        type="text"
-        label={`Comments`}
-        placeholder="Write a comment..."
-        name="message"
-        value={message}
-        onChange={handleChange}
-        fullWidth
-        sx={{ pl: 1, borderRadius: '20px' }}
-        InputProps={{
-          endAdornment: (
-            <EndAdornment position="end">
-              <Button onClick={handleUploadImage} variant={'icon'} size={'small'}>
-                <FilterIcon fontSize={'small'} />
-              </Button>
-              <Button type={'submit'} disabled={!message} variant={'icon'} size={'small'} sx={{ pl: 1 }}>
-                <SendIcon fontSize={'small'} />
-              </Button>
-            </EndAdornment>
-          ),
-        }}
-      />
+      <Stack direction={'column'} width={'100% '}>
+        <TextField
+          type="text"
+          label={`Comments`}
+          placeholder="Write a comment..."
+          name="message"
+          value={message}
+          onChange={handleChange}
+          fullWidth
+          sx={{ pl: 1, borderRadius: '20px' }}
+          InputProps={{
+            endAdornment: (
+              <EndAdornment position="end">
+                <input
+                  style={{ display: 'none' }}
+                  accept="image/*"
+                  id={`upload-comment-img-${postId}`}
+                  type="file"
+                  onChange={handleUploadImage}
+                />
+                <Button variant={'icon'} size={'small'} component={'label'} htmlFor={`upload-comment-img-${postId}`}>
+                  <FilterIcon fontSize={'small'} />
+                </Button>
+                <Button type={'submit'} disabled={!message} variant={'icon'} size={'small'} sx={{ pl: 1 }}>
+                  <SendIcon fontSize={'small'} />
+                </Button>
+              </EndAdornment>
+            ),
+          }}
+        />
+        <Stack direction={'row'} py={2}>
+          {image ? <Avatar src={image} sx={{ width: 120, height: 120 }} variant={'rounded'} /> : null}
+          {imageLoading ? <CircularProgress size={90} /> : null}
+        </Stack>
+      </Stack>
     </Stack>
   )
 }

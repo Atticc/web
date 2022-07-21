@@ -32,7 +32,7 @@ export interface IPost {
   id: string
   title?: string
   description: string
-  image_url?: string
+  imageUrl?: string
   createdAt: string
   updatedAt: string
   authorAddress: string
@@ -52,7 +52,7 @@ export interface IPost {
 export interface IComment {
   id: string
   message: string
-  image_url?: string
+  imageUrl?: string
   createdAt: string
   updatedAt: string
   authorAddress: string

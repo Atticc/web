@@ -81,3 +81,10 @@ export const toChecksumAddress = (address: string, chainId: string | null = null
     return address
   }
 }
+
+export function renameFile(originalFile: File, newName: string) {
+  return new File([originalFile], newName, {
+    type: originalFile.type,
+    lastModified: originalFile.lastModified,
+  })
+}
