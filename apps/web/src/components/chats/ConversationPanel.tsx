@@ -56,7 +56,11 @@ export const ConversationPanel = ({ onConnect }: ConversationPanelProps) => {
 
   const renderFriends = () => {
     if (isLoading) {
-      return <CircularProgress />
+      return (
+        <Stack direction={'column'} alignItems={'center'} width={'100%'} py={3}>
+          <CircularProgress />
+        </Stack>
+      )
     }
 
     return friends?.length > 0 ? (
@@ -72,7 +76,11 @@ export const ConversationPanel = ({ onConnect }: ConversationPanelProps) => {
     }
 
     if (loadingConversations) {
-      return <CircularProgress />
+      return (
+        <Stack direction={'column'} alignItems={'center'} width={'100%'} py={3}>
+          <CircularProgress />
+        </Stack>
+      )
     }
 
     return conversations?.length > 0 ? (

@@ -1,10 +1,8 @@
-import { Avatar, Chip, Grid, Stack, Typography, useTheme } from '@mui/material'
-import Link from 'next/link'
-import { formatAddress, formatTime } from '@utils/helper'
+import { Chip, Stack, Typography, useTheme } from '@mui/material'
+import { formatTime } from '@utils/helper'
 import { Message } from '@xmtp/xmtp-js'
 import ProfileImage from '@c/users/Avatar'
 import Address from '@c/users/Address'
-import useWallet from '@utils/useWallet'
 
 type MessageListItemProps = {
   message: Message
