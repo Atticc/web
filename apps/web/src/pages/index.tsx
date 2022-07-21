@@ -116,7 +116,7 @@ const TestPage: NextPage = () => {
               </Typography>
               <Typography variant="body1" pt={2} color={color.white.main}>
                 Welcome to a crypto native social media, built by crypto nerds, for crypto lovers, with{' '}
-                <span style={{ color: color.error.main, fontWeight: 600 }}>❤️</span>
+                <span style={{ color: color.white.main, fontWeight: 600 }}>❤️</span>
                 <br />
                 Find your community, chill with frens, experience web3. LFG!
               </Typography>
