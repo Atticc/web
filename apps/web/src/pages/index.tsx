@@ -122,7 +122,7 @@ const TestPage: NextPage = () => {
               </Typography>
             </Grid>
             <Grid item pt={2}>
-              <Button variant="outline" color="primary" href={'/discover'}>
+              <Button variant="outline" color="primary" href={'/home'}>
                 See More
               </Button>
             </Grid>
