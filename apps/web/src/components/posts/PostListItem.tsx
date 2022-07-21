@@ -35,21 +35,13 @@ export const PostListItem = ({ post }: { post: IPost | undefined }) => {
         <Stack direction={'row'}>
           <Stack direction={'column'}>
             <Link passHref href={`/users/${item?.authorAddress}`}>
-              <Box
-                sx={{
-                  cursor: 'pointer',
-                  borderColor: 'black',
-                  borderWidth: 4,
-                  borderStyle: 'solid',
-                  borderRadius: '50%',
-                }}
-              >
+              <a>
                 <ProfileImage
                   sx={{ height: 90, width: 90 }}
                   address={item?.authorAddress || ''}
                   src={item?.author?.avatar || undefined}
                 />
-              </Box>
+              </a>
             </Link>
             <Divider orientation={'vertical'} flexItem />
           </Stack>

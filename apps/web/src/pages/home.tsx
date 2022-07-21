@@ -68,7 +68,7 @@ const Home: NextPage = () => {
         </Grid>
         <Grid item xs>
           <Grid container direction={'column'} gap={3}>
-            <ContributorsList title={'Popular / Recommends'} data={users} showReason />
+            <ContributorsList title={'Recommendations'} data={users} showReason />
           </Grid>
         </Grid>
       </Grid>

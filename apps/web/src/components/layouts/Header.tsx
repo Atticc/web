@@ -26,7 +26,7 @@ function Header({ showSearch = true }: { showSearch?: boolean }) {
       return null
     }
 
-    if (!showSearch && m.title === 'Chats') {
+    if (!address && m.title === 'Chats') {
       return null
     }
 

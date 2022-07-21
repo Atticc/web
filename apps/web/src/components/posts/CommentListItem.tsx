@@ -20,22 +20,13 @@ export const CommentListItem = ({ comment }: { comment: IComment | undefined }) 
         <Stack direction={'row'}>
           <Stack direction={'column'}>
             <Link passHref href={`/users/${comment?.authorAddress}`}>
-              <Box
-                component={'a'}
-                sx={{
-                  cursor: 'pointer',
-                  borderColor: 'black',
-                  borderWidth: 4,
-                  borderStyle: 'solid',
-                  borderRadius: '50%',
-                }}
-              >
+              <a>
                 <ProfileImage
                   sx={{ height: 70, width: 70 }}
                   address={comment?.authorAddress || ''}
                   src={comment?.author?.avatar || undefined}
                 />
-              </Box>
+              </a>
             </Link>
           </Stack>
           <Stack direction={'column'} pl={2} flexGrow={1}>
