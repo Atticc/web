@@ -1,7 +1,7 @@
 import type { GetServerSideProps, NextPage } from 'next'
 import LayoutWithoutFooter from '@c/layouts/LayoutWithoutFooter'
 import { useEffect, useState } from 'react'
-import { Grid, Tab, Tabs, useTheme } from '@mui/material'
+import { CircularProgress, Grid, Stack, Tab, Tabs, Typography, useTheme } from '@mui/material'
 import { IPost, IUser } from '@app/constants'
 import { PostListItem } from '@c/posts/PostListItem'
 import { UserCard } from '@c/users/UserCard'
@@ -37,7 +37,12 @@ const UserDetailPage: NextPage = () => {
   const router = useRouter()
   const { address } = router.query
   const { address: authedAddress } = useWallet()
-  const { data: posts = [], refetch: refetchPosts, isLoading } = usePosts({ addresses: [address as string] })
+  const {
+    data: posts = [],
+    refetch: refetchPosts,
+    isLoading,
+    isFetching,
+  } = usePosts({ addresses: [address as string] })
   const userData: IUser = { address: String(address) }
   const [tab, setTab] = useState(1)
   const colorTheme = useTheme().palette
@@ -85,6 +90,14 @@ const UserDetailPage: NextPage = () => {
                     key={authedAddress}
                   />
                 </Grid>
+              ) : null}
+              {isLoading || isFetching ? (
+                <CircularProgress size={80} />
+              ) : !posts?.length ? (
+                <Stack direction="column" alignItems={'center'}>
+                  <Typography variant="h4">No Posts yet</Typography>
+                  <Typography variant="body1">This person haven't post anything in awhile...</Typography>
+                </Stack>
               ) : null}
               {posts?.map((p: IPost) => (
                 <Grid item width={'100%'} py={2} key={p.id}>

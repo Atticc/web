@@ -122,7 +122,9 @@ export const NftSection = ({ address }: { address: string }) => {
       !loading &&
       !oatFetching &&
       !poapFetching ? (
-        <Typography variant={'h2'}>No Collection Found.</Typography>
+        <Stack direction="column" alignItems={'center'}>
+          <Typography variant="h4">No Collection Found.</Typography>
+        </Stack>
       ) : null}
     </Grid>
   )

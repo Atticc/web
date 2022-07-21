@@ -5,7 +5,6 @@ import { useCallback, useState, MouseEvent, useEffect } from 'react'
 import ArrowForwardIosRoundedIcon from '@mui/icons-material/ArrowForwardIosRounded'
 import ProfileImage from './users/Avatar'
 import { getProfile, registerUser } from '@req/atticc/users'
-import useEns from '@utils/useEns'
 
 export function WalletComponent() {
   const router = useRouter()
@@ -49,6 +48,7 @@ export function WalletComponent() {
   const gotoProfile = (e: MouseEvent) => {
     e.preventDefault()
     router.push(`/users/${address}`)
+    handleClose()
   }
 
   return loading ? (
