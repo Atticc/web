@@ -72,19 +72,19 @@ export const UserCard = ({ user, isDetail = false }: { user: IUser; isDetail?: b
       }}
     >
       <Stack direction={'row'} alignItems={'center'}>
-        <Typography variant="body1" fontWeight={600}>
+        <Typography variant="bodyBold1">
           {user?.followerCount || 0}
         </Typography>
-        <Typography pl={1} variant="body1" fontWeight={600} color={color.lightGray.main}>
+        <Typography pl={1} variant="bodyBold1" color={color.lightGray.main}>
           Follower
         </Typography>
       </Stack>
       <Divider orientation={'vertical'} variant={'middle'} flexItem />
       <Stack direction={'row'} alignItems={'center'}>
-        <Typography variant="body1" fontWeight={600}>
+        <Typography variant="bodyBold1">
           {user?.followingCount || 0}
         </Typography>
-        <Typography pl={1} variant="body1" fontWeight={600} color={color.lightGray.main}>
+        <Typography pl={1} variant="bodyBold1" color={color.lightGray.main}>
           Following
         </Typography>
       </Stack>
@@ -171,7 +171,7 @@ export const UserCard = ({ user, isDetail = false }: { user: IUser; isDetail?: b
                     {({ copy }) => (
                       <Button onClick={() => copy(user?.address)} sx={{ p: 0, width: 'fit-content' }} component={'div'}>
                         <ContentCopyIcon fontSize="small" />
-                        <Typography variant="body1" pl={1} fontWeight={600} color={color.lightGray.main}>
+                        <Typography variant="bodyBold1" pl={1} color={color.lightGray.main}>
                           {formatAddress(user?.address)}
                         </Typography>
                       </Button>

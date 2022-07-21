@@ -38,8 +38,7 @@ export const PoapItem = ({
       />
       <CardContent sx={{ px: 4 }}>
         <Typography
-          variant="body1"
-          fontWeight={600}
+          variant="bodyBold1"
           textAlign={'center'}
           textOverflow={'ellipsis'}
           sx={{

@@ -77,20 +77,20 @@ export const PostListItem = ({ post }: { post: IPost | undefined }) => {
             <Stack direction={'row'} alignItems="center" pt={2}>
               <Button sx={{ pr: 2 }} disabled>
                 <ChatBubbleOutlineIcon fontSize="small" />
-                <Typography pl={1} color={color.black.main} fontWeight={600}>
+                <Typography pl={1} color={color.black.main} variant={'bodyBold1'}>
                   {item.comments?.length || item.commentsCount}
                 </Typography>
               </Button>
               <Button sx={{ px: 2 }}>
                 <FavoriteBorderIcon fontSize="small" />
-                <Typography pl={1} color={color.black.main} fontWeight={600}>
+                <Typography pl={1} color={color.black.main} variant={'bodyBold1'}>
                   {item.likesCount}
                 </Typography>
               </Button>
               <Tooltip title={'Coming soon'}>
                 <Button sx={{ px: 2 }}>
                   <ShareIcon fontSize="small" />
-                  <Typography pl={1} color={color.black.main} fontWeight={600}>
+                  <Typography pl={1} color={color.black.main} variant={'bodyBold1'}>
                     {item.sharesCount}
                   </Typography>
                 </Button>

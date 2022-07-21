@@ -278,6 +278,17 @@ export const getDesignTokens = (mode: PaletteMode) => {
         lineHeight: '22px',
         letterSpacing: 0.16,
       },
+      bodyBold1: {
+        fontSize: 16,
+        fontWeight: 600,
+        lineHeight: '27px',
+      },
+      bodyBold2: {
+        fontSize: 14,
+        fontWeight: 600,
+        lineHeight: '22px',
+        letterSpacing: 0.16,
+      },
       caption1: {
         fontSize: 14,
         fontWeight: 600,
@@ -330,6 +341,8 @@ declare module '@mui/material/styles' {
     radioCheckedColor: PaletteOptions['primary']
   }
   interface TypographyVariants {
+    bodyBold1: React.CSSProperties
+    bodyBold2: React.CSSProperties
     menu1: React.CSSProperties
     footer1: React.CSSProperties
     caption1: React.CSSProperties
@@ -337,6 +350,8 @@ declare module '@mui/material/styles' {
   }
 
   interface TypographyVariantsOptions {
+    bodyBold1?: React.CSSProperties
+    bodyBold2?: React.CSSProperties
     menu1?: React.CSSProperties
     footer1?: React.CSSProperties
     caption1?: React.CSSProperties
@@ -347,6 +362,8 @@ declare module '@mui/material/styles' {
 declare module '@mui/material/Typography' {
   interface TypographyPropsVariantOverrides {
     action: true
+    bodyBold1: true
+    bodyBold2: true
     menu1: true
     footer1: true
     caption1: true

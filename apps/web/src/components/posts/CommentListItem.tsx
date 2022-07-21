@@ -32,7 +32,7 @@ export const CommentListItem = ({ comment }: { comment: IComment | undefined }) 
           <Stack direction={'column'} pl={2} flexGrow={1}>
             <Stack direction={'row'} justifyContent={'space-between'} width={'100%'}>
               <Link passHref href={`/users/${comment?.authorAddress}`}>
-                <Typography variant="body1" fontWeight={600} component={'a'} sx={{ cursor: 'pointer' }}>
+                <Typography variant="bodyBold1" component={'a'} sx={{ cursor: 'pointer' }}>
                   {comment.author?.domain || formatAddress(comment?.authorAddress) || ''}
                 </Typography>
               </Link>
@@ -61,11 +61,11 @@ export const CommentListItem = ({ comment }: { comment: IComment | undefined }) 
             <Stack direction={'row'} alignItems="center" pt={1}>
               {/* <Button sx={{ pr: 2 }}>
                 <ChatBubbleOutlineIcon fontSize="small" />
-                <Typography pl={1} color={color.black.main} fontWeight={600}>{comment.repliesCount}</Typography>
+                <Typography pl={1} color={color.black.main} variant={'bodyBold1'}>{comment.repliesCount}</Typography>
               </Button> */}
               <Button sx={{ pr: 2 }}>
                 <FavoriteBorderIcon fontSize="small" />
-                <Typography pl={1} color={color.black.main} fontWeight={600}>
+                <Typography pl={1} color={color.black.main} variant={'bodyBold1'}>
                   {comment.likesCount}
                 </Typography>
               </Button>
