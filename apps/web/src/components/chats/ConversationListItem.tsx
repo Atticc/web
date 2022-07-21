@@ -29,7 +29,7 @@ const getLatestMessage = (messages: Message[]): Message | null =>
   messages.length ? messages[messages.length - 1] : null
 
 export const ConversationListItem = ({ conversation, isSelected }: ConversationListItemProps) => {
-  const colorTheme = useTheme().palette
+  const color = useTheme().palette
   const { loading: isLoadingEns } = useEns(conversation.peerAddress)
   const { messages, loading: isLoadingConversation } = useConversation(conversation.peerAddress)
 
@@ -46,9 +46,8 @@ export const ConversationListItem = ({ conversation, isSelected }: ConversationL
         item
         sx={{
           filter: isSelected ? 'opacity(0.6)' : '',
-          borderRadius: 3,
-          border: 0.2,
-          borderColor: colorTheme.dark.main,
+          borderRadius: 4,
+          bgcolor: color.white.main,
           margin: 1,
           cursor: 'pointer',
           ':hover': {
@@ -66,7 +65,7 @@ export const ConversationListItem = ({ conversation, isSelected }: ConversationL
             <Address address={conversation?.peerAddress || ''} />
           </Stack>
         )}
-        {latestMessage ? (
+        {!loading && latestMessage ? (
           <Typography variant="body2" paddingTop={1} paddingLeft={1}>
             {formatDate(latestMessage?.sent)}
             {`: `}

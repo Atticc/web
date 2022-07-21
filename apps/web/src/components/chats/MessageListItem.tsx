@@ -12,8 +12,7 @@ type MessageListItemProps = {
 }
 
 export const MessageListItem = ({ isSender, message }: MessageListItemProps) => {
-  const colorTheme = useTheme().palette
-  const { address } = useWallet()
+  const color = useTheme().palette
 
   if (!message) {
     return null
@@ -33,7 +32,19 @@ export const MessageListItem = ({ isSender, message }: MessageListItemProps) => 
           )}
           <Chip label={formatTime(message.sent)} variant="outlined" size="small" />
         </Stack>
-        <Typography textAlign={isSender ? 'right' : 'left'} paddingX={1}>
+        <Typography
+          variant="body1"
+          maxWidth={300}
+          minWidth={10}
+          textAlign={'left'}
+          px={2}
+          py={1}
+          sx={{
+            borderRadius: 6,
+            bgcolor: isSender ? color.white.main : color.success.light,
+            color: isSender ? color.black.main : color.white.main,
+          }}
+        >
           {
             message.error ? `Error: ${message.error?.message}` : message.content // <Emoji text={message.content || ''} />
           }

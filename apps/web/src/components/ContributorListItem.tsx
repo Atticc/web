@@ -11,7 +11,7 @@ export const ContributorListItem = ({
   user: IUser | undefined
   showReason?: boolean
 }) => {
-  const colorTheme = useTheme().palette
+  const color = useTheme().palette
 
   if (!user) {
     return null
@@ -23,7 +23,8 @@ export const ContributorListItem = ({
         <Grid
           item
           sx={{
-            borderRadius: 3,
+            borderRadius: 4,
+            bgcolor: color.white.main,
             margin: 1,
             cursor: 'pointer',
             ':hover': {

@@ -5,11 +5,13 @@ import { useCallback, useState, MouseEvent, useEffect } from 'react'
 import ArrowForwardIosRoundedIcon from '@mui/icons-material/ArrowForwardIosRounded'
 import ProfileImage from './users/Avatar'
 import { getProfile, registerUser } from '@req/atticc/users'
+import useXmtp from '@utils/useXmtp'
 
 export function WalletComponent() {
   const router = useRouter()
   const colorTheme = useTheme().palette
   const { connect, disconnect, address, lookupAddress, getAvatarUrl } = useWallet()
+  const { connect: connectXmtp, disconnect: disconnectXmtp, client } = useXmtp()
   const [loading, setLoading] = useState(false)
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
@@ -33,6 +35,7 @@ export function WalletComponent() {
           const avatar = await getAvatarUrl(addr)
           await registerUser({ address: addr as string, domain, avatar })
         }
+        await connectXmtp(signer!)
       }
     } catch (_) {
     } finally {

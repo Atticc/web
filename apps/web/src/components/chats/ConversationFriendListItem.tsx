@@ -8,10 +8,10 @@ import useEns from '@utils/useEns'
 import { toChecksumAddress } from '@utils/helper'
 
 export const ConversationFriendListItem = ({ user }: { user: IUser | undefined }) => {
-  const colorTheme = useTheme().palette
+  const color = useTheme().palette
   const router = useRouter()
   const { name, address, loading } = useEns(toChecksumAddress(String(user?.address || '')))
-  const isSelected = router.query?.params?.[0] == address || router.query?.params?.[0] == name
+  const isSelected = router.query?.params?.[0] === String(address) || router.query?.params?.[0] === String(name)
 
   if (!user) {
     return null
@@ -26,10 +26,9 @@ export const ConversationFriendListItem = ({ user }: { user: IUser | undefined }
       <Grid
         item
         sx={{
-          filter: isSelected ? 'opacity(0.6)' : '',
-          borderRadius: 3,
-          border: 0.2,
-          borderColor: colorTheme.dark.main,
+          filter: isSelected ? 'opacity(0.6)' : 'unset',
+          borderRadius: 4,
+          bgcolor: color.white.main,
           margin: 1,
           cursor: 'pointer',
           ':hover': {

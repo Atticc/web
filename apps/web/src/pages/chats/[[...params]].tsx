@@ -54,6 +54,7 @@ const ChatDetailsPage: NextPage = () => {
       const prevAddress = await prevSigner?.getAddress()
       const address = await signer.getAddress()
       if (address === prevAddress) return
+      if (client) return
       connectXmtp(signer)
     }
     connect()

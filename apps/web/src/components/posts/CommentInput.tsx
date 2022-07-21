@@ -92,7 +92,7 @@ const CommentInput = ({ onSend, postId }: CommentInputProps): JSX.Element => {
       alignItems={'flex-start'}
     >
       <ProfileImage address={address} sx={{ height: 70, width: 70 }} />
-      <Stack direction={'column'} width={'100% '}>
+      <Stack direction={'column'} width={'100% '} pl={1}>
         <TextField
           type="text"
           label={`Comments`}
@@ -101,7 +101,7 @@ const CommentInput = ({ onSend, postId }: CommentInputProps): JSX.Element => {
           value={message}
           onChange={handleChange}
           fullWidth
-          sx={{ pl: 1, borderRadius: '20px' }}
+          sx={{ borderRadius: '20px' }}
           InputProps={{
             endAdornment: (
               <EndAdornment position="end">

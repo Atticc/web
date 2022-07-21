@@ -15,7 +15,7 @@ export const CommentListItem = ({ comment }: { comment: IComment | undefined }) 
   }
 
   return (
-    <Grid container direction={'column'} py={3}>
+    <Grid container direction={'column'} pb={2} pt={1}>
       <Grid item>
         <Stack direction={'row'}>
           <Stack direction={'column'}>
