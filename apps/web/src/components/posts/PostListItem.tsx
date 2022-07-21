@@ -47,7 +47,7 @@ export const PostListItem = ({ post }: { post: IPost | undefined }) => {
                 <ProfileImage
                   sx={{ height: 90, width: 90 }}
                   address={item?.authorAddress || ''}
-                  src={item?.author?.avatar}
+                  src={item?.author?.avatar || undefined}
                 />
               </Box>
             </Link>

@@ -23,7 +23,6 @@ const CommentInput = ({ onSend, postId }: CommentInputProps): JSX.Element => {
   const [image, setImage] = useState(null)
   const router = useRouter()
   const { address } = useWallet()
-  const { avatarUrl } = useEns(address)
   const color = useTheme().palette
 
   useEffect(() => setMessage(''), [router.query.recipientWalletAddr])
@@ -61,7 +60,7 @@ const CommentInput = ({ onSend, postId }: CommentInputProps): JSX.Element => {
       flexDirection={'row'}
       alignItems={'center'}
     >
-      <ProfileImage src={avatarUrl} address={address} sx={{ height: 70, width: 70 }} />
+      <ProfileImage address={address} sx={{ height: 70, width: 70 }} />
       <TextField
         type="text"
         label={`Comments`}

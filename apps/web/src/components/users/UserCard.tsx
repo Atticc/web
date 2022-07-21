@@ -155,7 +155,7 @@ export const UserCard = ({ user, isDetail = false }: { user: IUser; isDetail?: b
               <Box sx={{ borderColor: 'black', borderWidth: 4, borderStyle: 'solid', borderRadius: '50%' }}>
                 <ProfileImage
                   sx={{ height: 140, width: 140 }}
-                  src={user?.avatar || user?.twitter?.avatar}
+                  src={user?.avatar || user?.twitter?.avatar || undefined}
                   address={user?.address}
                 />
               </Box>
@@ -231,7 +231,7 @@ export const UserCard = ({ user, isDetail = false }: { user: IUser; isDetail?: b
       <Link href={`/users/${user.address}`}>
         <Stack direction={'column'} alignItems={'center'}>
           <Stack direction={'row'} alignItems={'center'} paddingBottom={2}>
-            <ProfileImage src={user?.avatar || user?.twitter?.avatar} address={user?.address} />
+            <ProfileImage src={user?.avatar || user?.twitter?.avatar || undefined} address={user?.address} />
             <Stack direction={'column'} paddingLeft={1}>
               <Typography variant="h5">{user?.domain || null}</Typography>
               <Typography variant="body1">{formatAddress(user?.address)}</Typography>

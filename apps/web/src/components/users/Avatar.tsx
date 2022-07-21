@@ -42,7 +42,7 @@ function stringAvatar(address: string, props: any) {
 
 const ProfileImage = ({ address, src, ...props }: AvatarProps) => {
   const addr = toChecksumAddress(address)
-  const { avatarUrl } = useEns(addr)
+  const { avatarUrl = undefined } = useEns(addr)
   return (
     <Avatar
       variant="circular"
