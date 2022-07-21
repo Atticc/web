@@ -9,13 +9,23 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
 import ShareIcon from '@mui/icons-material/Share'
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz'
 import { CommentListItem } from './CommentListItem'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { usePosts } from '@req/atticc/posts'
+import Link from 'next/link'
 
 export const PostListItem = ({ post }: { post: IPost | undefined }) => {
+  const [item, setItem] = useState(post)
   const colorTheme = useTheme().palette
   const [commentSize, setCommentSize] = useState(1)
+  const { data: postData = [], refetch: refetchPost, isLoading } = usePosts({ postId: post?.id })
 
-  if (!post) {
+  useEffect(() => {
+    if (postData?.[0] && post?.id === postData?.[0].id) {
+      setItem(postData?.[0])
+    }
+  }, [postData])
+
+  if (!item) {
     return null
   }
 
@@ -24,17 +34,31 @@ export const PostListItem = ({ post }: { post: IPost | undefined }) => {
       <Grid item>
         <Stack direction={'row'}>
           <Stack direction={'column'}>
-            <Box sx={{ borderColor: 'black', borderWidth: 4, borderStyle: 'solid', borderRadius: '50%' }}>
-              <ProfileImage sx={{ height: 90, width: 90 }} address={post?.authorAddress || ''} />
-            </Box>
+            <Link passHref href={`/users/${item?.authorAddress}`}>
+              <Box
+                sx={{
+                  cursor: 'pointer',
+                  borderColor: 'black',
+                  borderWidth: 4,
+                  borderStyle: 'solid',
+                  borderRadius: '50%',
+                }}
+              >
+                <ProfileImage sx={{ height: 90, width: 90 }} address={item?.authorAddress || ''} />
+              </Box>
+            </Link>
             <Divider orientation={'vertical'} flexItem />
           </Stack>
           <Stack direction={'column'} pl={2} flexGrow={1}>
             <Stack direction={'row'} justifyContent={'space-between'} width={'100%'}>
-              <Typography variant="h5">{post.author?.domain || formatAddress(post?.authorAddress) || ''}</Typography>
+              <Link passHref href={`/users/${item?.authorAddress}`}>
+                <Typography variant="h5" component={'a'} sx={{ cursor: 'pointer' }}>
+                  {item.author?.domain || formatAddress(item?.authorAddress) || ''}
+                </Typography>
+              </Link>
               <Stack direction={'row'}>
                 <Typography variant="body2">
-                  {formatDate(new Date(post.updatedAt))} at {formatTime(new Date(post.updatedAt))}
+                  {formatDate(new Date(item.updatedAt))} at {formatTime(new Date(item.updatedAt))}
                 </Typography>
               </Stack>
             </Stack>
@@ -49,39 +73,45 @@ export const PostListItem = ({ post }: { post: IPost | undefined }) => {
                 whiteSpace: 'pre-line',
               }}
             >
-              {post.description}
+              {item.description}
             </Typography>
             <Stack direction={'row'} alignItems="center" pt={2}>
               <Button sx={{ pr: 2 }}>
                 <ChatBubbleOutlineIcon fontSize="small" />
-                <Typography pl={1}>{post.commentsCount}</Typography>
+                <Typography pl={1}>{item.commentsCount}</Typography>
               </Button>
               <Button sx={{ px: 2 }}>
                 <FavoriteBorderIcon fontSize="small" />
-                <Typography pl={1}>{post.likesCount}</Typography>
+                <Typography pl={1}>{item.likesCount}</Typography>
               </Button>
               <Button sx={{ px: 2 }}>
                 <ShareIcon fontSize="small" />
-                <Typography pl={1}>{post.sharesCount}</Typography>
+                <Typography pl={1}>{item.sharesCount}</Typography>
               </Button>
               <Button sx={{ px: 2 }}>
                 <MoreHorizIcon fontSize="small" />
               </Button>
             </Stack>
             <Divider flexItem sx={{ py: 1 }} />
-            <CommentInput onSend={async () => {}} key={post?.authorAddress} />
-            {post?.comments?.slice(0, commentSize).map((c) => (
+            <CommentInput
+              onSend={async () => {
+                await refetchPost()
+              }}
+              key={item.id}
+              postId={item.id}
+            />
+            {item?.comments?.slice(0, commentSize).map((c) => (
               <CommentListItem key={c?.id} comment={c} />
             ))}
           </Stack>
         </Stack>
       </Grid>
       <Grid item>
-        {commentSize < (post?.comments?.length || 1) ? (
+        {commentSize < (item?.comments?.length || 1) ? (
           <Button
             fullWidth
             variant={'fill'}
-            onClick={() => setCommentSize(Math.min(commentSize + 5, post?.comments?.length || Infinity))}
+            onClick={() => setCommentSize(Math.min(commentSize + 5, item?.comments?.length || Infinity))}
           >
             view more comments
           </Button>

@@ -7,6 +7,7 @@ import FilterIcon from '@mui/icons-material/Filter'
 import useWallet from '@utils/useWallet'
 import ProfileImage from '@c/users/Avatar'
 import SendIcon from '@mui/icons-material/Send'
+import { createComment } from '@req/atticc/comments'
 
 const EndAdornment = styled(InputAdornment)<InputAdornmentProps>({
   flexDirection: 'row',
@@ -14,10 +15,12 @@ const EndAdornment = styled(InputAdornment)<InputAdornmentProps>({
 
 type CommentInputProps = {
   onSend: (msg: string) => Promise<void>
+  postId: string
 }
 
-const CommentInput = ({ onSend }: CommentInputProps): JSX.Element => {
+const CommentInput = ({ onSend, postId }: CommentInputProps): JSX.Element => {
   const [message, setMessage] = useState('')
+  const [image, setImage] = useState(null)
   const router = useRouter()
   const { address } = useWallet()
   const { avatarUrl } = useEns(address)
@@ -37,8 +40,9 @@ const CommentInput = ({ onSend }: CommentInputProps): JSX.Element => {
       if (!message) {
         return
       }
-      setMessage('')
+      await createComment({ address: address as string, message, imageUrl: image, postId })
       await onSend(message)
+      setMessage('')
     },
     [onSend, message]
   )

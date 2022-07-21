@@ -5,6 +5,7 @@ import { IComment } from '../../app/constants'
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline'
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz'
+import Link from 'next/link'
 
 export const CommentListItem = ({ comment }: { comment: IComment | undefined }) => {
   const colorTheme = useTheme().palette
@@ -18,15 +19,28 @@ export const CommentListItem = ({ comment }: { comment: IComment | undefined }) 
       <Grid item>
         <Stack direction={'row'}>
           <Stack direction={'column'}>
-            <Box sx={{ borderColor: 'black', borderWidth: 4, borderStyle: 'solid', borderRadius: '50%' }}>
-              <ProfileImage sx={{ height: 70, width: 70 }} address={comment?.authorAddress || ''} />
-            </Box>
+            <Link passHref href={`/users/${comment?.authorAddress}`}>
+              <Box
+                component={'a'}
+                sx={{
+                  cursor: 'pointer',
+                  borderColor: 'black',
+                  borderWidth: 4,
+                  borderStyle: 'solid',
+                  borderRadius: '50%',
+                }}
+              >
+                <ProfileImage sx={{ height: 70, width: 70 }} address={comment?.authorAddress || ''} />
+              </Box>
+            </Link>
           </Stack>
           <Stack direction={'column'} pl={2} flexGrow={1}>
             <Stack direction={'row'} justifyContent={'space-between'} width={'100%'}>
-              <Typography variant="body1" fontWeight={600}>
-                {comment.author?.domain || formatAddress(comment?.authorAddress) || ''}
-              </Typography>
+              <Link passHref href={`/users/${comment?.authorAddress}`}>
+                <Typography variant="body1" fontWeight={600} component={'a'} sx={{ cursor: 'pointer' }}>
+                  {comment.author?.domain || formatAddress(comment?.authorAddress) || ''}
+                </Typography>
+              </Link>
               <Stack direction={'row'}>
                 <Typography variant="body2">
                   {formatDate(new Date(comment.updatedAt))} at {formatTime(new Date(comment.updatedAt))}

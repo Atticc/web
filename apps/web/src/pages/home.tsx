@@ -3,13 +3,14 @@ import LayoutWithoutFooter from '../components/layouts/LayoutWithoutFooter'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useEffect, useState } from 'react'
 import { Grid, Tab, Tabs, useTheme } from '@mui/material'
-import { IUser, posts } from '../app/constants'
+import { IPost, IUser } from '../app/constants'
 import { ContributorsList } from '../components/ContributorsList'
 import { PostListItem } from '../components/posts/PostListItem'
 import { useRecommendation } from '../graphql/cyberconnect/queries/getRecommendation'
 import { usePopular } from '../graphql/cyberconnect/queries/getPopular'
 import { isValidAddr } from '../utils/helper'
 import useWallet from '@utils/useWallet'
+import { usePosts } from '@req/atticc/posts'
 
 const tabs = [
   { label: 'Explore', value: 0 },
@@ -18,6 +19,7 @@ const tabs = [
 ]
 
 const Home: NextPage = () => {
+  const { data: posts = [], refetch: refetchPosts, isLoading } = usePosts({})
   const { address } = useWallet()
   const handleSuccess = (data: [IUser]) => {
     setUsers(data)
@@ -35,12 +37,13 @@ const Home: NextPage = () => {
   const [users, setUsers] = useState<[IUser] | []>([])
 
   useEffect(() => {
+    refetchPosts()
     if (isValidAddr(String(address))) {
       fetchRecommendations()
     } else {
       fetchPopular()
     }
-  }, [address, fetchPopular, fetchRecommendations])
+  }, [address, fetchPopular, fetchRecommendations, refetchPosts])
 
   const handleSetTab = (_: React.ChangeEvent<{}>, value: number) => {
     setTab(value)
@@ -56,8 +59,10 @@ const Home: NextPage = () => {
                 <Tab label={t.label} value={t.value} key={t.label} />
               ))}
             </Tabs>
-            {posts.map((p) => (
-              <PostListItem post={p} key={p.id} />
+            {posts?.map((p: IPost) => (
+              <Grid item width={'100%'} py={2} key={p.id}>
+                <PostListItem post={p} />
+              </Grid>
             ))}
           </Grid>
         </Grid>

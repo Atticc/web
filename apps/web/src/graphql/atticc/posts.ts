@@ -4,6 +4,7 @@ import { useQuery } from 'react-query'
 import { ATTIC_DEFAULT_HEADERS } from './headers'
 export interface GetPostsRequest {
   addresses?: Array<string>
+  postId?: string | null
 }
 export interface CreatePostsRequest {
   address: string
@@ -12,9 +13,13 @@ export interface CreatePostsRequest {
   title?: string | null
 }
 
-export const GET_POSTS = gql`
-  query MyQuery($addresses: [String]) {
-    atticcdev_post(where: { authorAddress: { _in: $addresses } }, order_by: { updatedAt: desc }) {
+export const GET_POSTS = ({ addresses, postId }: { addresses: any; postId: string }) => gql`
+  query MyQuery($addresses: [String], $postId: uuid) {
+    atticcdev_post(
+      ${addresses?.length > 0 ? 'where: { authorAddress: { _in: $addresses } },' : ''} 
+      ${postId?.length > 0 ? 'where: { id: { _eq: $postId } },' : ''} 
+      order_by: { updatedAt: desc }
+    ) {
       commentsCount
       createdAt
       description
@@ -31,12 +36,14 @@ export const GET_POSTS = gql`
         avatar
         domain
       }
-      comments(limit: 50) {
+      comments(limit: 50, order_by: { updatedAt: desc }) {
         createdAt
+        updatedAt
         id
         imageUrl
         likesCount
         message
+        authorAddress
         author {
           address
           avatar
@@ -47,17 +54,22 @@ export const GET_POSTS = gql`
   }
 `
 
-export const getPosts = async ({ addresses }: GetPostsRequest) => {
+export const getPosts = async ({ addresses, postId }: GetPostsRequest) => {
   try {
-    const { atticcdev_post } = await request(ATTICC_API_ENDPOINT, GET_POSTS, { addresses }, ATTIC_DEFAULT_HEADERS)
+    const { atticcdev_post } = await request(
+      ATTICC_API_ENDPOINT,
+      GET_POSTS({ addresses, postId: postId || '' }),
+      { addresses, postId },
+      ATTIC_DEFAULT_HEADERS
+    )
     return atticcdev_post
   } catch (err) {
     return null
   }
 }
 
-export function usePosts({ addresses, ...props }: GetPostsRequest) {
-  return useQuery(['posts', String(addresses)], async () => getPosts({ addresses }), {
+export function usePosts({ addresses, postId, ...props }: GetPostsRequest) {
+  return useQuery(['posts', String(addresses)], async () => getPosts({ addresses, postId }), {
     enabled: false,
     ...props,
   })
