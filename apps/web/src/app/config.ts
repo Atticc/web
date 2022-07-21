@@ -11,3 +11,11 @@ export const WEB3_STORAGE_API_TOKEN: string = process.env.NEXT_PUBLIC_WEB3_STORA
 export const ATTICC_API_ENDPOINT: string =
   process.env.NEXT_PUBLIC_ATTICC_API_ENDPOINT || 'https://query.dev.atticc.xyz/v1/graphql'
 export const ATTICC_API_SECRET: string = process.env.NEXT_PUBLIC_ATTICC_API_SECRET || 'user@password'
+
+
+export const Networks = {
+  Ethereum : {
+    id: 1,
+    rpc: ALCHEMY_RPC_ETH,
+  },
+}

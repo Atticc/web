@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState, createContext } from 'react'
 import { Signer, ethers as Ether } from 'ethers'
 import Web3Modal, { providers } from 'web3modal-dynamic-import'
 import CyberConnect from '@cyberlab/cyberconnect'
-import { ALCHEMY_RPC_ETH } from '@app/config'
+import { ALCHEMY_RPC_ETH, Networks } from '@app/config'
 import { useTheme } from '@mui/material/styles'
 
 export type WalletContextType = {
@@ -63,9 +63,13 @@ export const WalletProvider = ({ children }: WalletProviderProps): JSX.Element =
       if (cachedResolveName.has(name)) {
         return cachedResolveName.get(name)
       }
-      const address = (await provider?.resolveName(name)) || undefined
-      cachedResolveName.set(name, address)
-      return address
+      try {
+        const address = (await provider?.resolveName(name)) || undefined
+        cachedResolveName.set(name, address)
+        return address
+      } catch (_) {
+        return undefined
+      }
     },
     [provider]
   )
@@ -75,9 +79,13 @@ export const WalletProvider = ({ children }: WalletProviderProps): JSX.Element =
       if (cachedLookupAddress.has(address)) {
         return cachedLookupAddress.get(address)
       }
-      const name = (await provider?.lookupAddress(address)) || undefined
-      cachedLookupAddress.set(address, name)
-      return name
+      try {
+        const name = (await provider?.lookupAddress(address)) || undefined
+        cachedLookupAddress.set(address, name)
+        return name
+      } catch (_) {
+        return undefined
+      }
     },
     [provider]
   )
@@ -87,9 +95,13 @@ export const WalletProvider = ({ children }: WalletProviderProps): JSX.Element =
       if (cachedGetAvatarUrl.has(name)) {
         return cachedGetAvatarUrl.get(name)
       }
-      const avatarUrl = (await provider?.getAvatar(name)) || undefined
-      cachedGetAvatarUrl.set(name, avatarUrl)
-      return avatarUrl
+      try {
+        const avatarUrl = (await provider?.getAvatar(name)) || undefined
+        cachedGetAvatarUrl.set(name, avatarUrl)
+        return avatarUrl
+      } catch (_) {
+        return undefined
+      }
     },
     [provider]
   )
@@ -140,15 +152,14 @@ export const WalletProvider = ({ children }: WalletProviderProps): JSX.Element =
   const connect = useCallback(async () => {
     if (!web3Modal) throw new Error('web3Modal not initialized')
     try {
+      
       const instance = await web3Modal.connect()
+      instance.request({
+        method: 'wallet_switchEthereumChain',
+        params: [{ chainId: Ether.utils.hexValue(Networks.Ethereum.id) }],
+      })
       if (!instance) return
       const signer = await handleSetup(instance)
-      // const provider = new ethers.providers.Web3Provider(instance)
-      // const signer = provider.getSigner()
-      // setProvider(provider)
-      // setSigner(signer)
-      // setAddress(await signer.getAddress())
-      // initCyberConnect(provider.provider)
       return signer
     } catch (e) {
       // TODO: better error handling/surfacing here.
