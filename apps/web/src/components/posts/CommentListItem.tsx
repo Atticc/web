@@ -30,7 +30,11 @@ export const CommentListItem = ({ comment }: { comment: IComment | undefined }) 
                   borderRadius: '50%',
                 }}
               >
-                <ProfileImage sx={{ height: 70, width: 70 }} address={comment?.authorAddress || ''} />
+                <ProfileImage
+                  sx={{ height: 70, width: 70 }}
+                  address={comment?.authorAddress || ''}
+                  src={comment?.author?.avatar}
+                />
               </Box>
             </Link>
           </Stack>

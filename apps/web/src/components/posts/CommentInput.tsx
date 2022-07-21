@@ -63,12 +63,9 @@ const CommentInput = ({ onSend, postId }: CommentInputProps): JSX.Element => {
     >
       <ProfileImage src={avatarUrl} address={address} sx={{ height: 70, width: 70 }} />
       <TextField
-        multiline
         type="text"
         label={`Comments`}
         placeholder="Write a comment..."
-        minRows={1}
-        maxRows={4}
         name="message"
         value={message}
         onChange={handleChange}

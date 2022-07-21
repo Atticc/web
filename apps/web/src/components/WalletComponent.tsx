@@ -1,15 +1,16 @@
 import { Button, Grid, Stack, Menu, MenuItem, useTheme, CircularProgress } from '@mui/material'
 import useWallet from '@utils/useWallet'
 import { useRouter } from 'next/router'
-import { useCallback, useState, MouseEvent } from 'react'
+import { useCallback, useState, MouseEvent, useEffect } from 'react'
 import ArrowForwardIosRoundedIcon from '@mui/icons-material/ArrowForwardIosRounded'
-import Address from './users/Address'
 import ProfileImage from './users/Avatar'
+import { getProfile, registerUser } from '@req/atticc/users'
+import useEns from '@utils/useEns'
 
 export function WalletComponent() {
   const router = useRouter()
   const colorTheme = useTheme().palette
-  const { connect, disconnect, address } = useWallet()
+  const { connect, disconnect, address, lookupAddress, getAvatarUrl } = useWallet()
   const [loading, setLoading] = useState(false)
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
@@ -22,9 +23,22 @@ export function WalletComponent() {
   }
 
   const connectWallet = useCallback(async () => {
-    setLoading(true)
-    await connect()
-    setLoading(false)
+    try {
+      setLoading(true)
+      const signer = await connect()
+      const addr = await signer?.getAddress()
+      if (addr) {
+        const data = await getProfile({ address: addr as string })
+        if (!data?.address) {
+          const domain = await lookupAddress(addr)
+          const avatar = await getAvatarUrl(addr)
+          await registerUser({ address: addr as string, domain, avatar })
+        }
+      }
+    } catch (_) {
+    } finally {
+      setLoading(false)
+    }
   }, [connect])
 
   const handleDisconnect = useCallback(async () => {
@@ -46,7 +60,6 @@ export function WalletComponent() {
           {loading ? 'Loading...' : 'Connect Wallet'}
         </Button>
       ) : (
-        // <PrimaryDarkButton textcontent={loading ? 'Loading...' : 'Connect Wallet'} onClick={connectWallet} />
         <Button
           id="basic-button"
           aria-controls={open ? 'basic-menu' : undefined}
@@ -56,7 +69,6 @@ export function WalletComponent() {
         >
           <Stack direction={'row'} alignItems={'center'}>
             <ProfileImage address={String(address)} />
-            {/* <Address address={String(address)} showAddress /> */}
           </Stack>
         </Button>
       )}

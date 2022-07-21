@@ -193,7 +193,7 @@ export const UserCard = ({ user, isDetail = false }: { user: IUser; isDetail?: b
                   ) : null}
                   {isSameAddr(address as string, user.address) ? (
                     <Tooltip title={'Coming soon'}>
-                      <Button variant={'outline'} color={'secondary'} onClick={onFollow} disabled>
+                      <Button variant={'outline'} color={'secondary'} onClick={() => {}}>
                         {'Edit Profile'}
                       </Button>
                     </Tooltip>

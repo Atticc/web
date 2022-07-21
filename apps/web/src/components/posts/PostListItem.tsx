@@ -44,7 +44,11 @@ export const PostListItem = ({ post }: { post: IPost | undefined }) => {
                   borderRadius: '50%',
                 }}
               >
-                <ProfileImage sx={{ height: 90, width: 90 }} address={item?.authorAddress || ''} />
+                <ProfileImage
+                  sx={{ height: 90, width: 90 }}
+                  address={item?.authorAddress || ''}
+                  src={item?.author?.avatar}
+                />
               </Box>
             </Link>
             <Divider orientation={'vertical'} flexItem />
@@ -89,7 +93,7 @@ export const PostListItem = ({ post }: { post: IPost | undefined }) => {
                 </Typography>
               </Button>
               <Tooltip title={'Coming soon'}>
-                <Button sx={{ px: 2 }} disabled>
+                <Button sx={{ px: 2 }}>
                   <ShareIcon fontSize="small" />
                   <Typography pl={1} color={color.black.main} fontWeight={600}>
                     {item.sharesCount}
