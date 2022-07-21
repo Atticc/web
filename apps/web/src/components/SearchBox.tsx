@@ -42,10 +42,8 @@ const SearchBox = ({ id, name, placeholder, onSubmit, ...props }: SearchBoxProps
 
       try {
         setLoading(true)
-        console.log('input', debounceValue)
         if (debounceValue.startsWith('0x') && debounceValue.length === 42) {
           const domain = await lookupAddress(debounceValue)
-          console.log('domain', domain)
           setOptions([
             {
               domain: domain || '',
@@ -54,7 +52,6 @@ const SearchBox = ({ id, name, placeholder, onSubmit, ...props }: SearchBoxProps
           ])
         } else if (debounceValue.endsWith('.eth')) {
           const address = await resolveName(debounceValue)
-          console.log('address', address)
           if (address) {
             setOptions([
               {
@@ -69,7 +66,6 @@ const SearchBox = ({ id, name, placeholder, onSubmit, ...props }: SearchBoxProps
           throw new Error('Not met searching criteria')
         }
       } catch (_) {
-        console.log('this called')
         setOptions([])
       } finally {
         setLoading(false)
@@ -143,8 +139,6 @@ const SearchBox = ({ id, name, placeholder, onSubmit, ...props }: SearchBoxProps
         onInputChange={handInputChanged}
         getOptionLabel={(options) => (typeof options === 'string' ? options : options?.address)}
         renderOption={(props, option) => {
-          console.log(props)
-          console.log(option)
           return (
             <li {...props}>
               <Link href={`/users/${option.address}`} passHref key={option.address}>
