@@ -40,10 +40,18 @@ export interface IPost {
   communityId?: string
   community?: ICommunity
   bookmarked: boolean //whether the post is bookmarked by you
-  liked: boolean //whether the post is liked by you
-  likesCount: number
+  liked?: boolean //whether the post is liked by you
   sharesCount: number
-  commentsCount: number
+  likes_aggregate?: {
+    aggregate: {
+      count?: number
+    }
+  }
+  comments_aggregate?: {
+    aggregate: {
+      count?: number
+    }
+  }
   comments?: Array<IComment>
   pinned: boolean
   postId?: string // quoted retweet
@@ -57,8 +65,11 @@ export interface IComment {
   updatedAt: string
   authorAddress: string
   author?: IUser
-  liked: boolean //whether the comment is liked by you
-  likesCount: number
+  likes_aggregate?: {
+    aggregate: {
+      count?: number
+    }
+  }
   repliesCount: number
   postId?: string // parent post id, only one level
   replyId?: string // parent comment id, only one level
@@ -97,8 +108,6 @@ export const comments: Array<IComment> = [
     createdAt: Date(),
     updatedAt: Date(),
     authorAddress: '0xbF9B4a79a3d9e6AA3cea0fc0134A923FBB111309',
-    liked: false,
-    likesCount: 0,
     repliesCount: 0,
     archived: false,
   },
@@ -108,8 +117,6 @@ export const comments: Array<IComment> = [
     createdAt: Date(),
     updatedAt: Date(),
     authorAddress: '0xd8da6bf26964af9d7eed9e03e53415d37aa96045',
-    liked: false,
-    likesCount: 0,
     repliesCount: 0,
     archived: false,
   },
@@ -119,8 +126,6 @@ export const comments: Array<IComment> = [
     createdAt: Date(),
     updatedAt: Date(),
     authorAddress: '0x983110309620d911731ac0932219af06091b6744',
-    liked: false,
-    likesCount: 0,
     repliesCount: 0,
     archived: false,
   },
@@ -142,8 +147,6 @@ export const posts: Array<IPost> = [
     communityId: undefined,
     comments: comments,
     liked: false,
-    likesCount: 0,
-    commentsCount: 0,
     archived: false,
     bookmarked: false,
     sharesCount: 0,
@@ -159,8 +162,6 @@ export const posts: Array<IPost> = [
     authorAddress: '0x983110309620d911731ac0932219af06091b6744',
     communityId: '1',
     liked: false,
-    likesCount: 0,
-    commentsCount: 0,
     archived: false,
     bookmarked: false,
     sharesCount: 0,
@@ -175,8 +176,6 @@ export const posts: Array<IPost> = [
     authorAddress: '0x0000...0003',
     communityId: '1',
     liked: false,
-    likesCount: 0,
-    commentsCount: 0,
     archived: false,
     bookmarked: false,
     sharesCount: 0,

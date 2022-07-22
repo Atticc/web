@@ -1,23 +1,38 @@
 import ProfileImage from '@c/users/Avatar'
-import { Avatar, Button, Divider, Grid, Stack, Tooltip, Typography, useTheme } from '@mui/material'
-import { Box } from '@mui/system'
+import { Avatar, Button, LinearProgress, Divider, Grid, Stack, Tooltip, Typography, useTheme } from '@mui/material'
 import { formatAddress, formatDate, formatTime } from '@utils/helper'
 import { IPost } from '../../app/constants'
 import CommentInput from './CommentInput'
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline'
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
+import FavoriteIcon from '@mui/icons-material/Favorite'
 import ShareIcon from '@mui/icons-material/Share'
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz'
 import { CommentListItem } from './CommentListItem'
 import { useEffect, useState } from 'react'
 import { usePosts } from '@req/atticc/posts'
 import Link from 'next/link'
+import { ActionType, addAction, deleteAction, useActions } from '@req/atticc/actions'
+import useWallet from '@utils/useWallet'
 
 export const PostListItem = ({ post }: { post: IPost | undefined }) => {
   const [item, setItem] = useState(post)
+  const [isLiked, setIsLiked] = useState(false)
+  const [likeLoading, setLikeLoading] = useState(false)
+  const { address } = useWallet()
   const color = useTheme().palette
   const [commentSize, setCommentSize] = useState(1)
   const { data: postData = [], refetch: refetchPost, isLoading } = usePosts({ postId: post?.id })
+
+  const handleFetchActionStatusResult = (data: any) => {
+    setIsLiked(data?.[0]?.liked || false)
+  }
+
+  const { refetch: refetchLikeStatus } = useActions({
+    postId: post?.id || '',
+    address: address || '',
+    onSuccess: handleFetchActionStatusResult,
+  })
 
   useEffect(() => {
     if (postData?.[0] && post?.id === postData?.[0].id) {
@@ -25,8 +40,28 @@ export const PostListItem = ({ post }: { post: IPost | undefined }) => {
     }
   }, [postData])
 
+  useEffect(() => {
+    if (!address) return
+    refetchLikeStatus()
+  }, [address, refetchLikeStatus])
+
   if (!item) {
     return null
+  }
+
+  const onLike = async () => {
+    try {
+      setLikeLoading(true)
+      isLiked
+        ? await deleteAction({ address: address as string, postId: post?.id, type: ActionType.LIKE })
+        : await addAction({ address: address as string, postId: post?.id, type: ActionType.LIKE })
+      await refetchLikeStatus()
+      await refetchPost()
+    } catch (err: any) {
+      console.warn(err.message)
+    } finally {
+      setLikeLoading(false)
+    }
   }
 
   return (
@@ -78,14 +113,18 @@ export const PostListItem = ({ post }: { post: IPost | undefined }) => {
               <Button sx={{ pr: 2 }} disabled>
                 <ChatBubbleOutlineIcon fontSize="small" />
                 <Typography pl={1} color={color.black.main} variant={'bodyBold1'}>
-                  {item.comments?.length || item.commentsCount}
+                  {Math.max(item.comments_aggregate?.aggregate?.count || item.comments?.length || 0, 0)}
                 </Typography>
               </Button>
-              <Button sx={{ px: 2 }}>
-                <FavoriteBorderIcon fontSize="small" />
-                <Typography pl={1} color={color.black.main} variant={'bodyBold1'}>
-                  {item.likesCount}
-                </Typography>
+              <Button sx={{ px: 2 }} onClick={onLike}>
+                {isLiked ? <FavoriteIcon fontSize="small" /> : <FavoriteBorderIcon fontSize="small" />}
+                {likeLoading ? (
+                  <LinearProgress sx={{ pl: 3 }} />
+                ) : (
+                  <Typography pl={1} color={color.black.main} variant={'bodyBold1'}>
+                    {Math.max(item.likes_aggregate?.aggregate?.count || 0, 0)}
+                  </Typography>
+                )}
               </Button>
               <Tooltip title={'Coming soon'}>
                 <Button sx={{ px: 2 }}>

@@ -120,15 +120,15 @@ export const NftSection = ({ address }: { address: string }) => {
     async function fetchNFTs() {
       try {
         setLoading(true)
-        // try {
-        //   const { ownedNfts, totalCount } = await alchemy.getNfts({ owner: address, filters: [NftFilters.SPAM] })
-        //   setNfts({ items: ownedNfts.filter((n) => !n?.error), totalCount: totalCount })
-        // } catch (_) {
-        //   setNfts({items: [], totalCount: 0})
-        // }
-        // try {
-        //   await fetchOATs()
-        // } catch (_) { }
+        try {
+          const { ownedNfts, totalCount } = await alchemy.getNfts({ owner: address, filters: [NftFilters.SPAM] })
+          setNfts({ items: ownedNfts.filter((n) => !n?.error), totalCount: totalCount })
+        } catch (_) {
+          setNfts({ items: [], totalCount: 0 })
+        }
+        try {
+          await fetchOATs()
+        } catch (_) {}
         try {
           // @ts-ignore
           const { tokenBalances = [] } = await alchemy.getTokenBalances(address, 'DEFAULT_TOKENS')

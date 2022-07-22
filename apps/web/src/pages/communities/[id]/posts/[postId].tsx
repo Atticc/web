@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { Button, Grid, Tab, Tabs, Typography } from '@mui/material'
 import { CommunitiesList } from '../../../../components/posts/CommunitiesList'
 import { PostListItem } from '../../../../components/posts/PostListItem'
-import { comments, posts } from '../../../../app/constants'
+import { comments, IComment, posts } from '../../../../app/constants'
 import { ContributorsList } from '../../../../components/ContributorsList'
 import CommunityCreateModal from '../../../../components/modal/CommunityCreateModal'
 import { CommentListItem } from '../../../../components/posts/CommentListItem'
@@ -44,7 +44,7 @@ const Home: NextPage = () => {
         <Grid item xs={12} md={6}>
           <Grid container direction={'column'} alignItems={'center'}>
             {/* <PostListItem post={posts.find((p) => String(p.id) === postId)} /> */}
-            {comments.map((c) => (
+            {comments.map((c: IComment) => (
               <CommentListItem comment={c} key={c.id} />
             ))}
           </Grid>

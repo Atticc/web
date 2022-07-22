@@ -20,12 +20,10 @@ export const GET_POSTS = ({ addresses, postId }: { addresses: any; postId: strin
       ${postId?.length > 0 ? 'where: { id: { _eq: $postId } },' : ''} 
       order_by: { updatedAt: desc }
     ) {
-      commentsCount
       createdAt
       description
       id
       imageUrl
-      likesCount
       postId
       title
       updatedAt
@@ -36,12 +34,26 @@ export const GET_POSTS = ({ addresses, postId }: { addresses: any; postId: strin
         avatar
         domain
       }
+      likes_aggregate(where: {action: {_eq: LIKE}}) {
+        aggregate {
+          count
+        }
+      }
+      comments_aggregate {
+        aggregate {
+          count
+        }
+      }
       comments(limit: 50, order_by: { updatedAt: desc }) {
         createdAt
         updatedAt
         id
         imageUrl
-        likesCount
+        likes_aggregate(where: {action: {_eq: LIKE}}) {
+          aggregate {
+            count
+          }
+        }
         message
         authorAddress
         author {
@@ -69,7 +81,7 @@ export const getPosts = async ({ addresses, postId }: GetPostsRequest) => {
 }
 
 export function usePosts({ addresses, postId, ...props }: GetPostsRequest) {
-  return useQuery(['posts', String(addresses)], async () => getPosts({ addresses, postId }), {
+  return useQuery(['posts', String(addresses), postId], async () => getPosts({ addresses, postId }), {
     enabled: false,
     ...props,
   })
