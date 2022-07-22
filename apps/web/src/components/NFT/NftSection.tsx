@@ -1,6 +1,7 @@
 import { Nft, NftFilters, TokenBalance } from '@alch/alchemy-web3'
 import {
   Avatar,
+  Box,
   Button,
   CircularProgress,
   Grid,
@@ -134,8 +135,8 @@ export const NftSection = ({ address }: { address: string }) => {
           const ethBalance = await getBalance(address)
           const availablesTokens: Array<Partial<TokenBalance>> = [
             { tokenBalance: ethBalance, contractAddress: '0x0' },
-            ...tokenBalances.filter((token) => token.tokenBalance !== '0'),
-          ].filter((b) => TOKENS?.[b.contractAddress].coingeckoId)
+            ...tokenBalances,
+          ].filter((b) => b.tokenBalance !== '0' && TOKENS?.[b.contractAddress].coingeckoId)
 
           const ids: Array<string> = availablesTokens.reduce(
             (prev: Array<string>, cur: Partial<TokenBalance>) => [
@@ -191,58 +192,66 @@ export const NftSection = ({ address }: { address: string }) => {
       ) : null}
       {tokens?.length > 0 ? (
         <TypeSection label={'TOKENS'} height={'unset'}>
-          <TableContainer component={Paper}>
-            <Table aria-label="owned token table">
-              <TableHead>
-                <TableRow>
-                  <TableCell>
-                    <Typography variant="h5" color={color.lightGray.main}>
-                      Token
-                    </Typography>
-                  </TableCell>
-                  <TableCell align="right">
-                    <Typography variant="h5" color={color.lightGray.main}>
-                      Balance
-                    </Typography>
-                  </TableCell>
-                  <TableCell align="right">
-                    <Typography variant="h5" color={color.lightGray.main}>
-                      Amount
-                    </Typography>
-                  </TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {tokens.map((row: IToken) => (
-                  <TableRow key={row?.name} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                    <TableCell component="th" scope="row">
-                      <Stack direction={'row'} alignItems={'center'}>
-                        <Avatar
-                          src={row.logo}
-                          sx={{ height: 32, width: 32, objectFit: 'contain' }}
-                          variant={'rounded'}
-                        />
-                        <Typography variant="bodyBold1" pl={1}>
-                          {row.name}{' '}
-                          <Typography variant="body1" component={'span'}>
-                            ({row.symbol})
-                          </Typography>
-                        </Typography>
-                      </Stack>
-                    </TableCell>
-                    <TableCell align="right">
-                      <Typography variant="bodyBold1">
-                        {numeral(row.balance).format('0,0[.]0[000]')} {row.symbol}
+          <Box bgcolor={color.white.main} borderRadius={5} width={'100%'}>
+            <TableContainer component={Paper} sx={{ px: 3, py: 1, borderRadius: 5 }}>
+              <Table aria-label="owned token table">
+                <TableHead>
+                  <TableRow>
+                    <TableCell>
+                      <Typography variant="h5" color={color.lightGray.main}>
+                        Token
                       </Typography>
                     </TableCell>
                     <TableCell align="right">
-                      <Typography variant="bodyBold1">{numeral(row.amount).format('$0,0[.]00')}</Typography>
+                      <Typography variant="h5" color={color.lightGray.main}>
+                        Balance
+                      </Typography>
+                    </TableCell>
+                    <TableCell align="right">
+                      <Typography variant="h5" color={color.lightGray.main}>
+                        Amount
+                      </Typography>
                     </TableCell>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
+                </TableHead>
+                <TableBody>
+                  {tokens.map((row: IToken) => (
+                    <TableRow key={row?.name} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                      <TableCell component="th" scope="row">
+                        <Stack direction={'row'} alignItems={'center'}>
+                          <Avatar
+                            src={row.logo}
+                            sx={{
+                              height: 32,
+                              width: 32,
+                              '& img': {
+                                objectFit: 'contain',
+                              },
+                            }}
+                            variant={'rounded'}
+                          />
+                          <Typography variant="bodyBold1" pl={1}>
+                            {row.name}{' '}
+                            <Typography variant="body1" component={'span'}>
+                              ({row.symbol})
+                            </Typography>
+                          </Typography>
+                        </Stack>
+                      </TableCell>
+                      <TableCell align="right">
+                        <Typography variant="bodyBold1">
+                          {numeral(row.balance).format('0,0[.]0[000]')} {row.symbol}
+                        </Typography>
+                      </TableCell>
+                      <TableCell align="right">
+                        <Typography variant="bodyBold1">{numeral(row.amount).format('$0,0[.]00')}</Typography>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Box>
         </TypeSection>
       ) : null}
       {!oats?.list?.length &&
