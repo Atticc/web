@@ -1,5 +1,12 @@
 import axios from 'axios'
-import { POAP_API_URL } from '../app/config'
+
+interface RequestObj {
+  baseUrl?: string
+  endpoint: string
+  data?: any
+  method?: string
+  contentType?: string
+}
 
 function serialize(data: any) {
   return Object.keys(data)
@@ -12,13 +19,13 @@ export const toResultObject = (promise: any) => {
 }
 
 export async function request({
-  baseUrl = POAP_API_URL,
+  baseUrl = 'https://api.coingecko.com/api/v3',
   endpoint = '',
   data = null,
   method = 'GET',
   contentType = 'application/json',
   ...config
-}) {
+}: RequestObj) {
   let url = `${baseUrl}/${endpoint}`
   url = method === 'GET' && data !== null ? `${url}?${serialize(data)}` : url
 
@@ -37,9 +44,13 @@ export async function request({
   return axios.request(options)
 }
 
-export const POAP = {
-  getNFTs: ({ address }: { address: string }) =>
+export const Coingecko = {
+  getPrices: ({ ids }: { ids: Array<string> }) =>
     request({
-      endpoint: `actions/scan/${address}`,
+      endpoint: `simple/price`,
+      data: {
+        ids: ids.join(','),
+        vs_currencies: 'USD',
+      },
     }),
 }

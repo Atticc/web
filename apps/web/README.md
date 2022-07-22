@@ -8,3 +8,12 @@ Install it and run:
 yarn
 yarn dev
 ```
+
+## Tools
+
+Cyberconnect (free for now)
+XMTP (free for now)
+Alchemy (rate-limit)
+CoinGecko (rate-limit 100 req per minute)
+Web3 Storage (1tb space)
+Hasura (db storage)

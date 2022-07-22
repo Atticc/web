@@ -1,4 +1,4 @@
-import { Nft, NftFilters } from '@alch/alchemy-web3'
+import { Nft, NftFilters, TokenBalance } from '@alch/alchemy-web3'
 import {
   Avatar,
   Button,
@@ -15,6 +15,7 @@ import {
   Typography,
   useTheme,
 } from '@mui/material'
+import numeral from 'numeral'
 import { useEffect, useMemo, useState } from 'react'
 import { useQuery } from 'react-query'
 import { IOatNft, IPoapNft } from '@app/types'
@@ -29,6 +30,8 @@ import AddCircleIcon from '@mui/icons-material/AddCircle'
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle'
 import { NODE_ENV } from '@app/config'
 import TOKENS, { IToken } from '@app/token'
+import useWallet from '@utils/useWallet'
+import { Coingecko } from '@req/coingecko'
 
 const TypeSection = ({
   children,
@@ -59,7 +62,7 @@ const TypeSection = ({
         direction={'row'}
         gap={4}
         wrap={'wrap'}
-        maxHeight={show ? undefined : height}
+        maxHeight={show ? 'unset' : height}
         overflow={'hidden'}
         px={0.1}
         pb={1}
@@ -70,9 +73,15 @@ const TypeSection = ({
   )
 }
 
+interface ITokenResponse {
+  tokenBalance: string
+  contractAddress: string
+}
+
 export const NftSection = ({ address }: { address: string }) => {
   const color = useTheme().palette
   const { alchemy } = useAlchemy()
+  const { getBalance } = useWallet()
   const [loading, setLoading] = useState(false)
   const [tokens, setTokens] = useState<Array<IToken>>([])
   const [nfts, setNfts] = useState<{ items: Array<Nft>; totalCount?: number }>({ items: [], totalCount: 0 })
@@ -84,31 +93,63 @@ export const NftSection = ({ address }: { address: string }) => {
   } = useQuery(['poap', address], () => POAP.getNFTs({ address }))
 
   useEffect(() => {
+    function sortPricing(a: IToken, b: IToken) {
+      if (!a.amount || !b.amount) {
+        return 0
+      }
+      if (a.amount < b.amount) {
+        return 1
+      }
+      if (a.amount > b.amount) {
+        return -1
+      }
+      return 0
+    }
+
+    function calBalance(token: Partial<TokenBalance>, pricing: any): IToken {
+      const contract: IToken = TOKENS?.[token.contractAddress || ''] || {}
+      let balance = Number(token.tokenBalance)
+      balance = balance / Math.pow(10, contract?.decimals || 18)
+      const basePrice = pricing[contract.coingeckoId].usd || 0
+      const amount = balance * basePrice
+
+      return { ...contract, balance: balance, basePrice: basePrice, amount: amount }
+    }
+
     async function fetchNFTs() {
       try {
         setLoading(true)
+        // try {
+        //   const { ownedNfts, totalCount } = await alchemy.getNfts({ owner: address, filters: [NftFilters.SPAM] })
+        //   setNfts({ items: ownedNfts.filter((n) => !n?.error), totalCount: totalCount })
+        // } catch (_) {
+        //   setNfts({items: [], totalCount: 0})
+        // }
+        // try {
+        //   await fetchOATs()
+        // } catch (_) { }
         try {
-          const { ownedNfts, totalCount } = await alchemy.getNfts({ owner: address, filters: [NftFilters.SPAM] })
-          setNfts({ items: ownedNfts.filter((n) => !n?.error), totalCount: totalCount })
-        } catch (_) { }
-        try {
-          await fetchOATs()
-        } catch (_) { }
-        try {
-          console.log('fetching balances')
           // @ts-ignore
           const { tokenBalances = [] } = await alchemy.getTokenBalances(address, 'DEFAULT_TOKENS')
-          const availablesTokens = tokenBalances.filter((token) => token.tokenBalance !== '0') || []
+          const ethBalance = await getBalance(address)
+          const availablesTokens: Array<Partial<TokenBalance>> = [
+            { tokenBalance: ethBalance, contractAddress: '0x0' },
+            ...tokenBalances.filter((token) => token.tokenBalance !== '0'),
+          ].filter((b) => TOKENS?.[b.contractAddress].coingeckoId)
 
-          const balances: Array<IToken> = availablesTokens?.map((aval) => {
-            let balance: number = Number(aval.tokenBalance)
-            const contract: IToken = TOKENS?.[(aval.contractAddress as string) || ''] || {}
-            balance = balance / Math.pow(10, contract?.decimals || 18)
-            return { ...contract, balance: balance }
-          })
-
-          setTokens(balances || [])
-        } catch (_) {}
+          const ids: Array<string> = availablesTokens.reduce(
+            (prev: Array<string>, cur: Partial<TokenBalance>) => [
+              ...prev,
+              TOKENS?.[cur?.contractAddress as string]?.coingeckoId,
+            ],
+            []
+          )
+          const { data: pricing = {} } = await Coingecko.getPrices({ ids })
+          const balances: Array<IToken> = availablesTokens?.map((aval) => calBalance(aval, pricing))
+          setTokens(balances.sort(sortPricing) || [])
+        } catch (_) {
+          setTokens([])
+        }
       } catch (_) {
       } finally {
         setLoading(false)
@@ -120,7 +161,7 @@ export const NftSection = ({ address }: { address: string }) => {
     } else {
       setNfts({ items: [], totalCount: 0 })
     }
-  }, [address, fetchOATs])
+  }, [address])
 
   return (
     <Grid container direction={'column'} width={1}>
@@ -138,9 +179,6 @@ export const NftSection = ({ address }: { address: string }) => {
           ))}
         </TypeSection>
       ) : null}
-      {loading || poapLoading || poapFetching || oatLoading || oatFetching ? (
-        <CircularProgress size={100} color="primary" />
-      ) : null}
       {oats?.list?.length > 0 ? (
         <TypeSection label={'OATS'}>
           {oats?.list?.map((o: IOatNft) => (
@@ -148,8 +186,11 @@ export const NftSection = ({ address }: { address: string }) => {
           ))}
         </TypeSection>
       ) : null}
+      {loading || poapLoading || poapFetching || oatLoading || oatFetching ? (
+        <CircularProgress size={100} color="primary" />
+      ) : null}
       {tokens?.length > 0 ? (
-        <TypeSection label={'TOKENS'} height={undefined}>
+        <TypeSection label={'TOKENS'} height={'unset'}>
           <TableContainer component={Paper}>
             <Table aria-label="owned token table">
               <TableHead>
@@ -164,7 +205,11 @@ export const NftSection = ({ address }: { address: string }) => {
                       Balance
                     </Typography>
                   </TableCell>
-                  {/* <TableCell align="right"><Typography variant="h5" color={color.lightGray.main}>Amount</Typography></TableCell> */}
+                  <TableCell align="right">
+                    <Typography variant="h5" color={color.lightGray.main}>
+                      Amount
+                    </Typography>
+                  </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -172,7 +217,11 @@ export const NftSection = ({ address }: { address: string }) => {
                   <TableRow key={row?.name} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                     <TableCell component="th" scope="row">
                       <Stack direction={'row'} alignItems={'center'}>
-                        <Avatar src={row.logo} sx={{ height: 32, width: 32 }} />
+                        <Avatar
+                          src={row.logo}
+                          sx={{ height: 32, width: 32, objectFit: 'contain' }}
+                          variant={'rounded'}
+                        />
                         <Typography variant="bodyBold1" pl={1}>
                           {row.name}{' '}
                           <Typography variant="body1" component={'span'}>
@@ -183,10 +232,12 @@ export const NftSection = ({ address }: { address: string }) => {
                     </TableCell>
                     <TableCell align="right">
                       <Typography variant="bodyBold1">
-                        {Number(row.balance).toFixed(6)} {row.symbol}
+                        {numeral(row.balance).format('0,0[.]0[000]')} {row.symbol}
                       </Typography>
                     </TableCell>
-                    {/* <TableCell align="right"><Typography variant='bodyBold1'>0</Typography></TableCell> */}
+                    <TableCell align="right">
+                      <Typography variant="bodyBold1">{numeral(row.amount).format('$0,0[.]00')}</Typography>
+                    </TableCell>
                   </TableRow>
                 ))}
               </TableBody>

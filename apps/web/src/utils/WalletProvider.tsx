@@ -14,6 +14,7 @@ export type WalletContextType = {
   resolveName: (name: string) => Promise<string | undefined>
   lookupAddress: (address: string) => Promise<string | undefined>
   getAvatarUrl: (address: string) => Promise<string | undefined>
+  getBalance: (address: string) => Promise<string | undefined>
   connect: () => Promise<Signer | undefined>
   disconnect: () => Promise<void>
 }
@@ -27,6 +28,7 @@ export const WalletContext = createContext<WalletContextType>({
   resolveName: async () => undefined,
   lookupAddress: async () => undefined,
   getAvatarUrl: async () => undefined,
+  getBalance: async () => undefined,
   connect: async () => undefined,
   disconnect: async () => undefined,
 })
@@ -34,6 +36,7 @@ export const WalletContext = createContext<WalletContextType>({
 const cachedLookupAddress = new Map<string, string | undefined>()
 const cachedResolveName = new Map<string, string | undefined>()
 const cachedGetAvatarUrl = new Map<string, string | undefined>()
+const cachedBalance = new Map<string, string>()
 
 type WalletProviderProps = {
   children?: React.ReactNode
@@ -69,6 +72,23 @@ export const WalletProvider = ({ children }: WalletProviderProps): JSX.Element =
         return address
       } catch (_) {
         return undefined
+      }
+    },
+    [provider]
+  )
+
+  const getBalance = useCallback(
+    async (address: string) => {
+      if (cachedBalance.has(address)) {
+        return cachedBalance.get(address)
+      }
+      try {
+        const balance = (await provider?.getBalance(address)) || '0'
+        const stringBalance = balance.toString()
+        cachedBalance.set(address, stringBalance)
+        return stringBalance
+      } catch (_) {
+        return '0'
       }
     },
     [provider]
@@ -220,6 +240,7 @@ export const WalletProvider = ({ children }: WalletProviderProps): JSX.Element =
         cyberConnect,
         resolveName,
         lookupAddress,
+        getBalance,
         getAvatarUrl,
         connect,
         disconnect,
